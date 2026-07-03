@@ -1033,21 +1033,51 @@ body {
 
 .ced-empty { text-align: center; color: var(--am-gray); padding: 28px 14px !important; font-style: italic; }
 
-/* Fila de detalle */
-.ced-detail-row td { background: var(--am-gray-lighter) !important; padding: 0 !important; }
-.ced-detail-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px 20px; padding: 16px 20px;
+.ced-row.open td { background: rgba(98,16,68,0.06); box-shadow: inset 0 2px 0 var(--am-bordo); }
+.ced-row.open .ced-td-especie { background: rgba(98,16,68,0.06); }
+
+/* Fila / panel de detalle con gráfico */
+.ced-detail-row td { background: #fbfaf7 !important; padding: 0 !important; position: sticky; left: 0; }
+.ced-detail {
+  padding: 18px 22px; display: flex; flex-direction: column; gap: 14px;
+  /* el td de detalle es sticky-left; fijamos un ancho de viewport para que el panel
+     quede visible sin importar el scroll horizontal de la tabla */
+  width: calc(100vw - 340px); max-width: 1150px; box-sizing: border-box;
 }
-.ced-detail-item { display: flex; flex-direction: column; gap: 2px; }
-.ced-detail-label {
-  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
-  color: var(--am-gray-dark);
+.ced-detail-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.ced-detail-title { display: flex; align-items: baseline; gap: 10px; }
+.ced-detail-especie { font-size: 20px; font-weight: 800; color: var(--am-bordo); }
+.ced-detail-nombre { font-size: 14px; color: var(--am-gray-dark); }
+.ced-detail-toggles { display: flex; gap: 10px; flex-wrap: wrap; }
+.ced-dt-group { display: inline-flex; background: var(--am-gray-light); border-radius: 8px; padding: 2px; gap: 2px; }
+.ced-dt-btn {
+  border: none; background: transparent; color: var(--am-gray-dark);
+  font-family: inherit; font-size: 12px; font-weight: 700; padding: 5px 11px;
+  border-radius: 6px; cursor: pointer; transition: var(--transition);
 }
-.ced-detail-value { font-size: 14px; font-weight: 600; color: var(--am-pure-black); font-variant-numeric: tabular-nums; }
+.ced-dt-btn:hover { color: var(--am-bordo); }
+.ced-dt-btn.active { background: var(--am-bordo); color: var(--am-white); }
+
+.ced-detail-body { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.ced-chart-box { position: relative; height: 300px; min-width: 0; background: var(--am-white); border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 10px; }
+.ced-detail-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; align-content: start;
+}
+.ced-st { display: flex; flex-direction: column; gap: 1px; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.ced-st-l { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--am-gray-dark); }
+.ced-st-v { font-size: 14px; font-weight: 700; color: var(--am-pure-black); font-variant-numeric: tabular-nums; }
+.ced-st-err { grid-column: 1 / -1; color: var(--am-red); font-size: 13px; }
+.ced-detail-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.ced-detail-src { font-size: 11px; color: var(--am-gray); font-style: italic; }
+.ced-dt-research { font-size: 13px; font-weight: 700; color: var(--am-bordo); text-decoration: none; border-bottom: 1.5px dotted rgba(98,16,68,0.4); }
+.ced-dt-research:hover { border-bottom-style: solid; }
 
 .ced-legend-note { font-size: 11px; color: var(--am-gray); margin-top: 12px; font-style: italic; }
 
+@media (max-width: 900px) {
+  .ced-detail { width: calc(100vw - 40px); }
+  .ced-detail-body { grid-template-columns: 1fr; }
+}
 @media (max-width: 768px) {
   .ced-title { font-size: 22px; }
   .ced-kpis { gap: 10px; }
@@ -1059,5 +1089,5 @@ body {
   .ced-cols-btn { justify-content: center; }
   .ced-colpanel { right: auto; left: 0; width: 100%; max-width: 100%; }
   .ced-colpanel-grid { grid-template-columns: 1fr; }
-  .ced-detail-grid { grid-template-columns: 1fr 1fr; }
+  .ced-chart-box { height: 240px; }
 }

@@ -182,6 +182,12 @@
       sortDir: 'asc',
       visibleCols: loadVisibleCols(),
       colPickerOpen: false,
+      // detalle expandible (gráfico Reuters)
+      expandedKey: null,
+      seriesCache: {},
+      chart: null,
+      detailPeriod: '6M',
+      detailMoneda: 'ARS',
       // recursos a limpiar
       unsubRealtime: null,
       pollTimer: null,
@@ -413,6 +419,172 @@
     return `<span class="ced-especie">${escapeHtml(label)}</span>`;
   }
 
+  // ============ Detalle expandible con gráfico de Reuters ============
+  const PERIODS = [
+    { key: '1M', label: '1M', days: 22 },
+    { key: '3M', label: '3M', days: 66 },
+    { key: '6M', label: '6M', days: 132 },
+    { key: '1A', label: '1A', days: 9999 },
+  ];
+  function periodDays(k) { return (PERIODS.find(p => p.key === k) || PERIODS[2]).days; }
+
+  async function fetchSeries(especie) {
+    if (state.seriesCache[especie]) return state.seriesCache[especie];
+    const url = `${REST()}/cedears_series?especie=eq.${encodeURIComponent(especie)}&order=fecha.asc&select=fecha,close_ars,vol_ars,close_usd`;
+    const r = await fetch(url, { headers: headers() });
+    if (!r.ok) throw new Error(`cedears_series ${r.status}`);
+    const data = await r.json();
+    state.seriesCache[especie] = data;
+    return data;
+  }
+
+  // Fila de detalle (colspan completo) con toggles, canvas del gráfico y grilla de stats.
+  function detailRow(e, colspan) {
+    const key = especieKey(e);
+    const nombre = escapeHtml(e.nombre || '');
+    const periodBtns = PERIODS.map(p =>
+      `<button class="ced-dt-btn ${state.detailPeriod === p.key ? 'active' : ''}" data-period="${p.key}">${p.label}</button>`
+    ).join('');
+    const monBtns = ['ARS', 'USD'].map(m =>
+      `<button class="ced-dt-btn ${state.detailMoneda === m ? 'active' : ''}" data-moneda="${m}">${m}</button>`
+    ).join('');
+    const research = (key && state.instrumentIds.has(key))
+      ? `<a class="ced-dt-research" href="?inst=${encodeURIComponent(key)}" data-inst="${escapeHtml(key)}">Ver research completo →</a>`
+      : '';
+    return `
+      <tr class="ced-detail-row" data-detail-for="${escapeHtml(key)}">
+        <td colspan="${colspan}">
+          <div class="ced-detail">
+            <div class="ced-detail-top">
+              <div class="ced-detail-title">
+                <span class="ced-detail-especie">${escapeHtml(key)}</span>
+                <span class="ced-detail-nombre">${nombre}</span>
+              </div>
+              <div class="ced-detail-toggles">
+                <div class="ced-dt-group" data-group="moneda">${monBtns}</div>
+                <div class="ced-dt-group" data-group="period">${periodBtns}</div>
+              </div>
+            </div>
+            <div class="ced-detail-body">
+              <div class="ced-chart-box"><canvas id="cedChart-${escapeHtml(key)}"></canvas></div>
+              <div class="ced-detail-stats" id="cedStats-${escapeHtml(key)}"></div>
+            </div>
+            <div class="ced-detail-foot">
+              <span class="ced-detail-src">Fuente: LSEG Refinitiv · serie diaria (cierre) hasta último día hábil</span>
+              ${research}
+            </div>
+          </div>
+        </td>
+      </tr>`;
+  }
+
+  function statItem(label, value) {
+    return `<div class="ced-st"><span class="ced-st-l">${escapeHtml(label)}</span><span class="ced-st-v">${value}</span></div>`;
+  }
+
+  // Rellena la grilla de stats: 52 semanas (de la serie) + fundamentals (de cedears_live).
+  function fillDetailStats(e) {
+    const key = especieKey(e);
+    const box = state.container.querySelector(`#cedStats-${cssEscape(key)}`);
+    if (!box) return;
+    const series = state.seriesCache[key] || [];
+    const moneda = state.detailMoneda;
+    const pk = moneda === 'USD' ? 'close_usd' : 'close_ars';
+    const closes = series.map(d => d[pk]).filter(isNum).map(Number);
+    const hi = closes.length ? Math.max(...closes) : null;
+    const lo = closes.length ? Math.min(...closes) : null;
+    const last = isNum(e[moneda === 'USD' ? 'precio_usd' : 'precio_ars']) ? Number(e[moneda === 'USD' ? 'precio_usd' : 'precio_ars']) : (closes.length ? closes[closes.length - 1] : null);
+    const items = [
+      ['Precio ' + moneda, fmtPrice(last)],
+      ['Máx 52s', fmtPrice(hi)],
+      ['Mín 52s', fmtPrice(lo)],
+      ['Volumen', fmtInt(e.volumen)],
+      ['CCL impl.', fmtPrice(e.ccl)],
+      ['Fair Value', fmtPrice(e.fair_value)],
+      ['Dif %', fmtPct(e.dif_fv)],
+      ['P/E', fmtMult(e.pe)],
+      ['P/E Fwd', fmtMult(e.pe_fwd)],
+      ['P/B', fmtMult(e.pb)],
+      ['EV/EBITDA', fmtMult(e.ev_ebitda)],
+      ['Mg Op %', fmtMargin(e.mg_op)],
+      ['Mg Net %', fmtMargin(e.mg_net)],
+      ['Div Yield %', fmtDivY(e.div_yield)],
+      ['Rec. (1-5)', isNum(e.rec) ? recSemaforo(e.rec, e.rec_label) : DASH],
+      ['Consenso', e.rec_label ? escapeHtml(e.rec_label) : DASH],
+      ['Valuación', valuacionChip(e.valuacion)],
+      ['Semáforo', semaforoChip(e)],
+    ];
+    box.innerHTML = items.map(([l, v]) => statItem(l, v)).join('');
+  }
+
+  function drawDetailChart(e) {
+    const key = especieKey(e);
+    const canvas = state.container.querySelector(`#cedChart-${cssEscape(key)}`);
+    if (!canvas || typeof Chart === 'undefined') return;
+    const full = state.seriesCache[key] || [];
+    const data = full.slice(-periodDays(state.detailPeriod));
+    const moneda = state.detailMoneda;
+    const pk = moneda === 'USD' ? 'close_usd' : 'close_ars';
+    const labels = data.map(d => d.fecha);
+    const prices = data.map(d => (isNum(d[pk]) ? Number(d[pk]) : null));
+    const vols = data.map(d => (isNum(d.vol_ars) ? Number(d.vol_ars) : null));
+    const maxVol = vols.reduce((m, v) => (v != null && v > m ? v : m), 0);
+
+    if (state.chart) { try { state.chart.destroy(); } catch (_) {} state.chart = null; }
+    const BORDO = '#621044', YELLOW = '#F3CF11';
+    state.chart = new Chart(canvas, {
+      data: {
+        labels,
+        datasets: [
+          {
+            type: 'line', label: `Precio ${moneda}`, data: prices, yAxisID: 'y',
+            borderColor: BORDO, backgroundColor: 'rgba(98,16,68,0.08)',
+            borderWidth: 2, pointRadius: 0, tension: 0.25, fill: true, order: 1,
+          },
+          {
+            type: 'bar', label: 'Volumen', data: vols, yAxisID: 'yv',
+            backgroundColor: 'rgba(243,207,17,0.55)', borderWidth: 0, order: 2,
+          },
+        ],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: { ticks: { maxTicksLimit: 8, autoSkip: true, font: { size: 10 } }, grid: { display: false } },
+          y: { position: 'left', ticks: { font: { size: 10 }, callback: v => (moneda === 'USD' ? '$' + v : '$' + nfInt.format(v)) } },
+          yv: { position: 'right', display: false, grid: { drawOnChartArea: false }, max: maxVol * 4, beginAtZero: true },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ctx.dataset.type === 'bar'
+                ? `Vol: ${nfInt.format(ctx.parsed.y || 0)}`
+                : `${moneda}: ${fmtPrice(ctx.parsed.y)}`,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  // Tras (re)construir la tabla, si hay fila expandida: cargar serie, dibujar y llenar stats.
+  async function hydrateDetail() {
+    if (!state.expandedKey) return;
+    const e = state.especies.find(x => especieKey(x) === state.expandedKey);
+    if (!e) return;
+    try {
+      await fetchSeries(state.expandedKey);
+      if (state.destroyed || state.expandedKey !== especieKey(e)) return;
+      drawDetailChart(e);
+      fillDetailStats(e);
+    } catch (err) {
+      const box = state.container.querySelector(`#cedStats-${cssEscape(state.expandedKey)}`);
+      if (box) box.innerHTML = `<div class="ced-st-err">No se pudo cargar el histórico: ${escapeHtml(err.message)}</div>`;
+    }
+  }
+
   function renderTable() {
     const rows = sortedFilteredRows();
     const cols = visibleColList();
@@ -431,16 +603,18 @@
     } else {
       rows.forEach(e => {
         const key = especieKey(e);
+        const isOpen = state.expandedKey === key;
         const cells = cols.map(c => {
           const extra = c.cls ? c.cls(e) : '';
           const klass = `${c.type === 'num' ? 'ced-num' : ''}${extra ? ' ' + extra : ''}`.trim();
           return `<td${klass ? ` class="${klass}"` : ''}>${c.render(e)}</td>`;
         }).join('');
         body += `
-          <tr class="ced-row" data-especie="${escapeHtml(key)}">
+          <tr class="ced-row ${isOpen ? 'open' : ''}" data-especie="${escapeHtml(key)}">
             <td class="ced-td-especie">${especieCell(e)}</td>
             ${cells}
           </tr>`;
+        if (isOpen) body += detailRow(e, colspan);
       });
     }
 
@@ -470,9 +644,10 @@
         ${renderKpis()}
         ${renderControls()}
         ${renderTable()}
-        <p class="ced-legend-note">Dif % negativa = cotiza por debajo del fair value (barato). Rec.: semáforo del consenso de analistas (verde ≤2,5 comprar · rojo ≥3,5 vender). Usá <b>Columnas</b> para elegir qué mostrar (P/E, márgenes, vs Sector, etc.).</p>
+        <p class="ced-legend-note">Hacé clic en una especie para ver su <b>gráfico</b>, volumen e histórico de Reuters. Dif % negativa = cotiza por debajo del fair value (barato). Usá <b>Columnas</b> para elegir qué mostrar.</p>
       </div>`;
     wireEvents();
+    hydrateDetail();
   }
 
   // Re-render sólo del cuerpo de tabla (para sort/filtros sin perder foco de búsqueda)
@@ -483,6 +658,7 @@
     tmp.innerHTML = renderTable();
     wrap.replaceWith(tmp.firstElementChild);
     wireTableEvents();
+    hydrateDetail();
   }
 
   function wireEvents() {
@@ -571,8 +747,8 @@
         rerenderTable();
       });
     });
-    // Links de especie → navegación SPA
-    state.container.querySelectorAll('.ced-especie-link').forEach(link => {
+    // Links de especie → navegación SPA (research completo). No expande la fila.
+    state.container.querySelectorAll('.ced-especie-link, .ced-dt-research').forEach(link => {
       link.addEventListener('click', (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -582,10 +758,43 @@
         else location.search = `?inst=${encodeURIComponent(inst)}`;
       });
     });
+    // Click en una fila → expandir/colapsar el detalle con gráfico
+    state.container.querySelectorAll('.ced-row').forEach(row => {
+      row.addEventListener('click', (ev) => {
+        if (ev.target.closest('.ced-especie-link')) return; // el link navega
+        const key = row.dataset.especie;
+        state.expandedKey = (state.expandedKey === key) ? null : key;
+        if (state.chart) { try { state.chart.destroy(); } catch (_) {} state.chart = null; }
+        rerenderTable();
+        if (state.expandedKey) {
+          const dr = state.container.querySelector(`.ced-detail-row[data-detail-for="${cssEscape(state.expandedKey)}"]`);
+          if (dr && dr.scrollIntoView) dr.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      });
+    });
+    // Clicks dentro del panel de detalle no colapsan la fila
+    state.container.querySelectorAll('.ced-detail-row').forEach(dr => {
+      dr.addEventListener('click', (ev) => ev.stopPropagation());
+    });
+    // Toggles de período y moneda dentro del detalle
+    state.container.querySelectorAll('.ced-dt-btn').forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (btn.dataset.period) state.detailPeriod = btn.dataset.period;
+        if (btn.dataset.moneda) state.detailMoneda = btn.dataset.moneda;
+        const grp = btn.parentElement;
+        if (grp) grp.querySelectorAll('.ced-dt-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const e = state.especies.find(x => especieKey(x) === state.expandedKey);
+        if (e) { drawDetailChart(e); fillDetailStats(e); }
+      });
+    });
   }
 
   // -------------- Refetch (debounced) --------------
   async function refetchData() {
+    // Con un detalle abierto, no re-renderizamos toda la vista (destruiría el gráfico
+    // y perdería el foco del usuario). Los precios de la tabla se retoman al cerrarlo.
+    if (state.expandedKey) return;
     try {
       const [especies, params] = await Promise.all([fetchEspecies(), fetchParams()]);
       if (state.destroyed) return;
@@ -697,6 +906,7 @@
   function unmount() {
     if (!state) return;
     state.destroyed = true;
+    try { state.chart && state.chart.destroy(); } catch (_) {}
     try { state.unsubRealtime && state.unsubRealtime(); } catch (_) {}
     clearInterval(state.pollTimer);
     clearTimeout(state.refetchTimer);
