@@ -38,14 +38,27 @@
   const nfInt   = new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 });
   const nfPct   = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: 'always' });
   const nfMult  = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const nf1     = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
   function isNum(v) { return v != null && v !== '' && !isNaN(Number(v)); }
   function fmtPrice(v) { return isNum(v) ? `$ ${nfPrice.format(Number(v))}` : DASH; }
   function fmtInt(v)   { return isNum(v) ? nfInt.format(Math.round(Number(v))) : DASH; }
   function fmtPct(v)   { return isNum(v) ? `${nfPct.format(Number(v) * 100)}%` : DASH; }        // fracción → %
   function fmtPctRaw(v){ return isNum(v) ? `${nfPct.format(Number(v))}%` : DASH; }              // ya en %
+  function fmtMargin(v){ return isNum(v) ? `${nf1.format(Number(v))}%` : DASH; }                // margen ya en %, sin signo
+  function fmtDivY(v)  { return isNum(v) ? `${nfPrice.format(Number(v))}%` : DASH; }            // div yield ya en %
   function fmtMult(v)  { return isNum(v) ? `${nfMult.format(Number(v))}x` : DASH; }
   function fmtNum2(v)  { return isNum(v) ? nfPrice.format(Number(v)) : DASH; }
+
+  // Semáforo de recomendación de analistas (TR.RecMean 1-5): ≤2,5 verde (comprar) ·
+  // 2,5-3,5 amarillo (mantener) · ≥3,5 rojo (vender). Igual criterio que el Excel.
+  function recSemaforo(v, label) {
+    if (!isNum(v)) return DASH;
+    const n = Number(v);
+    const cls = n <= 2.5 ? 'ced-sem-green' : n < 3.5 ? 'ced-sem-amber' : 'ced-sem-red';
+    const title = label ? ` title="${escapeHtml(label)}"` : '';
+    return `<span class="ced-sem ${cls}"${title}><span class="ced-sem-dot"></span>${nfPrice.format(n)}</span>`;
+  }
 
   function signClass(v) {
     if (!isNum(v)) return '';
@@ -76,16 +89,32 @@
   const SECTOR_ORDER = ['Tecnologia', 'Comunicacion', 'Cons. Discrecional', 'Cons. Defensivo',
     'Salud', 'Industria', 'Energia', 'Materiales', 'Bancos', 'ETFs'];
 
+  // Columnas del monitor — paridad con la hoja FULL del Excel. `render` devuelve el HTML
+  // de la celda; `cls` una clase extra según el valor (color). Todas ordenables.
   const COLS = [
-    { key: 'nombre',     label: 'Nombre',      sortable: true,  type: 'str' },
-    { key: 'sector',     label: 'Sector',      sortable: true,  type: 'str' },
-    { key: 'precio_ars', label: 'Precio ARS',  sortable: true,  type: 'num' },
-    { key: 'var',        label: 'Var %',       sortable: true,  type: 'num' },
-    { key: 'ccl',        label: 'CCL',         sortable: true,  type: 'num' },
-    { key: 'fair_value', label: 'Fair Value',  sortable: true,  type: 'num' },
-    { key: 'dif_fv',     label: 'Dif %',       sortable: true,  type: 'num' },
-    { key: 'estado_fv',  label: 'Estado',      sortable: true,  type: 'str' },
-    { key: 'valuacion',  label: 'Valuación',   sortable: true,  type: 'str' },
+    { key: 'nombre',     label: 'Nombre',      sortable: true, type: 'str', render: e => escapeHtml(e.nombre || DASH) },
+    { key: 'sector',     label: 'Sector',      sortable: true, type: 'str', render: e => escapeHtml(e.sector || DASH) },
+    { key: 'precio_usd', label: 'Precio USD',  sortable: true, type: 'num', render: e => fmtPrice(e.precio_usd) },
+    { key: 'precio_ars', label: 'Precio ARS',  sortable: true, type: 'num', render: e => fmtPrice(e.precio_ars) },
+    { key: 'var',        label: 'Var %',       sortable: true, type: 'num', render: e => fmtPct(e.var),        cls: e => signClass(e.var) },
+    { key: 'volumen',    label: 'Volumen',     sortable: true, type: 'num', render: e => fmtInt(e.volumen) },
+    { key: 'ratio',      label: 'Ratio',       sortable: true, type: 'num', render: e => fmtNum2(e.ratio) },
+    { key: 'ccl',        label: 'CCL',         sortable: true, type: 'num', render: e => fmtPrice(e.ccl) },
+    { key: 'pe',         label: 'P/E',         sortable: true, type: 'num', render: e => fmtMult(e.pe) },
+    { key: 'pb',         label: 'P/B',         sortable: true, type: 'num', render: e => fmtMult(e.pb) },
+    { key: 'ev_ebitda',  label: 'EV/EBITDA',   sortable: true, type: 'num', render: e => fmtMult(e.ev_ebitda) },
+    { key: 'pe_fwd',     label: 'P/E Fwd',     sortable: true, type: 'num', render: e => fmtMult(e.pe_fwd) },
+    { key: 'mg_op',      label: 'Mg Op %',     sortable: true, type: 'num', render: e => fmtMargin(e.mg_op) },
+    { key: 'mg_net',     label: 'Mg Net %',    sortable: true, type: 'num', render: e => fmtMargin(e.mg_net) },
+    { key: 'div_yield',  label: 'Div Yield %', sortable: true, type: 'num', render: e => fmtDivY(e.div_yield) },
+    { key: 'vs_sector',  label: 'vs Sector',   sortable: true, type: 'num', render: e => fmtPct(e.vs_sector),  cls: e => difClass(e.vs_sector) },
+    { key: 'vs_hist',    label: 'vs Hist',     sortable: true, type: 'num', render: e => fmtPct(e.vs_hist),    cls: e => difClass(e.vs_hist) },
+    { key: 'rec',        label: 'Rec. (1-5)',  sortable: true, type: 'num', render: e => recSemaforo(e.rec, e.rec_label) },
+    { key: 'rec_label',  label: 'Consenso',    sortable: true, type: 'str', render: e => e.rec_label ? escapeHtml(e.rec_label) : DASH },
+    { key: 'valuacion',  label: 'Valuación',   sortable: true, type: 'str', render: e => valuacionChip(e.valuacion) },
+    { key: 'fair_value', label: 'Fair Value',  sortable: true, type: 'num', render: e => fmtPrice(e.fair_value) },
+    { key: 'dif_fv',     label: 'Dif %',       sortable: true, type: 'num', render: e => fmtPct(e.dif_fv),     cls: e => difClass(e.dif_fv) },
+    { key: 'estado_fv',  label: 'Estado',      sortable: true, type: 'str', render: e => estadoChip(e.estado_fv) },
   ];
 
   let state = null;
@@ -265,35 +294,12 @@
     return `<span class="ced-especie">${escapeHtml(label)}</span>`;
   }
 
-  function detailRow(e, colspan) {
-    const items = [
-      ['Precio USD', fmtPrice(e.precio_usd)],
-      ['Ratio', isNum(e.ratio) ? `${fmtNum2(e.ratio)}:1` : DASH],
-      ['Volumen', fmtInt(e.volumen)],
-      ['P/E', fmtMult(e.pe)],
-      ['P/E Fwd', fmtMult(e.pe_fwd)],
-      ['P/B', fmtMult(e.pb)],
-      ['EV/EBITDA', fmtMult(e.ev_ebitda)],
-      ['Mg Op %', fmtPctRaw(e.mg_op)],
-      ['Mg Net %', fmtPctRaw(e.mg_net)],
-      ['Div Yield %', fmtPctRaw(e.div_yield)],
-      ['Rec', isNum(e.rec) ? `${escapeHtml(String(e.rec))}/5${e.rec_label ? ' · ' + escapeHtml(e.rec_label) : ''}` : DASH],
-      ['vs Sector', e.vs_sector != null ? escapeHtml(String(e.vs_sector)) : DASH],
-      ['vs Hist', e.vs_hist != null ? escapeHtml(String(e.vs_hist)) : DASH],
-    ];
-    const cells = items.map(([l, v]) =>
-      `<div class="ced-detail-item"><span class="ced-detail-label">${escapeHtml(l)}</span><span class="ced-detail-value">${v}</span></div>`
-    ).join('');
-    return `<tr class="ced-detail-row" data-detail-for="${escapeHtml(especieKey(e))}"><td colspan="${colspan}"><div class="ced-detail-grid">${cells}</div></td></tr>`;
-  }
-
   function renderTable() {
     const rows = sortedFilteredRows();
-    const colspan = COLS.length + 2; // chevron + especie + cols
+    const colspan = COLS.length + 1; // especie + cols
 
     const head = `
-      <th class="ced-th-chevron"></th>
-      <th class="ced-th ced-sortable" data-sort="especie">Especie${sortArrow('especie')}</th>
+      <th class="ced-th ced-sortable ced-th-especie" data-sort="especie">Especie${sortArrow('especie')}</th>
       ${COLS.map(c => c.sortable
         ? `<th class="ced-th ced-sortable ${c.type === 'num' ? 'ced-num' : ''}" data-sort="${c.key}">${escapeHtml(c.label)}${sortArrow(c.key)}</th>`
         : `<th class="ced-th ${c.type === 'num' ? 'ced-num' : ''}">${escapeHtml(c.label)}</th>`
@@ -305,22 +311,16 @@
     } else {
       rows.forEach(e => {
         const key = especieKey(e);
-        const isOpen = state.expanded.has(key);
+        const cells = COLS.map(c => {
+          const extra = c.cls ? c.cls(e) : '';
+          const klass = `${c.type === 'num' ? 'ced-num' : ''}${extra ? ' ' + extra : ''}`.trim();
+          return `<td${klass ? ` class="${klass}"` : ''}>${c.render(e)}</td>`;
+        }).join('');
         body += `
-          <tr class="ced-row ${isOpen ? 'open' : ''}" data-especie="${escapeHtml(key)}">
-            <td class="ced-td-chevron"><span class="ced-chevron">▶</span></td>
+          <tr class="ced-row" data-especie="${escapeHtml(key)}">
             <td class="ced-td-especie">${especieCell(e)}</td>
-            <td>${escapeHtml(e.nombre || DASH)}</td>
-            <td>${escapeHtml(e.sector || DASH)}</td>
-            <td class="ced-num">${fmtPrice(e.precio_ars)}</td>
-            <td class="ced-num ${signClass(e.var)}">${fmtPct(e.var)}</td>
-            <td class="ced-num">${fmtPrice(e.ccl)}</td>
-            <td class="ced-num">${fmtPrice(e.fair_value)}</td>
-            <td class="ced-num ${difClass(e.dif_fv)}">${fmtPct(e.dif_fv)}</td>
-            <td>${estadoChip(e.estado_fv)}</td>
-            <td>${valuacionChip(e.valuacion)}</td>
+            ${cells}
           </tr>`;
-        if (isOpen) body += detailRow(e, colspan);
       });
     }
 
@@ -350,7 +350,7 @@
         ${renderKpis()}
         ${renderControls()}
         ${renderTable()}
-        <p class="ced-legend-note">Dif % negativa = cotiza por debajo del fair value (barato). Hacé clic en una fila para ver fundamentals.</p>
+        <p class="ced-legend-note">Dif % negativa = cotiza por debajo del fair value (barato). Rec.: semáforo del consenso de analistas (verde ≤2,5 comprar · rojo ≥3,5 vender). Deslizá la tabla para ver todas las columnas.</p>
       </div>`;
     wireEvents();
   }
@@ -395,17 +395,6 @@
           state.sortKey = key;
           state.sortDir = 'asc';
         }
-        rerenderTable();
-      });
-    });
-    // Expandir filas
-    state.container.querySelectorAll('.ced-row').forEach(row => {
-      row.addEventListener('click', (ev) => {
-        // No expandir si se hizo clic en el link de especie (navega)
-        if (ev.target.closest('.ced-especie-link')) return;
-        const key = row.dataset.especie;
-        if (state.expanded.has(key)) state.expanded.delete(key);
-        else state.expanded.add(key);
         rerenderTable();
       });
     });
