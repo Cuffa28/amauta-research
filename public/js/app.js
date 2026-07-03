@@ -12,6 +12,52 @@ let isAdmin = false;
 function getUrlInstrument() {
   return new URLSearchParams(location.search).get('inst') || null;
 }
+function getUrlView() {
+  return new URLSearchParams(location.search).get('view') || null;
+}
+
+// Puente para cedears.js (script global, no módulo): le pasamos config y navegación
+window.AmautaCedearsBridge = {
+  config: CFG,
+  navigate: (instId) => selectInstrument(instId, 0, true),
+};
+
+// -------------- Vista CEDEARs --------------
+let cedearsMounted = false;
+
+function showCedears(pushHistory = true) {
+  AmautaRenderer.destroyCharts();
+  document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('sidebarAdminEntry')?.classList.remove('active');
+  document.getElementById('cedearsNavEntry')?.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+
+  const topbar = document.getElementById('topbar');
+  if (topbar) topbar.style.display = 'none';
+
+  const welcome = document.getElementById('welcomeScreen');
+  if (welcome) welcome.remove();
+
+  if (pushHistory) history.pushState({ view: 'cedears' }, '', '?view=cedears');
+  active = null;
+
+  const content = document.getElementById('contentArea');
+  if (window.CedearsView) {
+    cedearsMounted = true;
+    window.CedearsView.mount(content);
+  } else {
+    content.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><h2>No disponible</h2><p>El módulo del Monitor CEDEARs no se cargó.</p></div>`;
+  }
+}
+
+// Desmonta la vista CEDEARs si está activa (limpia realtime, timers, listeners)
+function teardownCedears() {
+  if (cedearsMounted && window.CedearsView) {
+    try { window.CedearsView.unmount(); } catch (_) {}
+  }
+  cedearsMounted = false;
+  document.getElementById('cedearsNavEntry')?.classList.remove('active');
+}
 
 function pushUrlInstrument(id, tabIdx) {
   const params = new URLSearchParams();
@@ -31,11 +77,17 @@ function replaceUrlInstrument(id, tabIdx) {
 
 // Manejar botones atrás/adelante del browser
 window.addEventListener('popstate', (e) => {
+  const view = e.state?.view || getUrlView();
   const inst = e.state?.inst || getUrlInstrument();
+  if (view === 'cedears') {
+    showCedears(false);
+    return;
+  }
   if (inst) {
     selectInstrument(inst, e.state?.tab ?? 0, false);
   } else {
     // Volver a bienvenida
+    teardownCedears();
     AmautaRenderer.destroyCharts();
     document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
     const content = document.getElementById('contentArea');
@@ -67,6 +119,11 @@ async function init() {
   try {
     instruments = await AmautaDB.listInstruments();
     buildSidebar();
+    // Ruta especial: Monitor CEDEARs (antes de resolver instrumento)
+    if (getUrlView() === 'cedears') {
+      showCedears(false);
+      return;
+    }
     // Restaurar instrumento desde URL al cargar la página
     const instFromUrl = getUrlInstrument();
     const tabFromUrl  = parseInt(new URLSearchParams(location.search).get('tab') || '0', 10);
@@ -119,7 +176,12 @@ function buildSidebar() {
     (categories[inst.category] = categories[inst.category] || []).push(inst);
   });
   const orderedCats = order.filter(c => categories[c]).concat(Object.keys(categories).filter(c => !order.includes(c)));
-  let html = '';
+  // Entrada fija: Monitor CEDEARs (arriba de las categorías)
+  let html = `<div class="cedears-nav-entry ${cedearsMounted ? 'active' : ''}" id="cedearsNavEntry">
+      <span class="cedears-live-dot"></span>
+      <span class="ticker">Monitor</span>
+      <span class="inst-name">CEDEARs en vivo</span>
+    </div>`;
   orderedCats.forEach(cat => {
     html += `<div class="category open" id="cat-${cssId(cat)}">
       <div class="category-header">
@@ -143,6 +205,8 @@ function buildSidebar() {
   nav.querySelectorAll('.instrument-item').forEach(item => {
     item.addEventListener('click', () => selectInstrument(item.dataset.instId));
   });
+
+  nav.querySelector('#cedearsNavEntry')?.addEventListener('click', () => showCedears());
 
   const adminEntry = document.getElementById('sidebarAdminEntry');
   if (adminEntry) {
@@ -177,6 +241,7 @@ function filterInstruments() {
 
 // pushHistory=true cuando el usuario hace clic; false cuando se restaura desde URL/popstate
 async function selectInstrument(id, initialTab = 0, pushHistory = true) {
+  teardownCedears();
   AmautaRenderer.destroyCharts();
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
   document.querySelector(`.instrument-item[data-inst-id="${cssEscape(id)}"]`)?.classList.add('active');
@@ -299,6 +364,7 @@ function closeAdminModal() {
 
 // -------------- Home --------------
 function goHome() {
+  teardownCedears();
   AmautaRenderer.destroyCharts();
   active = null;
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
