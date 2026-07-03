@@ -116,15 +116,16 @@
     { key: 'fair_value', label: 'Fair Value',  group: 'Arbitraje CCL', def: true, type: 'num', render: e => fmtPrice(e.fair_value) },
     { key: 'dif_fv',     label: 'Dif %',       group: 'Arbitraje CCL', def: true, type: 'num', render: e => fmtPct(e.dif_fv),   cls: e => difClass(e.dif_fv) },
     { key: 'estado_fv',  label: 'Estado',      group: 'Arbitraje CCL', def: true, type: 'str', render: e => estadoChip(e.estado_fv) },
+    { key: 'semaforo',   label: 'Semáforo',    group: 'Señal',      def: true,  type: 'str', render: e => semaforoChip(e), sortVal: e => semaforoScore(e) },
   ];
 
-  const COL_GROUPS = ['General', 'Precios', 'Valuación', 'Consenso', 'Arbitraje CCL'];
+  const COL_GROUPS = ['General', 'Precios', 'Valuación', 'Consenso', 'Arbitraje CCL', 'Señal'];
   const COLS_STORAGE_KEY = 'amr:cedears:cols';
 
   // Presets rápidos: listas de keys visibles (Especie siempre va fija aparte).
   const COL_PRESETS = {
-    'Resumen':   ['nombre', 'sector', 'precio_ars', 'var', 'ccl', 'rec', 'valuacion', 'fair_value', 'dif_fv', 'estado_fv'],
-    'Valuación': ['nombre', 'sector', 'pe', 'pb', 'ev_ebitda', 'pe_fwd', 'div_yield', 'vs_sector', 'vs_hist', 'valuacion', 'rec', 'rec_label'],
+    'Resumen':   ['nombre', 'sector', 'precio_ars', 'var', 'ccl', 'rec', 'valuacion', 'fair_value', 'dif_fv', 'estado_fv', 'semaforo'],
+    'Valuación': ['nombre', 'sector', 'pe', 'pb', 'ev_ebitda', 'pe_fwd', 'div_yield', 'vs_sector', 'vs_hist', 'valuacion', 'rec', 'rec_label', 'semaforo'],
     'Precios':   ['nombre', 'sector', 'precio_usd', 'precio_ars', 'var', 'volumen', 'ratio', 'ccl', 'fair_value', 'dif_fv', 'estado_fv'],
     'Todo':      COLS.map(c => c.key),
   };
@@ -224,6 +225,33 @@
     };
     const cls = map[val] || 'ced-chip-gray';
     return `<span class="ced-chip ${cls}">${escapeHtml(val)}</span>`;
+  }
+
+  // Semáforo de acción — réplica exacta de la columna "Puntaje"/"Semáforo" del Excel.
+  // Puntaje = señal(Valuación) + señal(Estado) + señal(Rec):
+  //   Valuación: Barata +1 · Cara/Muy cara −1 · resto 0
+  //   Estado:    Barato +1 · Caro −1 · resto 0
+  //   Rec (1-5): ≤2 +1 · ≤3,5 0 · >3,5 −1  (si no es número: 0)
+  // Veredicto: ≥2 COMPRAR · ≤−2 REDUCIR · resto MONITOREAR. Nulo si faltan las tres señales.
+  function semaforoScore(e) {
+    const hasVal = e.valuacion != null && e.valuacion !== '';
+    const hasEst = e.estado_fv != null && e.estado_fv !== '';
+    const hasRec = isNum(e.rec);
+    if (!hasVal && !hasEst && !hasRec) return null;
+    let s = 0;
+    if (e.valuacion === 'Barata') s += 1;
+    else if (e.valuacion === 'Cara' || e.valuacion === 'Muy cara') s -= 1;
+    if (e.estado_fv === 'Barato') s += 1;
+    else if (e.estado_fv === 'Caro') s -= 1;
+    if (hasRec) { const n = Number(e.rec); s += n <= 2 ? 1 : n <= 3.5 ? 0 : -1; }
+    return s;
+  }
+  function semaforoChip(e) {
+    const s = semaforoScore(e);
+    if (s == null) return DASH;
+    const v = s >= 2 ? 'COMPRAR' : s <= -2 ? 'REDUCIR' : 'MONITOREAR';
+    const map = { 'COMPRAR': 'ced-sig-buy', 'REDUCIR': 'ced-sig-sell', 'MONITOREAR': 'ced-sig-hold' };
+    return `<span class="ced-sig ${map[v]}" title="Puntaje ${s}">${v}</span>`;
   }
 
   // -------------- KPIs --------------
@@ -337,9 +365,11 @@
     }
     const col = COLS.find(c => c.key === state.sortKey) || { type: 'num' };
     const dir = state.sortDir === 'asc' ? 1 : -1;
+    const getv = e => col.sortVal ? col.sortVal(e) : e[state.sortKey];
+    const numeric = col.type === 'num' || !!col.sortVal;
     rows.sort((a, b) => {
-      let av = a[state.sortKey], bv = b[state.sortKey];
-      if (col.type === 'num') {
+      let av = getv(a), bv = getv(b);
+      if (numeric) {
         const an = isNum(av) ? Number(av) : (dir === 1 ? Infinity : -Infinity);
         const bn = isNum(bv) ? Number(bv) : (dir === 1 ? Infinity : -Infinity);
         return (an - bn) * dir;
