@@ -121,6 +121,11 @@
 
   const COL_GROUPS = ['General', 'Precios', 'Valuación', 'Consenso', 'Arbitraje CCL', 'Señal'];
   const COLS_STORAGE_KEY = 'amr:cedears:cols';
+  // Versión del esquema de columnas. Al subirla, las columnas listadas en
+  // COLS_ADDED_BY_VERSION se agregan automáticamente a las selecciones ya guardadas
+  // (para que quien ya usó el selector vea las columnas nuevas sin re-elegir).
+  const COLS_SCHEMA_VERSION = 2;
+  const COLS_ADDED_BY_VERSION = { 2: ['semaforo'] };
 
   // Presets rápidos: listas de keys visibles (Especie siempre va fija aparte).
   const COL_PRESETS = {
@@ -137,15 +142,26 @@
     try {
       const raw = localStorage.getItem(COLS_STORAGE_KEY);
       if (!raw) return defaultVisibleCols();
-      const arr = JSON.parse(raw);
-      if (!Array.isArray(arr) || !arr.length) return defaultVisibleCols();
-      // sólo keys válidas y conocidas
+      const parsed = JSON.parse(raw);
+      // formato viejo = array de keys (v1); nuevo = { v, cols }
+      let arr, ver;
+      if (Array.isArray(parsed)) { arr = parsed; ver = 1; }
+      else { arr = parsed.cols || []; ver = parsed.v || 1; }
       const valid = arr.filter(k => COLS.some(c => c.key === k));
-      return valid.length ? new Set(valid) : defaultVisibleCols();
+      if (!valid.length) return defaultVisibleCols();
+      // migración: sumar columnas nuevas introducidas después de la versión guardada
+      for (let v = ver + 1; v <= COLS_SCHEMA_VERSION; v++) {
+        (COLS_ADDED_BY_VERSION[v] || []).forEach(k => {
+          if (!valid.includes(k) && COLS.some(c => c.key === k)) valid.push(k);
+        });
+      }
+      return new Set(valid);
     } catch { return defaultVisibleCols(); }
   }
   function saveVisibleCols(set) {
-    try { localStorage.setItem(COLS_STORAGE_KEY, JSON.stringify([...set])); } catch {}
+    try {
+      localStorage.setItem(COLS_STORAGE_KEY, JSON.stringify({ v: COLS_SCHEMA_VERSION, cols: [...set] }));
+    } catch {}
   }
   // Columnas visibles en el orden canónico de COLS.
   function visibleColList() {
