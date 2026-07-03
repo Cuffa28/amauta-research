@@ -914,6 +914,7 @@ body {
   background: var(--am-bordo); color: var(--am-white); border-color: var(--am-bordo);
   box-shadow: var(--shadow-bordo);
 }
+.ced-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ced-search { position: relative; flex: 0 1 260px; min-width: 180px; }
 .ced-search input {
   width: 100%; padding: 9px 12px 9px 34px;
@@ -924,13 +925,64 @@ body {
 .ced-search input:focus { border-color: var(--am-bordo); box-shadow: 0 0 0 3px rgba(98,16,68,0.06); }
 .ced-search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.4; }
 
+/* Selector de columnas */
+.ced-colpicker { position: relative; }
+.ced-cols-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 14px; border: 1.5px solid #e0e0e0; border-radius: 10px;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--am-gray-dark); background: var(--am-white);
+  cursor: pointer; transition: var(--transition); white-space: nowrap;
+}
+.ced-cols-btn:hover { border-color: var(--am-bordo); color: var(--am-bordo); }
+.ced-cols-btn.active { border-color: var(--am-bordo); color: var(--am-bordo); box-shadow: 0 0 0 3px rgba(98,16,68,0.06); }
+.ced-cols-ico { font-size: 13px; }
+.ced-cols-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 18px; padding: 0 5px; border-radius: 9px;
+  background: var(--am-bordo); color: var(--am-white); font-size: 10.5px; font-weight: 700;
+}
+.ced-colpanel {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 30;
+  width: 460px; max-width: min(92vw, 460px);
+  background: var(--am-white); border: 1px solid rgba(0,0,0,0.08); border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+  padding: 14px; display: none;
+}
+.ced-colpanel.open { display: block; animation: ced-pop 0.14s ease; }
+@keyframes ced-pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.ced-colpanel-head { margin-bottom: 12px; }
+.ced-colpanel-title, .ced-colgroup-title {
+  font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--am-gray-dark);
+}
+.ced-preset-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.ced-preset-btn {
+  padding: 5px 12px; border: 1.5px solid var(--am-bordo); border-radius: 999px;
+  background: var(--am-white); color: var(--am-bordo);
+  font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: var(--transition);
+}
+.ced-preset-btn:hover { background: var(--am-bordo); color: var(--am-white); }
+.ced-colpanel-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px;
+  border-top: 1px solid rgba(0,0,0,0.06); padding-top: 12px;
+}
+.ced-colgroup-title { margin-bottom: 5px; }
+.ced-colopt {
+  display: flex; align-items: center; gap: 7px; padding: 3px 0;
+  font-size: 12.5px; color: var(--am-pure-black); cursor: pointer;
+}
+.ced-colopt input { width: 15px; height: 15px; accent-color: var(--am-bordo); cursor: pointer; }
+.ced-colopt:hover { color: var(--am-bordo); }
+.ced-colpanel-note { margin-top: 12px; font-size: 11px; color: var(--am-gray); line-height: 1.4; }
+
 /* Tabla */
 .ced-table-wrap {
   background: var(--am-white); border-radius: var(--radius);
   box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.04);
   overflow-x: auto; -webkit-overflow-scrolling: touch;
 }
-.ced-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 1500px; }
+.ced-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
 .ced-table thead th {
   position: sticky; top: 0; z-index: 2;
   text-align: left; padding: 9px 11px;
@@ -993,6 +1045,10 @@ body {
   .ced-kpi { flex: 1 1 140px; min-width: 140px; padding: 13px 15px; }
   .ced-kpi-value { font-size: 20px; }
   .ced-controls { flex-direction: column; align-items: stretch; }
+  .ced-controls-right { flex-direction: column; align-items: stretch; }
   .ced-search { flex: 1 1 auto; }
+  .ced-cols-btn { justify-content: center; }
+  .ced-colpanel { right: auto; left: 0; width: 100%; max-width: 100%; }
+  .ced-colpanel-grid { grid-template-columns: 1fr; }
   .ced-detail-grid { grid-template-columns: 1fr 1fr; }
 }

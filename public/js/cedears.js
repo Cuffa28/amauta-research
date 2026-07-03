@@ -90,32 +90,66 @@
     'Salud', 'Industria', 'Energia', 'Materiales', 'Bancos', 'ETFs'];
 
   // Columnas del monitor — paridad con la hoja FULL del Excel. `render` devuelve el HTML
-  // de la celda; `cls` una clase extra según el valor (color). Todas ordenables.
+  // de la celda; `cls` una clase extra según el valor (color). `group` agrupa en el
+  // selector de columnas; `def` = visible por defecto. Todas ordenables.
   const COLS = [
-    { key: 'nombre',     label: 'Nombre',      sortable: true, type: 'str', render: e => escapeHtml(e.nombre || DASH) },
-    { key: 'sector',     label: 'Sector',      sortable: true, type: 'str', render: e => escapeHtml(e.sector || DASH) },
-    { key: 'precio_usd', label: 'Precio USD',  sortable: true, type: 'num', render: e => fmtPrice(e.precio_usd) },
-    { key: 'precio_ars', label: 'Precio ARS',  sortable: true, type: 'num', render: e => fmtPrice(e.precio_ars) },
-    { key: 'var',        label: 'Var %',       sortable: true, type: 'num', render: e => fmtPct(e.var),        cls: e => signClass(e.var) },
-    { key: 'volumen',    label: 'Volumen',     sortable: true, type: 'num', render: e => fmtInt(e.volumen) },
-    { key: 'ratio',      label: 'Ratio',       sortable: true, type: 'num', render: e => fmtNum2(e.ratio) },
-    { key: 'ccl',        label: 'CCL',         sortable: true, type: 'num', render: e => fmtPrice(e.ccl) },
-    { key: 'pe',         label: 'P/E',         sortable: true, type: 'num', render: e => fmtMult(e.pe) },
-    { key: 'pb',         label: 'P/B',         sortable: true, type: 'num', render: e => fmtMult(e.pb) },
-    { key: 'ev_ebitda',  label: 'EV/EBITDA',   sortable: true, type: 'num', render: e => fmtMult(e.ev_ebitda) },
-    { key: 'pe_fwd',     label: 'P/E Fwd',     sortable: true, type: 'num', render: e => fmtMult(e.pe_fwd) },
-    { key: 'mg_op',      label: 'Mg Op %',     sortable: true, type: 'num', render: e => fmtMargin(e.mg_op) },
-    { key: 'mg_net',     label: 'Mg Net %',    sortable: true, type: 'num', render: e => fmtMargin(e.mg_net) },
-    { key: 'div_yield',  label: 'Div Yield %', sortable: true, type: 'num', render: e => fmtDivY(e.div_yield) },
-    { key: 'vs_sector',  label: 'vs Sector',   sortable: true, type: 'num', render: e => fmtPct(e.vs_sector),  cls: e => difClass(e.vs_sector) },
-    { key: 'vs_hist',    label: 'vs Hist',     sortable: true, type: 'num', render: e => fmtPct(e.vs_hist),    cls: e => difClass(e.vs_hist) },
-    { key: 'rec',        label: 'Rec. (1-5)',  sortable: true, type: 'num', render: e => recSemaforo(e.rec, e.rec_label) },
-    { key: 'rec_label',  label: 'Consenso',    sortable: true, type: 'str', render: e => e.rec_label ? escapeHtml(e.rec_label) : DASH },
-    { key: 'valuacion',  label: 'Valuación',   sortable: true, type: 'str', render: e => valuacionChip(e.valuacion) },
-    { key: 'fair_value', label: 'Fair Value',  sortable: true, type: 'num', render: e => fmtPrice(e.fair_value) },
-    { key: 'dif_fv',     label: 'Dif %',       sortable: true, type: 'num', render: e => fmtPct(e.dif_fv),     cls: e => difClass(e.dif_fv) },
-    { key: 'estado_fv',  label: 'Estado',      sortable: true, type: 'str', render: e => estadoChip(e.estado_fv) },
+    { key: 'nombre',     label: 'Nombre',      group: 'General',    def: true,  type: 'str', render: e => escapeHtml(e.nombre || DASH) },
+    { key: 'sector',     label: 'Sector',      group: 'General',    def: true,  type: 'str', render: e => escapeHtml(e.sector || DASH) },
+    { key: 'precio_usd', label: 'Precio USD',  group: 'Precios',    def: false, type: 'num', render: e => fmtPrice(e.precio_usd) },
+    { key: 'precio_ars', label: 'Precio ARS',  group: 'Precios',    def: true,  type: 'num', render: e => fmtPrice(e.precio_ars) },
+    { key: 'var',        label: 'Var %',       group: 'Precios',    def: true,  type: 'num', render: e => fmtPct(e.var),        cls: e => signClass(e.var) },
+    { key: 'volumen',    label: 'Volumen',     group: 'Precios',    def: false, type: 'num', render: e => fmtInt(e.volumen) },
+    { key: 'ratio',      label: 'Ratio',       group: 'Precios',    def: false, type: 'num', render: e => fmtNum2(e.ratio) },
+    { key: 'ccl',        label: 'CCL',         group: 'Precios',    def: true,  type: 'num', render: e => fmtPrice(e.ccl) },
+    { key: 'pe',         label: 'P/E',         group: 'Valuación',  def: false, type: 'num', render: e => fmtMult(e.pe) },
+    { key: 'pb',         label: 'P/B',         group: 'Valuación',  def: false, type: 'num', render: e => fmtMult(e.pb) },
+    { key: 'ev_ebitda',  label: 'EV/EBITDA',   group: 'Valuación',  def: false, type: 'num', render: e => fmtMult(e.ev_ebitda) },
+    { key: 'pe_fwd',     label: 'P/E Fwd',     group: 'Valuación',  def: false, type: 'num', render: e => fmtMult(e.pe_fwd) },
+    { key: 'mg_op',      label: 'Mg Op %',     group: 'Valuación',  def: false, type: 'num', render: e => fmtMargin(e.mg_op) },
+    { key: 'mg_net',     label: 'Mg Net %',    group: 'Valuación',  def: false, type: 'num', render: e => fmtMargin(e.mg_net) },
+    { key: 'div_yield',  label: 'Div Yield %', group: 'Valuación',  def: false, type: 'num', render: e => fmtDivY(e.div_yield) },
+    { key: 'vs_sector',  label: 'vs Sector',   group: 'Valuación',  def: false, type: 'num', render: e => fmtPct(e.vs_sector),  cls: e => difClass(e.vs_sector) },
+    { key: 'vs_hist',    label: 'vs Hist',     group: 'Valuación',  def: false, type: 'num', render: e => fmtPct(e.vs_hist),    cls: e => difClass(e.vs_hist) },
+    { key: 'valuacion',  label: 'Valuación',   group: 'Valuación',  def: true,  type: 'str', render: e => valuacionChip(e.valuacion) },
+    { key: 'rec',        label: 'Rec. (1-5)',  group: 'Consenso',   def: true,  type: 'num', render: e => recSemaforo(e.rec, e.rec_label) },
+    { key: 'rec_label',  label: 'Consenso',    group: 'Consenso',   def: false, type: 'str', render: e => e.rec_label ? escapeHtml(e.rec_label) : DASH },
+    { key: 'fair_value', label: 'Fair Value',  group: 'Arbitraje CCL', def: true, type: 'num', render: e => fmtPrice(e.fair_value) },
+    { key: 'dif_fv',     label: 'Dif %',       group: 'Arbitraje CCL', def: true, type: 'num', render: e => fmtPct(e.dif_fv),   cls: e => difClass(e.dif_fv) },
+    { key: 'estado_fv',  label: 'Estado',      group: 'Arbitraje CCL', def: true, type: 'str', render: e => estadoChip(e.estado_fv) },
   ];
+
+  const COL_GROUPS = ['General', 'Precios', 'Valuación', 'Consenso', 'Arbitraje CCL'];
+  const COLS_STORAGE_KEY = 'amr:cedears:cols';
+
+  // Presets rápidos: listas de keys visibles (Especie siempre va fija aparte).
+  const COL_PRESETS = {
+    'Resumen':   ['nombre', 'sector', 'precio_ars', 'var', 'ccl', 'rec', 'valuacion', 'fair_value', 'dif_fv', 'estado_fv'],
+    'Valuación': ['nombre', 'sector', 'pe', 'pb', 'ev_ebitda', 'pe_fwd', 'div_yield', 'vs_sector', 'vs_hist', 'valuacion', 'rec', 'rec_label'],
+    'Precios':   ['nombre', 'sector', 'precio_usd', 'precio_ars', 'var', 'volumen', 'ratio', 'ccl', 'fair_value', 'dif_fv', 'estado_fv'],
+    'Todo':      COLS.map(c => c.key),
+  };
+
+  function defaultVisibleCols() {
+    return new Set(COLS.filter(c => c.def).map(c => c.key));
+  }
+  function loadVisibleCols() {
+    try {
+      const raw = localStorage.getItem(COLS_STORAGE_KEY);
+      if (!raw) return defaultVisibleCols();
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr) || !arr.length) return defaultVisibleCols();
+      // sólo keys válidas y conocidas
+      const valid = arr.filter(k => COLS.some(c => c.key === k));
+      return valid.length ? new Set(valid) : defaultVisibleCols();
+    } catch { return defaultVisibleCols(); }
+  }
+  function saveVisibleCols(set) {
+    try { localStorage.setItem(COLS_STORAGE_KEY, JSON.stringify([...set])); } catch {}
+  }
+  // Columnas visibles en el orden canónico de COLS.
+  function visibleColList() {
+    return COLS.filter(c => state.visibleCols.has(c.key));
+  }
 
   let state = null;
 
@@ -129,7 +163,8 @@
       search: '',
       sortKey: 'dif_fv',
       sortDir: 'asc',
-      expanded: new Set(),
+      visibleCols: loadVisibleCols(),
+      colPickerOpen: false,
       // recursos a limpiar
       unsubRealtime: null,
       pollTimer: null,
@@ -242,9 +277,47 @@
     return `
       <div class="ced-controls">
         <div class="ced-sector-chips">${chips}</div>
-        <div class="ced-search">
-          <span class="ced-search-icon">🔍</span>
-          <input type="text" id="cedSearch" placeholder="Buscar especie o nombre…" value="${escapeHtml(state.search)}">
+        <div class="ced-controls-right">
+          <div class="ced-search">
+            <span class="ced-search-icon">🔍</span>
+            <input type="text" id="cedSearch" placeholder="Buscar especie o nombre…" value="${escapeHtml(state.search)}">
+          </div>
+          ${renderColPicker()}
+        </div>
+      </div>`;
+  }
+
+  // -------------- Selector de columnas --------------
+  function renderColPicker() {
+    const count = visibleColList().length;
+    const presetBtns = Object.keys(COL_PRESETS).map(name =>
+      `<button class="ced-preset-btn" data-preset="${escapeHtml(name)}">${escapeHtml(name)}</button>`
+    ).join('');
+
+    const groups = COL_GROUPS.map(g => {
+      const items = COLS.filter(c => c.group === g).map(c => {
+        const on = state.visibleCols.has(c.key);
+        return `
+          <label class="ced-colopt">
+            <input type="checkbox" data-col="${escapeHtml(c.key)}" ${on ? 'checked' : ''}>
+            <span>${escapeHtml(c.label)}</span>
+          </label>`;
+      }).join('');
+      return `<div class="ced-colgroup"><div class="ced-colgroup-title">${escapeHtml(g)}</div>${items}</div>`;
+    }).join('');
+
+    return `
+      <div class="ced-colpicker">
+        <button class="ced-cols-btn ${state.colPickerOpen ? 'active' : ''}" id="cedColsBtn" aria-expanded="${state.colPickerOpen}">
+          <span class="ced-cols-ico">▦</span> Columnas <span class="ced-cols-count">${count}</span>
+        </button>
+        <div class="ced-colpanel ${state.colPickerOpen ? 'open' : ''}" id="cedColPanel">
+          <div class="ced-colpanel-head">
+            <span class="ced-colpanel-title">Vistas rápidas</span>
+            <div class="ced-preset-row">${presetBtns}</div>
+          </div>
+          <div class="ced-colpanel-grid">${groups}</div>
+          <div class="ced-colpanel-note">La columna <b>Especie</b> queda siempre fija. Tu selección se recuerda en este navegador.</div>
         </div>
       </div>`;
   }
@@ -296,11 +369,12 @@
 
   function renderTable() {
     const rows = sortedFilteredRows();
-    const colspan = COLS.length + 1; // especie + cols
+    const cols = visibleColList();
+    const colspan = cols.length + 1; // especie + cols visibles
 
     const head = `
       <th class="ced-th ced-sortable ced-th-especie" data-sort="especie">Especie${sortArrow('especie')}</th>
-      ${COLS.map(c => c.sortable
+      ${cols.map(c => c.sortable
         ? `<th class="ced-th ced-sortable ${c.type === 'num' ? 'ced-num' : ''}" data-sort="${c.key}">${escapeHtml(c.label)}${sortArrow(c.key)}</th>`
         : `<th class="ced-th ${c.type === 'num' ? 'ced-num' : ''}">${escapeHtml(c.label)}</th>`
       ).join('')}`;
@@ -311,7 +385,7 @@
     } else {
       rows.forEach(e => {
         const key = especieKey(e);
-        const cells = COLS.map(c => {
+        const cells = cols.map(c => {
           const extra = c.cls ? c.cls(e) : '';
           const klass = `${c.type === 'num' ? 'ced-num' : ''}${extra ? ' ' + extra : ''}`.trim();
           return `<td${klass ? ` class="${klass}"` : ''}>${c.render(e)}</td>`;
@@ -350,7 +424,7 @@
         ${renderKpis()}
         ${renderControls()}
         ${renderTable()}
-        <p class="ced-legend-note">Dif % negativa = cotiza por debajo del fair value (barato). Rec.: semáforo del consenso de analistas (verde ≤2,5 comprar · rojo ≥3,5 vender). Deslizá la tabla para ver todas las columnas.</p>
+        <p class="ced-legend-note">Dif % negativa = cotiza por debajo del fair value (barato). Rec.: semáforo del consenso de analistas (verde ≤2,5 comprar · rojo ≥3,5 vender). Usá <b>Columnas</b> para elegir qué mostrar (P/E, márgenes, vs Sector, etc.).</p>
       </div>`;
     wireEvents();
   }
@@ -381,7 +455,60 @@
         rerenderTable();
       });
     }
+    wireColPicker();
     wireTableEvents();
+  }
+
+  function wireColPicker() {
+    const btn = state.container.querySelector('#cedColsBtn');
+    const panel = state.container.querySelector('#cedColPanel');
+    if (!btn || !panel) return;
+
+    // Abrir/cerrar (sin re-render, para no perder scroll)
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      state.colPickerOpen = !state.colPickerOpen;
+      panel.classList.toggle('open', state.colPickerOpen);
+      btn.classList.toggle('active', state.colPickerOpen);
+      btn.setAttribute('aria-expanded', String(state.colPickerOpen));
+    });
+    // Clic dentro del panel no lo cierra
+    panel.addEventListener('click', (ev) => ev.stopPropagation());
+
+    // Checkboxes: activar/desactivar columna
+    panel.querySelectorAll('input[data-col]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const key = cb.dataset.col;
+        if (cb.checked) state.visibleCols.add(key);
+        else state.visibleCols.delete(key);
+        // No permitir dejar la tabla sin ninguna columna
+        if (state.visibleCols.size === 0) { state.visibleCols.add(key); cb.checked = true; return; }
+        saveVisibleCols(state.visibleCols);
+        updateColCount();
+        rerenderTable();
+      });
+    });
+
+    // Presets
+    panel.querySelectorAll('.ced-preset-btn').forEach(pb => {
+      pb.addEventListener('click', () => {
+        const preset = COL_PRESETS[pb.dataset.preset];
+        if (!preset) return;
+        state.visibleCols = new Set(preset);
+        saveVisibleCols(state.visibleCols);
+        // reflejar en los checkboxes sin rebuild completo
+        panel.querySelectorAll('input[data-col]').forEach(cb => {
+          cb.checked = state.visibleCols.has(cb.dataset.col);
+        });
+        updateColCount();
+        rerenderTable();
+      });
+    });
+  }
+
+  function updateColCount() {
+    const el = state.container && state.container.querySelector('.ced-cols-count');
+    if (el) el.textContent = String(visibleColList().length);
   }
 
   function wireTableEvents() {
@@ -504,6 +631,18 @@
       return;
     }
 
+    // Cerrar el panel de columnas al hacer clic afuera
+    state.docClickHandler = (ev) => {
+      if (!state || !state.colPickerOpen) return;
+      if (ev.target.closest && ev.target.closest('.ced-colpicker')) return;
+      state.colPickerOpen = false;
+      const panel = state.container && state.container.querySelector('#cedColPanel');
+      const btn = state.container && state.container.querySelector('#cedColsBtn');
+      if (panel) panel.classList.remove('open');
+      if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
+    };
+    document.addEventListener('click', state.docClickHandler);
+
     // Realtime + polling
     state.unsubRealtime = subscribeParamsRealtime();
     startPolling();
@@ -516,6 +655,7 @@
     clearInterval(state.pollTimer);
     clearTimeout(state.refetchTimer);
     if (state.visibilityHandler) document.removeEventListener('visibilitychange', state.visibilityHandler);
+    if (state.docClickHandler) document.removeEventListener('click', state.docClickHandler);
     state = null;
   }
 
