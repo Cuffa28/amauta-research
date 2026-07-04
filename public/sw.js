@@ -1,4 +1,4 @@
-const CACHE = 'amauta-research-v10';
+const CACHE = 'amauta-research-v11';
 const SHELL = ['/', '/index.html', '/css/styles.css', '/js/config.js', '/js/supabase-client.js', '/js/renderer.js', '/js/admin.js', '/js/cedears.js', '/js/app.js', '/manifest.json', '/icon.svg'];
 
 self.addEventListener('install', e => {
