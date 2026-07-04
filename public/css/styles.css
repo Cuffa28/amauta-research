@@ -1073,6 +1073,91 @@ body {
 .ced-dt-research:hover { border-bottom-style: solid; }
 
 .ced-legend-note { font-size: 11px; color: var(--am-gray); margin-top: 12px; font-style: italic; }
+.ced-st-sub { font-size: 11px; color: var(--am-gray); font-weight: 400; }
+
+/* Vista Noticias Reuters */
+.news-nav-ico { font-size: 13px; flex-shrink: 0; }
+.nw-view { max-width: 900px; }
+.nw-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.nw-select {
+  padding: 9px 12px; border: 1.5px solid #e8e8e8; border-radius: 10px;
+  font-family: inherit; font-size: 13px; font-weight: 600; color: var(--am-pure-black);
+  background: var(--am-white); outline: none; cursor: pointer; min-width: 130px;
+}
+.nw-select:focus { border-color: var(--am-bordo); }
+.nw-list {
+  background: var(--am-white); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.04);
+}
+.nw-item { padding: 13px 18px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.nw-item:last-child { border-bottom: none; }
+.nw-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.nw-especie {
+  display: inline-block; padding: 2px 9px; border-radius: 6px;
+  background: rgba(98,16,68,0.09); color: var(--am-bordo);
+  font-size: 11px; font-weight: 800; text-decoration: none; letter-spacing: 0.4px;
+}
+.nw-especie:hover { background: var(--am-bordo); color: var(--am-white); }
+.nw-time { font-size: 11px; color: var(--am-gray); font-weight: 600; }
+.nw-source { font-size: 10px; color: var(--am-gray); text-transform: uppercase; letter-spacing: 0.4px; }
+.nw-headline { font-size: 14px; color: var(--am-pure-black); line-height: 1.45; }
+.nw-empty { padding: 30px 18px; text-align: center; color: var(--am-gray); font-style: italic; }
+
+/* Comparador de especies */
+.ced-th-cmp, .ced-td-cmp { width: 34px; text-align: center; }
+.ced-cmp-check { width: 15px; height: 15px; accent-color: var(--am-bordo); cursor: pointer; }
+.ced-cmp-bar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  background: rgba(98,16,68,0.05); border: 1px dashed rgba(98,16,68,0.3);
+  border-radius: 12px; padding: 10px 14px; margin-bottom: 14px;
+}
+.ced-cmp-bar-label { font-size: 12px; font-weight: 800; color: var(--am-bordo); text-transform: uppercase; letter-spacing: 0.5px; }
+.ced-cmp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--am-bordo); color: var(--am-white);
+  border-radius: 999px; padding: 4px 6px 4px 12px; font-size: 12.5px; font-weight: 700;
+}
+.ced-cmp-chip-x {
+  border: none; background: rgba(255,255,255,0.2); color: var(--am-white);
+  width: 17px; height: 17px; border-radius: 50%; font-size: 9px; cursor: pointer; line-height: 1;
+}
+.ced-cmp-chip-x:hover { background: rgba(255,255,255,0.4); }
+.ced-cmp-hint { font-size: 12px; color: var(--am-gray); font-style: italic; }
+.ced-cmp-go {
+  margin-left: auto; padding: 7px 16px; border: none; border-radius: 8px;
+  background: var(--am-yellow); color: var(--am-pure-black);
+  font-family: inherit; font-size: 13px; font-weight: 800; cursor: pointer; transition: var(--transition);
+}
+.ced-cmp-go:hover:not(:disabled) { filter: brightness(0.95); }
+.ced-cmp-go:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.ced-cmp-panel {
+  background: var(--am-white); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.04);
+  padding: 18px 22px;
+}
+.ced-cmp-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.ced-cmp-title { font-size: 17px; font-weight: 800; color: var(--am-pure-black); }
+.ced-cmp-title span { color: var(--am-bordo); }
+.ced-cmp-close {
+  border: 1.5px solid #e0e0e0; background: var(--am-white); color: var(--am-gray-dark);
+  border-radius: 8px; padding: 5px 12px; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
+}
+.ced-cmp-close:hover { border-color: var(--am-red); color: var(--am-red); }
+.ced-cmp-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+.ced-cmp-leg { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; }
+.ced-cmp-leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+.ced-cmp-chart { position: relative; height: 320px; margin-bottom: 16px; }
+.ced-cmp-tablewrap { overflow-x: auto; }
+.ced-cmpt { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ced-cmpt th {
+  text-align: right; padding: 8px 12px; background: var(--am-bordo); color: var(--am-white);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.ced-cmpt th:first-child { text-align: left; }
+.ced-cmpt td { padding: 7px 12px; border-bottom: 1px solid rgba(0,0,0,0.05); text-align: right; font-variant-numeric: tabular-nums; }
+.ced-cmpt-label { text-align: left !important; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--am-gray-dark); }
+.ced-cmpt tr:nth-child(even) td { background: rgba(0,0,0,0.015); }
 
 @media (max-width: 900px) {
   .ced-detail { width: calc(100vw - 40px); }
@@ -1090,4 +1175,55 @@ body {
   .ced-colpanel { right: auto; left: 0; width: 100%; max-width: 100%; }
   .ced-colpanel-grid { grid-template-columns: 1fr; }
   .ced-chart-box { height: 240px; }
+}
+
+/* ============ Export PDF del Monitor CEDEARs (print) ============ */
+#cedPrint { display: none; }
+
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body > *:not(#cedPrint) { display: none !important; }
+  body { background: #fff !important; }
+  #cedPrint { display: block; font-family: 'Fira Sans', Arial, sans-serif; color: #000; }
+
+  .cp-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    border-bottom: 3px solid #F3CF11; padding-bottom: 10px; margin-bottom: 12px;
+  }
+  .cp-logo { height: 42px; width: auto; }
+  .cp-title { text-align: right; }
+  .cp-title h1 { font-size: 20px; font-weight: 800; color: #231F20; margin: 0; }
+  .cp-sub { font-size: 10.5px; color: #58585A; margin-top: 2px; }
+
+  .cp-table { width: 100%; border-collapse: collapse; font-size: 8.5px; }
+  .cp-table th {
+    background: #231F20 !important; color: #fff !important;
+    padding: 4px 6px; text-align: left; font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.4px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .cp-table th.num { text-align: right; }
+  .cp-table td { padding: 3px 6px; border-bottom: 0.5pt solid #ddd; white-space: nowrap; }
+  .cp-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .cp-table td.esp, .cp-table th.esp { font-weight: 800; }
+  .cp-table tr:nth-child(even) td { background: #F6F5F3 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .cp-table thead { display: table-header-group; }
+  .cp-table tr { page-break-inside: avoid; }
+
+  /* colores semánticos en impresión */
+  #cedPrint .ced-up   { color: #1e7e34 !important; font-weight: 700; }
+  #cedPrint .ced-down { color: #C0392B !important; font-weight: 700; }
+  #cedPrint .ced-chip, #cedPrint .ced-sig {
+    background: none !important; color: #231F20 !important;
+    border: 0.5pt solid #999; border-radius: 3px; padding: 0 4px; font-size: 7.5px; font-weight: 700;
+  }
+  #cedPrint .ced-sig-buy  { border-color: #1e7e34; color: #1e7e34 !important; }
+  #cedPrint .ced-sig-sell { border-color: #C0392B; color: #C0392B !important; }
+  #cedPrint .ced-chip-green  { border-color: #1e7e34; color: #1e7e34 !important; }
+  #cedPrint .ced-chip-red    { border-color: #C0392B; color: #C0392B !important; }
+  #cedPrint .ced-chip-orange { border-color: #b45309; color: #b45309 !important; }
+  #cedPrint .ced-sem-dot { display: inline-block; }
+
+  .cp-foot { margin-top: 12px; border-top: 0.5pt solid #ccc; padding-top: 8px; }
+  .cp-disclaimer { font-size: 7px; color: #666; line-height: 1.45; margin: 0 0 4px; }
+  .cp-brand { font-size: 8px; font-weight: 700; color: #621044; margin: 0; }
 }

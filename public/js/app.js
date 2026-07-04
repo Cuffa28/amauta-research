@@ -26,6 +26,7 @@ window.AmautaCedearsBridge = {
 let cedearsMounted = false;
 
 function showCedears(pushHistory = true) {
+  teardownNews();
   AmautaRenderer.destroyCharts();
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
   document.getElementById('sidebarAdminEntry')?.classList.remove('active');
@@ -59,6 +60,43 @@ function teardownCedears() {
   document.getElementById('cedearsNavEntry')?.classList.remove('active');
 }
 
+// -------------- Vista Noticias --------------
+let newsMounted = false;
+
+function showNews(pushHistory = true) {
+  teardownCedears();
+  AmautaRenderer.destroyCharts();
+  document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('sidebarAdminEntry')?.classList.remove('active');
+  document.getElementById('newsNavEntry')?.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+
+  const topbar = document.getElementById('topbar');
+  if (topbar) topbar.style.display = 'none';
+
+  const welcome = document.getElementById('welcomeScreen');
+  if (welcome) welcome.remove();
+
+  if (pushHistory) history.pushState({ view: 'news' }, '', '?view=news');
+  active = null;
+
+  const content = document.getElementById('contentArea');
+  if (window.NewsView) {
+    newsMounted = true;
+    window.NewsView.mount(content);
+  } else {
+    content.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><h2>No disponible</h2><p>El módulo de Noticias no se cargó.</p></div>`;
+  }
+}
+
+function teardownNews() {
+  if (newsMounted && window.NewsView) {
+    try { window.NewsView.unmount(); } catch (_) {}
+  }
+  newsMounted = false;
+  document.getElementById('newsNavEntry')?.classList.remove('active');
+}
+
 function pushUrlInstrument(id, tabIdx) {
   const params = new URLSearchParams();
   if (id) params.set('inst', id);
@@ -83,11 +121,16 @@ window.addEventListener('popstate', (e) => {
     showCedears(false);
     return;
   }
+  if (view === 'news') {
+    showNews(false);
+    return;
+  }
   if (inst) {
     selectInstrument(inst, e.state?.tab ?? 0, false);
   } else {
     // Volver a bienvenida
     teardownCedears();
+    teardownNews();
     AmautaRenderer.destroyCharts();
     document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
     const content = document.getElementById('contentArea');
@@ -119,9 +162,13 @@ async function init() {
   try {
     instruments = await AmautaDB.listInstruments();
     buildSidebar();
-    // Ruta especial: Monitor CEDEARs (antes de resolver instrumento)
+    // Rutas especiales: Monitor CEDEARs / Noticias (antes de resolver instrumento)
     if (getUrlView() === 'cedears') {
       showCedears(false);
+      return;
+    }
+    if (getUrlView() === 'news') {
+      showNews(false);
       return;
     }
     // Restaurar instrumento desde URL al cargar la página
@@ -176,11 +223,16 @@ function buildSidebar() {
     (categories[inst.category] = categories[inst.category] || []).push(inst);
   });
   const orderedCats = order.filter(c => categories[c]).concat(Object.keys(categories).filter(c => !order.includes(c)));
-  // Entrada fija: Monitor CEDEARs (arriba de las categorías)
+  // Entradas fijas: Monitor CEDEARs + Noticias (arriba de las categorías)
   let html = `<div class="cedears-nav-entry ${cedearsMounted ? 'active' : ''}" id="cedearsNavEntry">
       <span class="cedears-live-dot"></span>
       <span class="ticker">Monitor</span>
       <span class="inst-name">CEDEARs en vivo</span>
+    </div>
+    <div class="cedears-nav-entry ${newsMounted ? 'active' : ''}" id="newsNavEntry">
+      <span class="news-nav-ico">📰</span>
+      <span class="ticker">Noticias</span>
+      <span class="inst-name">Reuters · universo CEDEARs</span>
     </div>`;
   orderedCats.forEach(cat => {
     html += `<div class="category open" id="cat-${cssId(cat)}">
@@ -207,6 +259,7 @@ function buildSidebar() {
   });
 
   nav.querySelector('#cedearsNavEntry')?.addEventListener('click', () => showCedears());
+  nav.querySelector('#newsNavEntry')?.addEventListener('click', () => showNews());
 
   const adminEntry = document.getElementById('sidebarAdminEntry');
   if (adminEntry) {
@@ -242,6 +295,7 @@ function filterInstruments() {
 // pushHistory=true cuando el usuario hace clic; false cuando se restaura desde URL/popstate
 async function selectInstrument(id, initialTab = 0, pushHistory = true) {
   teardownCedears();
+  teardownNews();
   AmautaRenderer.destroyCharts();
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
   document.querySelector(`.instrument-item[data-inst-id="${cssEscape(id)}"]`)?.classList.add('active');
@@ -365,6 +419,7 @@ function closeAdminModal() {
 // -------------- Home --------------
 function goHome() {
   teardownCedears();
+  teardownNews();
   AmautaRenderer.destroyCharts();
   active = null;
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
