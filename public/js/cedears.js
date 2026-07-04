@@ -522,11 +522,13 @@
     const canvas = state.container.querySelector(`#cedChart-${cssEscape(key)}`);
     if (!canvas || typeof Chart === 'undefined') return;
     const full = state.seriesCache[key] || [];
-    const data = full.slice(-periodDays(state.detailPeriod));
     const moneda = state.detailMoneda;
     const pk = moneda === 'USD' ? 'close_usd' : 'close_ars';
+    // Solo días con precio en la moneda elegida: evita los huecos que aparecen cuando
+    // BYMA y NYSE tienen feriados distintos (una serie queda en null ese día).
+    const data = full.filter(d => isNum(d[pk])).slice(-periodDays(state.detailPeriod));
     const labels = data.map(d => d.fecha);
-    const prices = data.map(d => (isNum(d[pk]) ? Number(d[pk]) : null));
+    const prices = data.map(d => Number(d[pk]));
     const vols = data.map(d => (isNum(d.vol_ars) ? Number(d.vol_ars) : null));
     const maxVol = vols.reduce((m, v) => (v != null && v > m ? v : m), 0);
 
@@ -539,7 +541,7 @@
           {
             type: 'line', label: `Precio ${moneda}`, data: prices, yAxisID: 'y',
             borderColor: BORDO, backgroundColor: 'rgba(98,16,68,0.08)',
-            borderWidth: 2, pointRadius: 0, tension: 0.25, fill: true, order: 1,
+            borderWidth: 2, pointRadius: 0, tension: 0.25, fill: true, order: 1, spanGaps: true,
           },
           {
             type: 'bar', label: 'Volumen', data: vols, yAxisID: 'yv',
