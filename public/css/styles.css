@@ -914,7 +914,7 @@ body {
   background: var(--am-bordo); color: var(--am-white); border-color: var(--am-bordo);
   box-shadow: var(--shadow-bordo);
 }
-.ced-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ced-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-left: auto; justify-content: flex-end; }
 .ced-search { position: relative; flex: 0 1 260px; min-width: 180px; }
 .ced-search input {
   width: 100%; padding: 9px 12px 9px 34px;
