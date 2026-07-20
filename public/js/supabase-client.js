@@ -5,9 +5,11 @@ const REST  = `${cfg.SUPABASE_URL}/rest/v1`;
 const FN    = `${cfg.SUPABASE_URL}/functions/v1`;
 const AUTH  = `${cfg.SUPABASE_URL}/auth/v1`;
 const CACHE_TTL = 60 * 60 * 1000;
+const SESSION_KEY = 'amauta:session';
 
-// Sesión en memoria — nunca en localStorage
-let _session = null;
+// Sesión persistida en localStorage (portal de equipo — login por código de email)
+let _session = restoreSession();
+let _member  = null; // { email, role: 'admin' | 'member' }
 
 const BASE_HEADERS = {
   apikey: cfg.SUPABASE_KEY,
@@ -22,29 +24,153 @@ function getHeaders() {
   };
 }
 
-// -------------- Auth --------------
-export async function signIn(email, password) {
-  const r = await fetch(`${AUTH}/token?grant_type=password`, {
+// -------------- Persistencia de sesión --------------
+function restoreSession() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (!s?.access_token || !s?.refresh_token) return null;
+    return s;
+  } catch { return null; }
+}
+
+function persistSession(s) {
+  _session = s;
+  try {
+    if (s) localStorage.setItem(SESSION_KEY, JSON.stringify(s));
+    else localStorage.removeItem(SESSION_KEY);
+  } catch {}
+}
+
+function decodeJwt(token) {
+  try {
+    return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+  } catch { return {}; }
+}
+function decodeExp(token) {
+  return (decodeJwt(token).exp || 0) * 1000;
+}
+function sessionEmail() {
+  if (_session?.email) return _session.email;
+  if (_session?.access_token) return decodeJwt(_session.access_token).email || null;
+  return null;
+}
+
+// -------------- Auth: OTP por email (código de 6 dígitos / magic link) --------------
+export async function sendOtp(email) {
+  const r = await fetch(`${AUTH}/otp`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', apikey: cfg.SUPABASE_KEY },
-    body: JSON.stringify({ email, password }),
+    // create_user: true → el equipo puede loguear la primera vez sin alta previa;
+    // el acceso real se controla contra la allowlist team_members tras verificar.
+    body: JSON.stringify({ email, create_user: true }),
   });
-  const data = await r.json();
-  if (!r.ok) throw new Error(data.error_description || data.msg || 'Credenciales incorrectas');
-  _session = { access_token: data.access_token, refresh_token: data.refresh_token };
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error_description || data.msg || data.error || 'No se pudo enviar el código');
   return data;
 }
 
-export async function signOut() {
-  if (!_session?.access_token) return;
-  await fetch(`${AUTH}/logout`, {
+export async function verifyOtp(email, token) {
+  const r = await fetch(`${AUTH}/verify`, {
     method: 'POST',
-    headers: { ...BASE_HEADERS, Authorization: `Bearer ${_session.access_token}` },
-  }).catch(() => {});
-  _session = null;
+    headers: { 'Content-Type': 'application/json', apikey: cfg.SUPABASE_KEY },
+    body: JSON.stringify({ email, token: token.trim(), type: 'email' }),
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok || !data.access_token) {
+    throw new Error(data.error_description || data.msg || data.error || 'Código inválido o expirado');
+  }
+  persistSession({
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+    expires_at: decodeExp(data.access_token),
+    email: data.user?.email || email,
+  });
+  return data;
+}
+
+// Captura una sesión que llega por el hash de la URL (magic link de email).
+// Supabase redirige a #access_token=...&refresh_token=...&type=magiclink
+export function captureHashSession() {
+  try {
+    if (!location.hash || location.hash.indexOf('access_token') === -1) return false;
+    const p = new URLSearchParams(location.hash.slice(1));
+    const access_token = p.get('access_token');
+    const refresh_token = p.get('refresh_token');
+    if (!access_token || !refresh_token) return false;
+    persistSession({
+      access_token,
+      refresh_token,
+      expires_at: decodeExp(access_token),
+      email: null, // se completa vía getTeamMember() con el JWT
+    });
+    // Limpiar el hash para no dejar tokens en la URL
+    history.replaceState(null, '', location.pathname + location.search);
+    return true;
+  } catch { return false; }
+}
+
+async function refreshSession() {
+  if (!_session?.refresh_token) return null;
+  const r = await fetch(`${AUTH}/token?grant_type=refresh_token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', apikey: cfg.SUPABASE_KEY },
+    body: JSON.stringify({ refresh_token: _session.refresh_token }),
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok || !data.access_token) { persistSession(null); return null; }
+  persistSession({
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+    expires_at: decodeExp(data.access_token),
+    email: data.user?.email || _session.email,
+  });
+  return _session;
+}
+
+// Devuelve una sesión válida (refresca si está por expirar), o null.
+export async function ensureSession() {
+  if (!_session?.access_token) return null;
+  const exp = _session.expires_at || decodeExp(_session.access_token);
+  if (exp && Date.now() > exp - 60 * 1000) {
+    return await refreshSession();
+  }
+  return _session;
+}
+
+// Valida contra la allowlist del equipo. Devuelve { email, role } o null si no autorizado.
+export async function getTeamMember() {
+  if (!_session?.access_token) return null;
+  const email = sessionEmail();
+  if (!email) return null;
+  if (!_session.email) { _session.email = email; persistSession(_session); }
+  try {
+    const r = await fetch(
+      `${REST}/team_members?select=email,role,active&email=eq.${encodeURIComponent(email)}&active=eq.true`,
+      { headers: getHeaders() }
+    );
+    if (!r.ok) return null;
+    const rows = await r.json();
+    _member = rows[0] ? { email: rows[0].email, role: rows[0].role || 'member' } : null;
+    return _member;
+  } catch { return null; }
+}
+
+export async function signOut() {
+  if (_session?.access_token) {
+    await fetch(`${AUTH}/logout`, {
+      method: 'POST',
+      headers: { ...BASE_HEADERS, Authorization: `Bearer ${_session.access_token}` },
+    }).catch(() => {});
+  }
+  persistSession(null);
+  _member = null;
+  clearCache();
 }
 
 export function getSession() { return _session; }
+export function getMember() { return _member; }
 
 // -------------- Caché localStorage --------------
 function cacheGet(key) {
@@ -189,6 +315,6 @@ export function subscribeRealtime() {
 export const AmautaDB = {
   listInstruments, getInstrument, getBlocks,
   adminWrite, clearCache,
-  signIn, signOut, getSession,
+  sendOtp, verifyOtp, captureHashSession, ensureSession, getTeamMember, signOut, getSession, getMember,
   onInstrumentsChanged, offInstrumentsChanged, subscribeRealtime,
 };

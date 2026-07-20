@@ -1,5 +1,8 @@
 import { AMAUTA_CONFIG } from './config.js';
-import { AmautaDB, signIn, signOut, clearCache, subscribeRealtime, onInstrumentsChanged } from './supabase-client.js';
+import {
+  AmautaDB, sendOtp, verifyOtp, captureHashSession, ensureSession, getTeamMember, signOut,
+  clearCache, subscribeRealtime, onInstrumentsChanged,
+} from './supabase-client.js';
 import { AmautaRenderer } from './renderer.js';
 import { AmautaAdmin } from './admin.js';
 
@@ -7,6 +10,9 @@ const CFG = AMAUTA_CONFIG;
 let instruments = [];
 let active = null;
 let isAdmin = false;
+let member = null;
+let appStarted = false;
+let realtimeStarted = false;
 
 // -------------- URL routing --------------
 function getUrlInstrument() {
@@ -22,11 +28,123 @@ window.AmautaCedearsBridge = {
   navigate: (instId) => selectInstrument(instId, 0, true),
 };
 
-// -------------- Vista CEDEARs --------------
+// =============================================================
+//  AUTH / GATE (login de equipo por código de email)
+// =============================================================
+async function bootstrap() {
+  wireLoginHandlers();
+  wireMobileMenu();
+  wireStaticHandlers();
+
+  // Si venimos de un magic link de email, capturar la sesión del hash de la URL.
+  captureHashSession();
+
+  try {
+    const s = await ensureSession();
+    if (s) {
+      const m = await getTeamMember();
+      if (m) { enterApp(m); return; }
+      await signOut();
+      showLogin('Tu correo no está autorizado para este portal. Escribí a tu administrador.');
+      return;
+    }
+  } catch (_) { /* cae a login */ }
+  showLogin();
+}
+
+function showLogin(errorMsg) {
+  document.body.classList.remove('authed');
+  resetLoginToEmail();
+  const err = document.getElementById('loginError');
+  if (errorMsg) { err.textContent = errorMsg; err.style.display = 'block'; }
+  document.getElementById('loginEmail')?.focus();
+}
+
+let _pendingEmail = '';
+function resetLoginToEmail() {
+  _pendingEmail = '';
+  document.getElementById('loginStepEmail').style.display = '';
+  document.getElementById('loginStepCode').style.display = 'none';
+  document.getElementById('loginSub').textContent = 'Ingresá tu correo y te enviamos un código de acceso.';
+  const err = document.getElementById('loginError');
+  if (err) err.style.display = 'none';
+}
+
+async function handleSendCode() {
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const err = document.getElementById('loginError');
+  const btn = document.getElementById('loginSendBtn');
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    err.textContent = 'Ingresá un correo válido.'; err.style.display = 'block'; return;
+  }
+  btn.disabled = true; btn.textContent = 'Enviando…'; err.style.display = 'none';
+  try {
+    await sendOtp(email);
+    _pendingEmail = email;
+    document.getElementById('loginStepEmail').style.display = 'none';
+    document.getElementById('loginStepCode').style.display = '';
+    document.getElementById('loginSub').innerHTML = `Enviamos un código a <strong>${escapeHtml(email)}</strong>. Revisá tu correo.`;
+    document.getElementById('loginCode').value = '';
+    document.getElementById('loginCode').focus();
+  } catch (e) {
+    err.textContent = e.message; err.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Enviar código';
+  }
+}
+
+async function handleVerifyCode() {
+  const code = document.getElementById('loginCode').value.trim();
+  const err = document.getElementById('loginError');
+  const btn = document.getElementById('loginVerifyBtn');
+  if (!code) { err.textContent = 'Ingresá el código que recibiste.'; err.style.display = 'block'; return; }
+  btn.disabled = true; btn.textContent = 'Ingresando…'; err.style.display = 'none';
+  try {
+    await verifyOtp(_pendingEmail, code);
+    const m = await getTeamMember();
+    if (!m) {
+      await signOut();
+      showLogin('Tu correo no está autorizado para este portal. Escribí a tu administrador.');
+      return;
+    }
+    enterApp(m);
+  } catch (e) {
+    err.textContent = e.message; err.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Ingresar';
+  }
+}
+
+function enterApp(m) {
+  member = m;
+  isAdmin = m.role === 'admin';
+  document.body.classList.add('authed');
+  document.body.classList.toggle('admin-mode', isAdmin);
+  const ue = document.getElementById('userEmail');
+  if (ue) ue.textContent = m.email;
+  init();
+  if (!realtimeStarted) {
+    realtimeStarted = true;
+    subscribeRealtime();
+    onInstrumentsChanged(async () => {
+      instruments = await AmautaDB.listInstruments().catch(() => instruments);
+      buildSidebar();
+    });
+  }
+}
+
+async function handleLogout() {
+  await signOut();
+  location.reload();
+}
+
+// =============================================================
+//  Vista CEDEARs (nativa)
+// =============================================================
 let cedearsMounted = false;
 
 function showCedears(pushHistory = true) {
-  teardownNews();
+  teardownNews(); teardownEmbed();
   AmautaRenderer.destroyCharts();
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
   document.getElementById('sidebarAdminEntry')?.classList.remove('active');
@@ -51,7 +169,6 @@ function showCedears(pushHistory = true) {
   }
 }
 
-// Desmonta la vista CEDEARs si está activa (limpia realtime, timers, listeners)
 function teardownCedears() {
   if (cedearsMounted && window.CedearsView) {
     try { window.CedearsView.unmount(); } catch (_) {}
@@ -60,11 +177,13 @@ function teardownCedears() {
   document.getElementById('cedearsNavEntry')?.classList.remove('active');
 }
 
-// -------------- Vista Noticias --------------
+// =============================================================
+//  Vista Noticias (nativa)
+// =============================================================
 let newsMounted = false;
 
 function showNews(pushHistory = true) {
-  teardownCedears();
+  teardownCedears(); teardownEmbed();
   AmautaRenderer.destroyCharts();
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
   document.getElementById('sidebarAdminEntry')?.classList.remove('active');
@@ -97,6 +216,54 @@ function teardownNews() {
   document.getElementById('newsNavEntry')?.classList.remove('active');
 }
 
+// =============================================================
+//  Secciones embebidas (Monitor FCIs / Chat / Simulador) — iframe
+// =============================================================
+let currentEmbed = null;
+
+function showEmbed(view, pushHistory = true) {
+  const conf = CFG.EMBEDS[view];
+  if (!conf) return;
+  teardownCedears(); teardownNews();
+  AmautaRenderer.destroyCharts();
+  document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('sidebarAdminEntry')?.classList.remove('active');
+  document.querySelectorAll('.embed-nav-entry').forEach(e => e.classList.remove('active'));
+  document.getElementById(`embedNav_${view}`)?.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+
+  const topbar = document.getElementById('topbar');
+  if (topbar) topbar.style.display = 'none';
+
+  const welcome = document.getElementById('welcomeScreen');
+  if (welcome) welcome.remove();
+
+  if (pushHistory) history.pushState({ view }, '', `?view=${view}`);
+  active = null;
+  currentEmbed = view;
+
+  const content = document.getElementById('contentArea');
+  if (!conf.url) {
+    document.body.classList.remove('embedding');
+    content.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">${escapeHtml(conf.icon || '🧩')}</div>
+        <h2>${escapeHtml(conf.title)}</h2>
+        <p>${escapeHtml(conf.subtitle || '')}</p>
+        <p style="margin-top:10px;"><span class="soon-badge">Próximamente</span></p>
+      </div>`;
+    return;
+  }
+  document.body.classList.add('embedding');
+  content.innerHTML = `<div class="embed-wrap"><iframe class="embed-frame" src="${conf.url}" title="${escapeHtml(conf.title)}" allow="clipboard-read; clipboard-write; fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+}
+
+function teardownEmbed() {
+  currentEmbed = null;
+  document.body.classList.remove('embedding');
+  document.querySelectorAll('.embed-nav-entry').forEach(e => e.classList.remove('active'));
+}
+
 function pushUrlInstrument(id, tabIdx) {
   const params = new URLSearchParams();
   if (id) params.set('inst', id);
@@ -115,67 +282,44 @@ function replaceUrlInstrument(id, tabIdx) {
 
 // Manejar botones atrás/adelante del browser
 window.addEventListener('popstate', (e) => {
+  if (!document.body.classList.contains('authed')) return;
   const view = e.state?.view || getUrlView();
   const inst = e.state?.inst || getUrlInstrument();
-  if (view === 'cedears') {
-    showCedears(false);
-    return;
-  }
-  if (view === 'news') {
-    showNews(false);
-    return;
-  }
+  if (view === 'cedears') { showCedears(false); return; }
+  if (view === 'news') { showNews(false); return; }
+  if (view && CFG.EMBEDS[view]) { showEmbed(view, false); return; }
   if (inst) {
     selectInstrument(inst, e.state?.tab ?? 0, false);
   } else {
-    // Volver a bienvenida
-    teardownCedears();
-    teardownNews();
+    teardownCedears(); teardownNews(); teardownEmbed();
     AmautaRenderer.destroyCharts();
     document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
-    const content = document.getElementById('contentArea');
     const topbar = document.getElementById('topbar');
     if (topbar) topbar.style.display = 'none';
-    content.innerHTML = '';
-    const welcome = document.createElement('div');
-    welcome.className = 'welcome';
-    welcome.id = 'welcomeScreen';
-    welcome.innerHTML = `
-      <div class="welcome-logo">✦</div>
-      <h2>Amauta Research</h2>
-      <p>Seleccioná un instrumento del panel izquierdo para ver el análisis completo.</p>
-      <div class="legend">
-        <div class="legend-item"><span class="status-dot ready" style="display:inline-block;width:8px;height:8px;border-radius:50%;"></span> Análisis completo</div>
-        <div class="legend-item"><span class="status-dot wip" style="display:inline-block;width:8px;height:8px;border-radius:50%;"></span> En desarrollo</div>
-        <div class="legend-item"><span class="status-dot empty" style="display:inline-block;width:8px;height:8px;border-radius:50%;"></span> Pendiente</div>
-      </div>`;
-    content.appendChild(welcome);
-    buildWelcome();
+    renderWelcome();
     active = null;
   }
 });
 
 // -------------- Sidebar --------------
 async function init() {
+  if (appStarted) return;
+  appStarted = true;
   const topbar = document.getElementById('topbar');
   topbar.style.display = 'none';
   try {
     instruments = await AmautaDB.listInstruments();
     buildSidebar();
-    // Rutas especiales: Monitor CEDEARs / Noticias (antes de resolver instrumento)
-    if (getUrlView() === 'cedears') {
-      showCedears(false);
-      return;
-    }
-    if (getUrlView() === 'news') {
-      showNews(false);
-      return;
-    }
-    // Restaurar instrumento desde URL al cargar la página
+    const view = getUrlView();
+    if (view === 'cedears') { showCedears(false); return; }
+    if (view === 'news') { showNews(false); return; }
+    if (view && CFG.EMBEDS[view]) { showEmbed(view, false); return; }
     const instFromUrl = getUrlInstrument();
     const tabFromUrl  = parseInt(new URLSearchParams(location.search).get('tab') || '0', 10);
     if (instFromUrl) {
       selectInstrument(instFromUrl, tabFromUrl, false);
+    } else {
+      renderWelcome();
     }
   } catch (e) {
     console.error('Error loading instruments', e);
@@ -184,10 +328,28 @@ async function init() {
   }
 }
 
+function renderWelcome() {
+  document.body.classList.remove('embedding');
+  const content = document.getElementById('contentArea');
+  content.innerHTML = `
+    <div class="welcome" id="welcomeScreen">
+      <div class="welcome-hero">
+        <span class="welcome-hero-icon">✦</span>
+        <h2>Amauta <span>Local</span></h2>
+        <p>El portal del equipo de Amauta. Research de instrumentos, monitor de CEDEARs y FCIs, noticias, simulador y chat financiero — todo en un solo lugar.</p>
+        <div class="welcome-legend">
+          <div class="legend-item"><span class="status-dot ready" style="display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;"></span> Análisis completo</div>
+          <div class="legend-item"><span class="status-dot wip" style="display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;"></span> En desarrollo</div>
+          <div class="legend-item"><span class="status-dot empty" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;"></span> Pendiente</div>
+        </div>
+      </div>
+    </div>`;
+  buildWelcome();
+}
+
 function buildWelcome() {
   const welcome = document.getElementById('welcomeScreen');
   if (!welcome) return;
-  // Limpiar cards previas
   welcome.querySelector('.welcome-title')?.remove();
   welcome.querySelector('.welcome-instruments')?.remove();
 
@@ -223,17 +385,36 @@ function buildSidebar() {
     (categories[inst.category] = categories[inst.category] || []).push(inst);
   });
   const orderedCats = order.filter(c => categories[c]).concat(Object.keys(categories).filter(c => !order.includes(c)));
-  // Entradas fijas: Monitor CEDEARs + Noticias (arriba de las categorías)
-  let html = `<div class="cedears-nav-entry ${cedearsMounted ? 'active' : ''}" id="cedearsNavEntry">
+
+  // Entradas fijas de herramientas (arriba de las categorías de instrumentos)
+  let html = `<div class="nav-group-label">Herramientas</div>
+    <div class="cedears-nav-entry ${cedearsMounted ? 'active' : ''}" id="cedearsNavEntry">
       <span class="cedears-live-dot"></span>
-      <span class="ticker">Monitor</span>
-      <span class="inst-name">CEDEARs en vivo</span>
+      <span class="ticker">CEDEARs</span>
+      <span class="inst-name">Monitor en vivo</span>
+    </div>
+    <div class="cedears-nav-entry embed-nav-entry" id="embedNav_fci">
+      <span class="news-nav-ico">📊</span>
+      <span class="ticker">FCIs</span>
+      <span class="inst-name">Fondos · CAFCI</span>
+    </div>
+    <div class="cedears-nav-entry embed-nav-entry" id="embedNav_chat">
+      <span class="news-nav-ico">💬</span>
+      <span class="ticker">Chat</span>
+      <span class="inst-name">Chat financiero (IA)</span>
+    </div>
+    <div class="cedears-nav-entry embed-nav-entry" id="embedNav_simulador">
+      <span class="news-nav-ico">🧮</span>
+      <span class="ticker">Simulador</span>
+      <span class="inst-name">Escenarios de inversión</span>
     </div>
     <div class="cedears-nav-entry ${newsMounted ? 'active' : ''}" id="newsNavEntry">
       <span class="news-nav-ico">📰</span>
       <span class="ticker">Noticias</span>
       <span class="inst-name">Reuters · universo CEDEARs</span>
-    </div>`;
+    </div>
+    <div class="nav-group-label">Research</div>`;
+
   orderedCats.forEach(cat => {
     html += `<div class="category open" id="cat-${cssId(cat)}">
       <div class="category-header">
@@ -260,13 +441,18 @@ function buildSidebar() {
 
   nav.querySelector('#cedearsNavEntry')?.addEventListener('click', () => showCedears());
   nav.querySelector('#newsNavEntry')?.addEventListener('click', () => showNews());
+  nav.querySelector('#embedNav_fci')?.addEventListener('click', () => showEmbed('fci'));
+  nav.querySelector('#embedNav_chat')?.addEventListener('click', () => showEmbed('chat'));
+  nav.querySelector('#embedNav_simulador')?.addEventListener('click', () => showEmbed('simulador'));
 
   const adminEntry = document.getElementById('sidebarAdminEntry');
-  if (adminEntry) {
+  if (adminEntry && !adminEntry.dataset.wired) {
+    adminEntry.dataset.wired = '1';
     adminEntry.addEventListener('click', () => {
       document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
       adminEntry.classList.add('active');
       document.getElementById('sidebar').classList.remove('open');
+      teardownCedears(); teardownNews(); teardownEmbed();
       AmautaAdmin.openPanel();
     });
   }
@@ -277,7 +463,8 @@ function buildSidebar() {
     countEl.textContent = `${readyCount} de ${instruments.length} instrumentos con análisis`;
   }
 
-  buildWelcome();
+  // Reafirmar estado activo de la sección embebida si corresponde
+  if (currentEmbed) document.getElementById(`embedNav_${currentEmbed}`)?.classList.add('active');
 }
 
 let _filterTimer;
@@ -294,8 +481,7 @@ function filterInstruments() {
 
 // pushHistory=true cuando el usuario hace clic; false cuando se restaura desde URL/popstate
 async function selectInstrument(id, initialTab = 0, pushHistory = true) {
-  teardownCedears();
-  teardownNews();
+  teardownCedears(); teardownNews(); teardownEmbed();
   AmautaRenderer.destroyCharts();
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
   document.querySelector(`.instrument-item[data-inst-id="${cssEscape(id)}"]`)?.classList.add('active');
@@ -308,7 +494,6 @@ async function selectInstrument(id, initialTab = 0, pushHistory = true) {
   const content = document.getElementById('contentArea');
   content.innerHTML = `<div class="loading"><div class="spinner"></div><div>Cargando ${escapeHtml(id)}…</div></div>`;
 
-  // Actualizar URL
   if (pushHistory) {
     pushUrlInstrument(id, initialTab > 0 ? initialTab : null);
   } else {
@@ -342,7 +527,6 @@ async function selectInstrument(id, initialTab = 0, pushHistory = true) {
     const res = AmautaRenderer.renderInstrument(content, inst, blocks, initialTab);
     active.switchTab = res.switchTab;
 
-    // Sincronizar URL cuando el usuario cambia de tab
     if (res.onTabChange) {
       res.onTabChange((tabIdx) => {
         pushUrlInstrument(id, tabIdx > 0 ? tabIdx : null);
@@ -372,54 +556,9 @@ function loadTVTickerWidget(symbol) {
   div.appendChild(script);
 }
 
-// -------------- Admin gate --------------
-function toggleAdmin() {
-  if (isAdmin) {
-    isAdmin = false;
-    document.body.classList.remove('admin-mode');
-    signOut();
-    clearCache();
-    buildSidebar();
-    return;
-  }
-  document.getElementById('adminModal').classList.add('show');
-  document.getElementById('adminEmail').focus();
-}
-async function checkAdmin() {
-  const email = document.getElementById('adminEmail').value.trim();
-  const pass  = document.getElementById('adminPass').value;
-  const errEl = document.getElementById('adminError');
-  const btn   = document.querySelector('.modal-btn');
-  if (!email || !pass) { errEl.textContent = 'Ingresá email y contraseña'; errEl.style.display = 'block'; return; }
-  if (btn) { btn.textContent = '…'; btn.disabled = true; }
-  try {
-    await signIn(email, pass);
-    isAdmin = true;
-    document.body.classList.add('admin-mode');
-    document.getElementById('adminModal').classList.remove('show');
-    document.getElementById('adminEmail').value = '';
-    document.getElementById('adminPass').value = '';
-    errEl.style.display = 'none';
-    clearCache();
-    buildSidebar();
-  } catch (e) {
-    errEl.textContent = e.message;
-    errEl.style.display = 'block';
-  } finally {
-    if (btn) { btn.textContent = 'Ingresar'; btn.disabled = false; }
-  }
-}
-function closeAdminModal() {
-  document.getElementById('adminModal').classList.remove('show');
-  document.getElementById('adminEmail').value = '';
-  document.getElementById('adminPass').value = '';
-  document.getElementById('adminError').style.display = 'none';
-}
-
 // -------------- Home --------------
 function goHome() {
-  teardownCedears();
-  teardownNews();
+  teardownCedears(); teardownNews(); teardownEmbed();
   AmautaRenderer.destroyCharts();
   active = null;
   document.querySelectorAll('.instrument-item').forEach(i => i.classList.remove('active'));
@@ -428,21 +567,7 @@ function goHome() {
   const topbar = document.getElementById('topbar');
   if (topbar) topbar.style.display = 'none';
   history.pushState({}, '', location.pathname);
-  const content = document.getElementById('contentArea');
-  content.innerHTML = `
-    <div class="welcome" id="welcomeScreen">
-      <div class="welcome-hero">
-        <span class="welcome-hero-icon">✦</span>
-        <h2>Amauta <span>Research</span></h2>
-        <p>Análisis institucional de instrumentos financieros — equities, renta fija y más. Tesis de inversión, financials, valuación y modelos propios.</p>
-        <div class="welcome-legend">
-          <div class="legend-item"><span class="status-dot ready" style="display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;"></span> Análisis completo</div>
-          <div class="legend-item"><span class="status-dot wip" style="display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;"></span> En desarrollo</div>
-          <div class="legend-item"><span class="status-dot empty" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;"></span> Pendiente</div>
-        </div>
-      </div>
-    </div>`;
-  buildWelcome();
+  renderWelcome();
 }
 
 // -------------- Utils --------------
@@ -472,27 +597,22 @@ function wireMobileMenu() {
   }
 }
 
-// -------------- Inline handler replacements --------------
+// -------------- Login / handlers --------------
+function wireLoginHandlers() {
+  document.getElementById('loginSendBtn')?.addEventListener('click', handleSendCode);
+  document.getElementById('loginVerifyBtn')?.addEventListener('click', handleVerifyCode);
+  document.getElementById('loginBackLink')?.addEventListener('click', resetLoginToEmail);
+  document.getElementById('loginEmail')?.addEventListener('keydown', e => { if (e.key === 'Enter') handleSendCode(); });
+  document.getElementById('loginCode')?.addEventListener('keydown', e => { if (e.key === 'Enter') handleVerifyCode(); });
+}
+
 function wireStaticHandlers() {
   document.getElementById('searchInput')?.addEventListener('input', filterInstruments);
   document.querySelector('.sidebar-logo')?.addEventListener('click', goHome);
-  document.querySelector('.admin-toggle')?.addEventListener('click', toggleAdmin);
-  document.getElementById('adminEmail')?.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('adminPass')?.focus(); });
-  document.getElementById('adminPass')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAdmin(); });
-  document.querySelector('.modal-btn')?.addEventListener('click', checkAdmin);
-  document.querySelector('.modal-cancel')?.addEventListener('click', closeAdminModal);
+  document.getElementById('logoutBtn')?.addEventListener('click', handleLogout);
 }
 
-wireMobileMenu();
-wireStaticHandlers();
-init();
-
-// Real-time: si admin publica/actualiza, el sidebar se actualiza solo
-subscribeRealtime();
-onInstrumentsChanged(async () => {
-  instruments = await AmautaDB.listInstruments().catch(() => instruments);
-  buildSidebar();
-});
+bootstrap();
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});

@@ -5,11 +5,21 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
-const CORS = {
-  'Access-Control-Allow-Origin': 'https://amauta-research.vercel.app',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const ALLOWED_ORIGINS = [
+  'https://amauta-research.vercel.app',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+];
+
+function corsFor(origin: string | null) {
+  const allow = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allow,
+    'Vary': 'Origin',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
+}
 
 const SUPABASE_URL    = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE    = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -20,21 +30,34 @@ const admin = createClient(SUPABASE_URL, SERVICE_ROLE, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
-function json(body: unknown, status = 200) {
+// CORS de la request en curso (fijado al inicio de cada request por serve()).
+let _cors: Record<string, string> = corsFor(null);
+
+function json(body: unknown, status = 200, cors: Record<string, string> = _cors) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...CORS, 'Content-Type': 'application/json' },
+    headers: { ...cors, 'Content-Type': 'application/json' },
   });
 }
 
-async function verifyJWT(token: string): Promise<boolean> {
-  // Verifica el JWT creando un cliente anon con el token del usuario
+// Verifica el JWT y exige que el usuario sea un miembro del equipo con rol 'admin'.
+// Devuelve el email si está autorizado, o null.
+async function verifyAdmin(token: string): Promise<string | null> {
   const userClient = createClient(SUPABASE_URL, SUPABASE_ANON, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: { headers: { Authorization: `Bearer ${token}` } },
   });
   const { data: { user }, error } = await userClient.auth.getUser();
-  return !error && user !== null;
+  if (error || !user?.email) return null;
+
+  const { data: member } = await admin
+    .from('team_members')
+    .select('role, active')
+    .eq('email', user.email.toLowerCase())
+    .maybeSingle();
+
+  if (!member || member.active !== true || member.role !== 'admin') return null;
+  return user.email;
 }
 
 type Action =
@@ -57,14 +80,16 @@ function pick<T extends object>(obj: T, keys: readonly (keyof T)[]) {
 }
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
-  if (req.method !== 'POST') return json({ error: 'method not allowed' }, 405);
+  const cors = corsFor(req.headers.get('Origin'));
+  _cors = cors;
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
+  if (req.method !== 'POST') return json({ error: 'method not allowed' }, 405, cors);
 
-  // Verificar JWT desde Authorization header
+  // Verificar JWT + rol admin desde Authorization header
   const authHeader = req.headers.get('Authorization') || '';
   const token = authHeader.replace(/^Bearer\s+/i, '').trim();
-  if (!token || !(await verifyJWT(token))) {
-    return json({ error: 'unauthorized' }, 401);
+  if (!token || !(await verifyAdmin(token))) {
+    return json({ error: 'unauthorized' }, 401, cors);
   }
 
   let body: any;

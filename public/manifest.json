@@ -1,7 +1,7 @@
 {
-  "name": "Amauta Research",
-  "short_name": "AMAVTA",
-  "description": "Research browser de Amauta Inversiones Financieras",
+  "name": "Amauta Local",
+  "short_name": "Amauta Local",
+  "description": "Portal interno de Amauta Inversiones Financieras — research, CEDEARs, FCIs, noticias, simulador y chat financiero.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#231F20",
