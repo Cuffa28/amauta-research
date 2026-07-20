@@ -1,191 +1,76 @@
-# Amauta Research Browser — Project Brief for Claude Code
+# Amauta Local — Brief del proyecto
 
-## What is this project?
+> **Empezá leyendo [HANDOFF.md](HANDOFF.md)** — ahí está el estado actual, lo que falta y cómo desplegar.
 
-A **single-file HTML dashboard** (`Amauta_Research.html`, ~1760 lines) that serves as Amauta Inversiones Financieras' internal research browser. It displays the firm's investment views across multiple asset classes, with interactive charts. It's branded, mobile-responsive, and requires no backend or hosting costs — just open the `.html` file in any browser.
+## Qué es
 
-**Owner**: Facundo Argañaraz (@FacundoArg28) — Amauta Inversiones Financieras (Multifamily Office, CNV matrícula 1029, Tucumán, Argentina).
+**Amauta Local** es el **portal interno del equipo de Amauta Inversiones Financieras** (Multifamily Office, CNV Mat. 1029). Nació como "Amauta Research" y se está convirtiendo en la **web madre** que concentra todas las herramientas en una sola app, detrás de un **login de equipo por email**.
 
----
+- **Deploy:** `amauta-research.vercel.app` (repo GitHub **`Cuffa28/amauta-research`**).
+- **Stack:** sitio **estático** — HTML + CSS + **JavaScript vanilla (ES modules)**. Sin framework, sin build, sin bundler. Se sirve la carpeta `public/`.
+- **Backend:** **Supabase** proyecto **`jfjqydgqzlwnyngcmzwu`** (Postgres + Auth + Realtime) + 1 Edge Function (`admin-write`).
+- Dependencias por CDN: Chart.js 4.4.1, DOMPurify, Fira Sans, TradingView widget.
 
-## Architecture
+## Arquitectura (una sola app, navegación por sidebar)
 
-### Single-file approach
-- Everything lives in one HTML file: CSS, JS, data, and content
-- Dependencies loaded from CDN: **Chart.js 4.4.1**, **Fira Sans** (Google Fonts)
-- TradingView widget embedded for live price bar (top of instrument view) — note: only works when opened via HTTP, not `file://` protocol
-- No backend, no database, no API calls for data. All instrument data is hardcoded in a JS object and updated manually through conversation with Facu
+Todo vive en `public/`. Es una SPA con sidebar a la izquierda y un `#contentArea` a la derecha donde se montan las secciones. **Todo se integra en la misma app — no se redirige a otras webs.**
 
-### Key data structure
-```javascript
-const INSTRUMENTS = {
-  "NU":            { status: "ready",  category: "Equity US",     render: renderNU },
-  "MSFT":          { status: "ready",  category: "Equity US",     render: renderMSFT },
-  "UBER":          { status: "empty",  category: "Equity US",     render: renderEmpty },
-  "V":             { status: "empty",  category: "Equity US",     render: renderEmpty },
-  "SOBERANOS_USD": { status: "empty",  category: "Renta Fija AR", render: renderEmpty },
-  "LECAPS":        { status: "empty",  category: "Renta Fija AR", render: renderEmpty },
-  "CER":           { status: "empty",  category: "Renta Fija AR", render: renderEmpty },
-  "ONS":           { status: "empty",  category: "Renta Fija AR", render: renderEmpty },
-};
-```
+- `public/index.html` — shell: login view + sidebar + main. Carga `cedears.js` y `news.js` como scripts clásicos y `app.js` como módulo.
+- `public/js/app.js` — orquestador: gate de login, routing por `?view=`/`?inst=`, sidebar, montaje de secciones.
+- `public/js/supabase-client.js` — auth (OTP email), sesión persistente, lecturas/escrituras a Supabase, realtime.
+- `public/js/renderer.js` — renderiza instrumentos de Research (bloques + Chart.js).
+- `public/js/admin.js` — panel admin (CRUD de instrumentos/bloques). Solo rol `admin`.
+- `public/js/cedears.js` — **Monitor CEDEARs** (sección **nativa**; `window.CedearsView.mount/unmount`). Datos en tablas `cedears_*` del mismo Supabase.
+- `public/js/news.js` — **Noticias** Reuters (sección **nativa**; `window.NewsView`).
+- `public/js/config.js` — URL/key de Supabase, orden de categorías y `EMBEDS` (URLs de las secciones iframe).
+- `public/sw.js` — service worker cache-first. **Al cambiar archivos del shell hay que bumpear `CACHE`** (hoy `amauta-local-v14`).
+- `supabase/functions/admin-write/index.ts` — Edge Function; escribe con service_role; **exige rol `admin`** (valida contra `team_members`).
 
-Each instrument with `status: "ready"` has a dedicated `render[TICKER]()` function and a `render[TICKER]Charts(tabIdx)` function for its Chart.js visualizations.
+### Secciones del portal (todas dentro de la misma app)
+| Sección | Cómo está integrada | Ruta |
+|---|---|---|
+| Research (instrumentos) | nativa (renderer.js) | `?inst=<id>` |
+| Monitor CEDEARs | **nativa** (cedears.js, datos en Supabase) | `?view=cedears` |
+| Noticias | **nativa** (news.js) | `?view=news` |
+| Monitor FCIs | **iframe** a `monitor-fci-amauta.vercel.app` | `?view=fci` |
+| Chat Financiero | **iframe** a `amauta-chat-financiero.vercel.app` | `?view=chat` |
+| Simulador | "Próximamente" (no existe repo aún) | `?view=simulador` |
 
-### Key functions
-| Function | Purpose |
+**Patrón para agregar una herramienta nueva:**
+- Si tiene su propia app Next.js separada → embeberla: agregar entrada en `config.js` `EMBEDS`, una entrada en el sidebar (`buildSidebar` en app.js) y su ruta en `showEmbed`.
+- Si sus datos están en el Supabase de research → módulo nativo tipo cedears (`window.XxxView.mount/unmount`) cargado como script en index.html.
+
+## Autenticación (login de equipo por email, sin contraseña)
+
+- El portal entero está detrás del login (`body.authed`). Sin sesión válida → se muestra `#loginView`.
+- Flujo: escribís tu correo → Supabase manda un **código OTP** → lo ingresás → entrás. (También soporta magic link vía captura del hash de la URL.)
+- **Allowlist `team_members`** (tabla en Supabase): `email` (PK), `role` (`member`|`admin`), `active`. Tras verificar el OTP se valida que el correo esté en la allowlist activa; si no, se deniega.
+- `role='admin'` habilita el Panel Admin (edición de Research). `member` = solo lectura.
+- La Edge Function `admin-write` re-chequea rol `admin` del lado server.
+- RLS: cada usuario autenticado solo puede leer SU fila de `team_members`.
+
+## Branding (obligatorio)
+
+| Elemento | Valor |
 |---|---|
-| `buildSidebar()` | Renders sidebar nav with instrument list grouped by category |
-| `filterInstruments()` | Filters sidebar by search input and category buttons |
-| `selectInstrument(key)` | Loads an instrument into the main panel |
-| `switchTab(idx)` | Switches between tabs within an instrument, destroys/recreates charts |
-| `destroyCharts()` | Cleans up Chart.js instances to prevent memory leaks |
-| `toggleAdmin()` / `checkAdmin()` | Password-protected admin mode (password: `Amauta2026`) |
-| `renderNU(container, inst)` | Full NU Holdings analysis (6 tabs) |
-| `renderNUCharts(tabIdx)` | Chart.js charts for NU (financials, growth, valuation) |
-| `renderMSFT(container, inst)` | Full Microsoft analysis (5 tabs) |
-| `renderMSFTCharts(tabIdx)` | Chart.js charts for MSFT |
-| `renderEmpty(container, inst)` | Placeholder for instruments without content yet |
+| Amarillo (primario) | `#F3CF11` |
+| Bordó | `#621044` |
+| Negro/charcoal | `#231F20` |
+| Fuente | **Fira Sans** (300–800), fallback Arial |
+| Logo | `public/assets/amauta-logo-horizontal.png` + marca diamante SVG en el sidebar |
+| Disclaimer CNV 1029 | **OBLIGATORIO** en vistas de cara al cliente |
 
-### Critical pattern: adding a new instrument
-When adding a new instrument (e.g., UBER):
-1. Update the `INSTRUMENTS` object: change `status` to `"ready"`, define `tabs` array, set `render: renderUBER`
-2. Write `renderUBER(container, inst)` function with all tab HTML
-3. Write `renderUBERCharts(tabIdx)` function for Chart.js visualizations
-4. **Update `switchTab()`** to call `renderUBERCharts(idx)` when `activeInstrument === 'UBER'`
-5. Update `topMetrics`, `price`, `change`, `updated` fields in the INSTRUMENTS object
+Variables CSS `--am-*` en `public/css/styles.css`.
 
-**IMPORTANT**: The `switchTab()` function must have an explicit `if` clause for every "ready" instrument, otherwise charts won't render when switching tabs. This was a bug that already happened once.
+## Correr localmente
 
----
-
-## Branding (mandatory)
-
-| Element | Value |
-|---|---|
-| Primary color (yellow) | `#F3CF11` — hero, CTAs, accents, icons |
-| Bordo/violet | `#621044` — section titles, emphasis |
-| Black | `#231F20` — navbar, footer, dark backgrounds |
-| Font | **Fira Sans** (all weights: 300, 400, 600, 700, 800) |
-| Fallback | Arial |
-| Tone | Formal "usted", client-facing, prudent, benefit-oriented |
-| Disclaimer | **OBLIGATORIO** in all client-facing docs (see branding skill) |
-
-CSS variables already defined:
-```css
-:root {
-  --am-yellow: #F3CF11;
-  --am-bordo: #621044;
-  --am-black: #231F20;
-  --am-pure-black: #000000;
-  --am-white: #FFFFFF;
-  --am-gray: #666666;
-  --am-gray-light: #F1F1F1;
-  --am-gray-dark: #58585A;
-  --am-green: #27AE60;
-  --am-red: #C0392B;
-  --am-blue: #2980B9;
-}
+```bash
+npx serve public -l 3000 --no-clipboard
+# abrir http://localhost:3000
 ```
+Las lecturas de Supabase son con anon key (funcionan sin login). Para probar el login por código ver HANDOFF.md (requiere 2 ajustes en Supabase).
 
----
-
-## Layout structure
-
-```
-┌─────────────────────────────────────────────────┐
-│ [Mobile only] Top bar: ☰ AMAVTA | Research      │
-├──────────┬──────────────────────────────────────┤
-│ SIDEBAR  │  MAIN CONTENT                        │
-│ 280px    │                                      │
-│          │  ┌─ TradingView price bar ─────────┐ │
-│ Logo     │  │ (topbar widget, not chart)       │ │
-│ Search   │  └─────────────────────────────────┘ │
-│ Filters  │  ┌─ Instrument header ─────────────┐ │
-│          │  │ Name, metrics, price, change     │ │
-│ NU    ●  │  └─────────────────────────────────┘ │
-│ MSFT  ●  │  ┌─ Tab bar ──────────────────────┐ │
-│ UBER  ○  │  │ Tesis | Financieros | ...       │ │
-│ V     ○  │  └─────────────────────────────────┘ │
-│          │  ┌─ Tab content ───────────────────┐ │
-│ —Renta—  │  │ HTML + Chart.js canvases        │ │
-│ GD/AL ○  │  │                                  │ │
-│ LECAP ○  │  │                                  │ │
-│ CER   ○  │  └─────────────────────────────────┘ │
-│ ONs   ○  │  ┌─ Disclaimer footer ────────────┐ │
-│          │  │ CNV 1029 · legal text            │ │
-│ [Admin]  │  └─────────────────────────────────┘ │
-├──────────┴──────────────────────────────────────┤
-│ Footer: Amauta branding                         │
-└─────────────────────────────────────────────────┘
-
-● = ready (has full analysis)    ○ = empty (placeholder)
-```
-
-### Mobile responsive (≤768px)
-- Sidebar becomes full-screen overlay, toggled via top bar `<a>` links
-- Top bar shows "☰ AMAVTA" + "Research" label
-- Close button (✕) inside sidebar
-- Uses `<a href="javascript:void(0)">` instead of `<button>` for iOS Safari compatibility
-- JS listeners: `mobileMenuLink` (open) and `sidebarCloseLink` (close)
-
----
-
-## Completed instruments
-
-### NU Holdings (Nubank) — 6 tabs
-1. **Tesis**: Investment thesis, bull case, key catalysts, Facu's personal thesis (@FacundoArg28)
-2. **Financieros**: Revenue/net income/EPS bar charts (2021-2026E), margins table
-3. **Crecimiento**: Customer growth (100M+), ARPAC, engagement metrics, geographic expansion
-4. **Valuación**: P/E, P/S, PEG, DCF range, comp table vs StoneCo/MercadoLibre/Inter
-5. **Riesgos**: Regulatory, credit, competition, FX, concentration
-6. **Modelo 2028**: Facu's proprietary "Modelo 2028" projection — target $18.45 (29.7% upside)
-
-### Microsoft (MSFT) — 5 tabs
-1. **Tesis**: Cloud+AI dominance thesis, target $585 (39% upside)
-2. **Financieros**: Revenue/operating income/FCF charts, margin expansion narrative
-3. **Segmentos & AI**: Intelligent Cloud, Productivity, Personal Computing breakdown + Azure AI ramp
-4. **Valuación**: P/E, EV/EBITDA, DCF, comp table vs Apple/Google/Amazon
-5. **Riesgos**: Antitrust, AI capex, cloud competition, valuation premium
-
----
-
-## Pending work
-
-### Instruments to populate
-- **UBER** — needs full analysis like NU/MSFT
-- **V (Visa)** — needs full analysis
-- **SOBERANOS_USD (Soberanos Hard Dollar)** — GD30, GD35, GD38, GD41, GD46, AL30, AL35, AL41 (USD sovereign bonds Argentina). Different format than equities: price/yield tables, spread curves, duration analysis
-- **LECAPS** — Letras Capitalizables (ARS fixed income). Tab structure TBD: current rates, curve, rollover analysis
-- **CER** — Inflation-linked bonds (TX26, TX28, DICP, etc.). CER curve, breakeven inflation, real yield
-- **ONS** — Obligaciones Negociables (corporate bonds AR). Yield comparison table, credit quality, duration
-
-### Features to build
-- **Admin mode expansion**: Currently admin just toggles a visual badge. Future: authorized users can edit content, others view-only. Facu mentioned possibly password-gating an edit interface
-- **Data loading workflow**: Currently all data is hardcoded in JS. Facu loads data by chatting with Claude and regenerating the file. No automated data feeds
-- **Live prices**: TradingView topbar widget works for equities when served over HTTP but not `file://`. Could explore alternatives or suggest simple local HTTP server
-
-### Known issues / gotchas
-- **TradingView widgets don't load from `file://` protocol** — works fine if served from a local HTTP server (`python -m http.server`)
-- **iOS Safari mobile**: Was historically problematic with `<button>` elements not responding to touch. Solved by using `<a href="javascript:void(0)">` tags with both `click` and `touchend` listeners
-- **Chart.js cleanup is critical**: Must call `destroyCharts()` before rendering new charts, or Chart.js throws "Canvas is already in use" errors
-- **switchTab must be updated for every new instrument**: Add an `if (activeInstrument === 'TICKER')` clause — forgetting this causes charts to not render
-
----
-
-## How to work on this file
-
-1. **Always read the full file first** — it's ~1760 lines, everything is interconnected
-2. **Use Edit tool for targeted changes** — don't rewrite the whole file
-3. **When adding an instrument**: follow the pattern of renderNU/renderMSFT exactly. Copy the structure, update data, add to switchTab()
-4. **Test chart rendering**: every Chart.js canvas needs a unique ID, and `chartInstances.push()` must be called for cleanup
-5. **Maintain branding**: use CSS variables (`var(--am-yellow)`, etc.), Fira Sans font, formal "usted" tone in Spanish text
-6. **Disclaimer is mandatory** at the bottom of every instrument view
-
----
-
-## File location
-```
-C:\Users\AMAUTA\OneDrive\Escritorio\Claude Code\Amauta_Research.html
-```
-(Mounted workspace — this is the user's actual desktop folder)
+## Gotchas
+- **Service worker cache-first**: si cambiás archivos del shell y no bumpeás `CACHE` en `sw.js`, los usuarios ven assets viejos.
+- `admin.js`: cuidado con backticks crudos dentro de template literals (ya hubo un bug de sintaxis por `` ```json `` sin escapar).
+- El proyecto Supabase correcto es **`jfjqydgqzlwnyngcmzwu`** (hubo una config vieja que apuntaba a `ltfcqoutumlcaakmobew` — NO usar esa).
