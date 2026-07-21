@@ -94,8 +94,7 @@ export default async function FichaPage({
     <div className="min-h-full">
       <div className="space-y-6">
         {/* ── Hero plano ───────────────────────────────────────────────── */}
-        <header className="relative overflow-hidden bg-surface-raised border border-brand-border rounded-lg p-6 sm:p-8">
-          <span className="absolute top-0 left-0 h-full w-1 bg-amauta-yellow" aria-hidden />
+        <div>
           <nav className="text-xs text-text-tertiary font-medium mb-3">
             <Link href="/fondos" className="hover:text-amauta-yellow transition-colors">
               Fondos
@@ -134,14 +133,14 @@ export default async function FichaPage({
             {d.horizonte && <ChipDark>{d.horizonte}</ChipDark>}
           </div>
 
-          {/* KPIs */}
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <HeroKpi label="VCP" value={fmtNumber(d.vcp, 2)} />
-            <HeroKpi label="Patrimonio" value={compactArs(d.patrimonio)} />
-            <HeroKpi label="TNA" value={pctOrDash(m.tna)} />
-            <HeroKpi label="Sharpe" value={m.sharpe != null ? fmtNumber(m.sharpe, 2) : "—"} />
-          </div>
-        </header>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <HeroKpi label="VCP" value={fmtNumber(d.vcp, 2)} />
+          <HeroKpi label="Patrimonio" value={compactArs(d.patrimonio)} />
+          <HeroKpi label="TNA" value={pctOrDash(m.tna)} />
+          <HeroKpi label="Sharpe" value={m.sharpe != null ? fmtNumber(m.sharpe, 2) : "—"} />
+        </div>
 
         <div className="border-b border-brand-border">
           <FciTabs />
@@ -309,9 +308,9 @@ function ChipDark({ children }: { children: React.ReactNode }) {
 
 function HeroKpi({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-surface-overlay border border-brand-border rounded-lg px-4 py-3.5">
-      <p className="text-[10px] uppercase tracking-[0.14em] text-text-tertiary font-bold mb-1">{label}</p>
-      <p className="text-lg sm:text-xl lg:text-2xl font-extrabold text-amauta-yellow leading-tight tabular-nums">
+    <div className="bg-surface-raised border border-brand-border border-t-2 border-t-amauta-yellow rounded-lg px-5 py-4">
+      <p className="text-[10px] uppercase tracking-[0.14em] text-text-tertiary font-extrabold mb-1.5">{label}</p>
+      <p className="text-xl sm:text-2xl font-extrabold text-text-primary leading-none tabular-nums">
         {value}
       </p>
     </div>
