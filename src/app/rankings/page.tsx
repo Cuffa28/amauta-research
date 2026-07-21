@@ -1,0 +1,290 @@
+﻿/**
+ * Rankings de FCIs por rendimiento y categoría.
+ *
+ * Período seleccionable en URL: ?periodo=1d | mtd | ytd | 13m
+ * Top 10 por rendimiento del período elegido dentro de cada categoría.
+ * Datos: planilla diaria oficial de CAFCI (variaciones pre-calculadas).
+ */
+import Link from "next/link";
+import { fmtCompactCurrency, fmtNumber, fmtReturn } from "@/lib/utils/format";
+import { fmtDateAr, getMarketSnapshotWithReturns } from "@/lib/fondos/enriched";
+import type { EnrichedRow } from "@/lib/fondos/enriched";
+
+const TOP_N = 10;
+
+type Periodo = "1d" | "mtd" | "ytd" | "13m";
+
+const PERIODOS: { key: Periodo; label: string; field: keyof EnrichedRow; outlierThreshold: number }[] = [
+  { key: "1d",  label: "Diario (1D)",         field: "ret1d",  outlierThreshold: 5   },
+  { key: "mtd", label: "Mensual",             field: "retMTD", outlierThreshold: 35  },
+  { key: "ytd", label: "Año en Curso (YTD)",  field: "ytd",    outlierThreshold: 100 },
+  { key: "13m", label: "Interanual",          field: "ret13m", outlierThreshold: 150 },
+];
+
+interface SearchParams {
+  periodo?: string;
+  estrategia?: string;
+  /** @deprecated — still accepted for legacy permalinks. */
+  cat?: string;
+}
+
+export const metadata = {
+  title: "Rankings · Monitor FCIs · Amauta",
+  description:
+    "Rankings de Fondos Comunes de Inversión argentinos por rendimiento diario, semanal, mensual e interanual.",
+};
+
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
+
+export default async function RankingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const sp = await searchParams;
+  const periodo = (sp.periodo as Periodo) ?? "mtd";
+  // estrategia is the new grouping axis; `cat` is kept for legacy permalinks.
+  const estrategiaFilter = (sp.estrategia ?? "").trim();
+  const legacyCatFilter = (sp.cat ?? "").trim();
+
+  const validPeriodo = PERIODOS.find((p) => p.key === periodo) ? periodo : "mtd";
+  const periodoConfig = PERIODOS.find((p) => p.key === validPeriodo) ?? PERIODOS[1];
+
+  const snap = await getMarketSnapshotWithReturns().catch(() => null);
+
+  if (!snap) {
+    return (
+      <div className="flex-1 flex items-center justify-center bg-amauta-bg-light">
+        <div className="bg-white rounded-lg p-8 text-center">
+          <p className="text-amauta-text-secondary">
+            No pudimos cargar los datos de fondos. Volvé a intentar en unos minutos.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const getReturn = (r: EnrichedRow): number | null =>
+    r[periodoConfig.field] as number | null;
+
+  // Apply both filters (legacy `cat` filter still works on top of estrategia).
+  const filteredRows = snap.rows.filter((r) => {
+    if (estrategiaFilter && r.estrategia !== estrategiaFilter) return false;
+    if (legacyCatFilter && r.categoria !== legacyCatFilter) return false;
+    return true;
+  });
+
+  // Group by estrategia (the more meaningful axis for asesores).
+  const byEstrategia = new Map<string, EnrichedRow[]>();
+  for (const r of filteredRows) {
+    const ret = getReturn(r);
+    if (ret == null) continue;
+    if (!byEstrategia.has(r.estrategia)) byEstrategia.set(r.estrategia, []);
+    byEstrategia.get(r.estrategia)!.push(r);
+  }
+
+  const groups = Array.from(byEstrategia.entries())
+    .map(([estrategia, rows]) => ({
+      estrategia,
+      total: snap.rows.filter((r) => r.estrategia === estrategia).length,
+      aumTotal: snap.rows
+        .filter((r) => r.estrategia === estrategia)
+        .reduce((s, r) => s + (r.patrimonio ?? 0), 0),
+      top: rows
+        .sort((a, b) => (getReturn(b) ?? -Infinity) - (getReturn(a) ?? -Infinity))
+        .slice(0, TOP_N),
+    }))
+    .sort((a, b) => b.aumTotal - a.aumTotal);
+
+  const buildPeriodoHref = (p: Periodo) => {
+    const params = new URLSearchParams();
+    params.set("periodo", p);
+    if (estrategiaFilter) params.set("estrategia", estrategiaFilter);
+    return `/rankings?${params.toString()}`;
+  };
+
+  const buildEstrategiaHref = (e: string) => {
+    const params = new URLSearchParams();
+    params.set("periodo", validPeriodo);
+    if (e) params.set("estrategia", e);
+    return `/rankings?${params.toString()}`;
+  };
+
+  return (
+    <div className="bg-amauta-bg-light flex-1">
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="mb-6">
+          <h1 className="text-3xl font-extrabold text-amauta-bordo">
+            Rankings de fondos
+          </h1>
+          <p className="mt-1 text-sm text-amauta-text-secondary">
+            Top {TOP_N} por rendimiento en el período seleccionado · cierre{" "}
+            {fmtDateAr(snap.fecha)}
+          </p>
+        </div>
+
+        {/* Period tabs */}
+        <div className="bg-white rounded-lg border border-amauta-bg-light p-3 mb-6 flex flex-wrap gap-2 items-center">
+          <span className="text-xs font-bold uppercase tracking-wider text-amauta-text-tertiary mr-1">
+            Período:
+          </span>
+          {PERIODOS.map((p) => (
+            <Link
+              key={p.key}
+              href={buildPeriodoHref(p.key)}
+              className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+                validPeriodo === p.key
+                  ? "bg-amauta-bordo text-white"
+                  : "bg-amauta-bg-light text-amauta-text-secondary hover:bg-amauta-yellow/20"
+              }`}
+            >
+              {p.label}
+            </Link>
+          ))}
+          <div className="ml-auto flex flex-wrap gap-1 items-center">
+            <span className="text-xs font-bold uppercase tracking-wider text-amauta-text-tertiary mr-1">
+              Estrategia:
+            </span>
+            <Link
+              href={buildEstrategiaHref("")}
+              className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                !estrategiaFilter
+                  ? "bg-amauta-dark text-white"
+                  : "bg-amauta-bg-light text-amauta-text-secondary hover:bg-amauta-yellow/20"
+              }`}
+            >
+              Todas
+            </Link>
+            {snap.estrategias.map((e) => (
+              <Link
+                key={e}
+                href={buildEstrategiaHref(e)}
+                className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                  estrategiaFilter === e
+                    ? "bg-amauta-dark text-white"
+                    : "bg-amauta-bg-light text-amauta-text-secondary hover:bg-amauta-yellow/20"
+                }`}
+              >
+                {e}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {groups.length === 0 ? (
+          <div className="bg-white rounded-lg border border-amauta-bg-light p-12 text-center">
+            <p className="text-amauta-text-secondary">
+              No hay datos de rendimiento disponibles para este período. Los
+              datos aparecen el siguiente día hábil.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-6 lg:grid-cols-2">
+            {groups.map((g) => (
+              <EstrategiaCard
+                key={g.estrategia}
+                group={g}
+                getReturn={getReturn}
+                periodoLabel={periodoConfig.label}
+                outlierThreshold={periodoConfig.outlierThreshold}
+              />
+            ))}
+          </div>
+        )}
+
+        <p className="mt-6 text-xs text-amauta-text-tertiary">
+          Rendimientos calculados sobre VCP diario ·{" "}
+          <span className="text-amber-500 font-semibold">⚠</span> = posible artefacto de datos
+          (corrección de VCP o distribución), verificar con la fuente oficial
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function EstrategiaCard({
+  group,
+  getReturn,
+  periodoLabel,
+  outlierThreshold,
+}: {
+  group: {
+    estrategia: string;
+    total: number;
+    aumTotal: number;
+    top: EnrichedRow[];
+  };
+  getReturn: (r: EnrichedRow) => number | null;
+  periodoLabel: string;
+  outlierThreshold: number;
+}) {
+  const slug = encodeURIComponent(group.estrategia);
+  return (
+    <article className="bg-white rounded-lg border border-amauta-bg-light overflow-hidden">
+      <header className="bg-amauta-dark text-white px-4 py-3 flex items-end justify-between gap-3">
+        <div>
+          <h2 className="font-extrabold">{group.estrategia}</h2>
+          <p className="text-xs text-white/60">
+            {group.total.toLocaleString("es-AR")} clases · AUM{" "}
+            {fmtCompactCurrency(group.aumTotal, "ARS")}
+          </p>
+        </div>
+        <Link
+          href={`/fondos?estrategia=${slug}&sort=patrimonio_desc`}
+          className="text-xs font-bold text-amauta-yellow hover:text-white whitespace-nowrap"
+        >
+          Ver todos →
+        </Link>
+      </header>
+      <table className="w-full text-sm">
+        <thead className="bg-amauta-bg-light/50 text-amauta-text-tertiary text-xs uppercase">
+          <tr>
+            <th className="px-3 py-2 text-left font-bold w-8">#</th>
+            <th className="px-3 py-2 text-left font-bold">Fondo / Clase</th>
+            <th className="px-3 py-2 text-right font-bold">VCP</th>
+            <th className="px-3 py-2 text-right font-bold">{periodoLabel}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {group.top.map((r, i) => {
+            const ret = getReturn(r);
+            const retFmt = fmtReturn(ret, 2, outlierThreshold);
+            return (
+              <tr
+                key={r.key}
+                className="border-t border-amauta-bg-light hover:bg-amauta-bg-light/40"
+              >
+                <td className="px-3 py-2 text-amauta-text-tertiary tabular-nums">
+                  {i + 1}
+                </td>
+                <td className="px-3 py-2">
+                  <Link
+                    href={`/fondo/${encodeURIComponent(r.key)}`}
+                    className="font-medium text-amauta-bordo hover:underline"
+                  >
+                    {r.displayName}
+                  </Link>
+                  {r.gestora && (
+                    <div className="text-xs text-amauta-text-tertiary font-normal">
+                      {r.gestora}
+                    </div>
+                  )}
+                </td>
+                <td className="px-3 py-2 text-right tabular-nums whitespace-nowrap text-amauta-text-secondary">
+                  {fmtNumber(r.vcp, 4)}
+                </td>
+                <td
+                  className={`px-3 py-2 text-right tabular-nums whitespace-nowrap font-semibold ${retFmt.colorClass}`}
+                  title={retFmt.isOutlier ? "Posible artefacto de datos (corrección de VCP o distribución). Verificar con la fuente oficial." : undefined}
+                >
+                  {retFmt.text}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </article>
+  );
+}

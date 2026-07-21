@@ -12,7 +12,7 @@ import {
   signOut,
   LEGACY_CONFIG,
   type Member,
-} from "@/lib/supabase";
+} from "@/lib/portal-supabase";
 
 const TOOLS = [
   { href: "/cedears", title: "Monitor CEDEARs", sub: "Cotizaciones y fundamentals en vivo", icon: "📈", short: "CEDEARs", live: true },
@@ -87,12 +87,18 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
   // Clases de vista en <body> (reusan el CSS del portal)
   useEffect(() => {
     const b = document.body;
-    b.classList.remove("view-hub", "view-cedears", "view-news", "embedding");
+    b.classList.remove("view-hub", "view-cedears", "view-news", "view-fci", "embedding");
     if (status !== "authed") return;
+    const isFci =
+      pathname === "/fondos" ||
+      pathname.startsWith("/fondo") ||
+      pathname === "/comparar" ||
+      pathname === "/rankings";
     if (pathname === "/") b.classList.add("view-hub");
     else if (pathname === "/cedears") b.classList.add("view-cedears");
     else if (pathname === "/noticias") b.classList.add("view-news");
-    else b.classList.add("embedding"); // fondos, chat, simulador (iframe)
+    else if (isFci) b.classList.add("view-fci"); // nativo, ocupa todo el ancho
+    else b.classList.add("embedding"); // chat, simulador (iframe)
 
     // Colapsar el panel al entrar a una herramienta; expandir en el hub (desktop)
     if (pathname === "/") b.classList.remove("nav-collapsed");
@@ -269,7 +275,16 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
             <Link
               key={t.href}
               href={t.href}
-              className={`cedears-nav-entry tool-nav-entry${pathname === t.href ? " active" : ""}`}
+              className={`cedears-nav-entry tool-nav-entry${
+                (t.href === "/fondos"
+                  ? pathname === "/fondos" ||
+                    pathname.startsWith("/fondo") ||
+                    pathname === "/comparar" ||
+                    pathname === "/rankings"
+                  : pathname === t.href)
+                  ? " active"
+                  : ""
+              }`}
             >
               {t.live ? <span className="cedears-live-dot" /> : <span className="news-nav-ico">{t.icon}</span>}
               <span className="ticker">{t.short}</span>

@@ -2,10 +2,7 @@
 
 /* Tokens de marca Amauta para utilidades Tailwind v4 */
 @theme {
-  --color-amauta-yellow: #F3CF11;
-  --color-amauta-yellow-dark: #d9b80f;
-  --color-amauta-bordo: #621044;
-  --color-amauta-dark: #231F20;
+  /* Portal (tema oscuro) */
   --color-surface-base: #1C1819;
   --color-surface-raised: #231F20;
   --color-surface-overlay: #2C2728;
@@ -14,6 +11,41 @@
   --color-text-secondary: #B8B2B3;
   --color-text-tertiary: #8A8487;
   --font-fira: 'Fira Sans', Helvetica, Arial, sans-serif;
+
+  /* Marca Amauta (compartido con Monitor FCIs) */
+  --color-amauta-yellow: #f3cf11;
+  --color-amauta-yellow-dark: #d9b80f;
+  --color-amauta-yellow-hover: #d9b80f;
+  --color-amauta-bordo: #621044;
+  --color-amauta-bordo-hover: #4a0c34;
+  --color-amauta-dark: #231f20;
+  --color-amauta-dark-hover: #1a1718;
+  --color-amauta-bg-light: #f1f1f1;
+  --color-amauta-text: #000000;
+  --color-amauta-text-secondary: #666666;
+  --color-amauta-text-tertiary: #58585a;
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+
+  /* Tipografía (Monitor FCIs) */
+  --font-sans: var(--font-fira), Helvetica, Arial, sans-serif;
+  --text-xs: 13px; --text-sm: 14px; --text-base: 16px; --text-md: 15px;
+  --text-lg: 17px; --text-xl: 20px; --text-2xl: 22px; --text-3xl: 28px;
+  --text-4xl: 36px; --text-5xl: 48px;
+
+  /* Radios y sombra (Monitor FCIs) */
+  --radius-xs: 3px; --radius-sm: 5px; --radius-md: 6px; --radius-lg: 8px;
+  --shadow-card: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  --motion-instant: 200ms;
+  --motion-fast: 300ms;
+  --motion-normal: 400ms;
+}
+.amauta-rule {
+  display: block; width: 64px; height: 4px;
+  background: var(--color-amauta-yellow); border-radius: var(--radius-xs);
 }
 
 /* ============================================================
@@ -1593,3 +1625,7 @@ body.view-cedears .ced-dt-btn.active { background: var(--brand-bordo); color: #f
 body.view-cedears .ced-dt-research { color: var(--accent); border-bottom-color: rgba(243,207,17,0.4); }
 body.view-cedears .ced-loading,
 body.view-cedears .loading { color: var(--text-secondary); }
+
+/* ============ Monitor FCIs (nativo) ============ */
+body.view-fci .content-area { padding: 0; background: var(--color-amauta-bg-light); }
+body.view-fci .main { background: var(--color-amauta-bg-light); }
