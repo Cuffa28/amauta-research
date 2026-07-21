@@ -30,10 +30,9 @@ export default function FciShell({
   children: ReactNode;
 }) {
   return (
-    <div className="min-h-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div className="space-y-6">
         {/* ── Hero plano ─────────────────────────────────────────────── */}
-        <header className="relative overflow-hidden bg-surface-raised border border-brand-border rounded-lg p-6 sm:p-8 mb-6">
+        <header className="relative overflow-hidden bg-surface-raised border border-brand-border rounded-lg p-6 sm:p-8">
           <span className="absolute top-0 left-0 h-full w-1 bg-amauta-yellow" aria-hidden />
           {kicker && (
             <p className="text-[11px] uppercase tracking-[0.18em] text-amauta-yellow font-extrabold mb-2">
@@ -72,13 +71,12 @@ export default function FciShell({
         </header>
 
         {/* ── Sub-nav ────────────────────────────────────────────────── */}
-        <div className="border-b border-brand-border mb-6">
+        <div className="border-b border-brand-border">
           <FciTabs />
         </div>
 
         {/* ── Contenido ──────────────────────────────────────────────── */}
-        <div>{children}</div>
-      </div>
+        <div className="space-y-6">{children}</div>
     </div>
   );
 }

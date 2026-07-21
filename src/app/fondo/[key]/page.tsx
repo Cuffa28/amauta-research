@@ -92,9 +92,9 @@ export default async function FichaPage({
 
   return (
     <div className="min-h-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="space-y-6">
         {/* ── Hero plano ───────────────────────────────────────────────── */}
-        <header className="relative overflow-hidden bg-surface-raised border border-brand-border rounded-lg p-6 sm:p-8 mb-6">
+        <header className="relative overflow-hidden bg-surface-raised border border-brand-border rounded-lg p-6 sm:p-8">
           <span className="absolute top-0 left-0 h-full w-1 bg-amauta-yellow" aria-hidden />
           <nav className="text-xs text-text-tertiary font-medium mb-3">
             <Link href="/fondos" className="hover:text-amauta-yellow transition-colors">
@@ -143,7 +143,7 @@ export default async function FichaPage({
           </div>
         </header>
 
-        <div className="border-b border-brand-border mb-6">
+        <div className="border-b border-brand-border">
           <FciTabs />
         </div>
 

@@ -1545,7 +1545,7 @@ body.view-cedears .disclaimer {
 /* ============ Monitor FCIs — override tema oscuro on-brand ============ */
 body.view-fci .main,
 body.view-fci .content-area { background: var(--surface-base); }
-body.view-fci .content-area { padding: 0; color: var(--text-primary); }
+body.view-fci .content-area { color: var(--text-primary); }
 body.view-fci .disclaimer {
   background: transparent; border-top: 1px solid var(--brand-border); color: var(--text-tertiary);
 }
@@ -1635,5 +1635,4 @@ body.view-cedears .ced-loading,
 body.view-cedears .loading { color: var(--text-secondary); }
 
 /* ============ Monitor FCIs (nativo, tema oscuro como el hub) ============ */
-body.view-fci .content-area { padding: 0; background: var(--color-surface-base); }
 body.view-fci .main { background: var(--color-surface-base); }
