@@ -1626,6 +1626,6 @@ body.view-cedears .ced-dt-research { color: var(--accent); border-bottom-color: 
 body.view-cedears .ced-loading,
 body.view-cedears .loading { color: var(--text-secondary); }
 
-/* ============ Monitor FCIs (nativo) ============ */
-body.view-fci .content-area { padding: 0; background: var(--color-amauta-bg-light); }
-body.view-fci .main { background: var(--color-amauta-bg-light); }
+/* ============ Monitor FCIs (nativo, tema oscuro) ============ */
+body.view-fci .content-area { padding: 0; background: var(--color-surface-base); }
+body.view-fci .main { background: var(--color-surface-base); }
