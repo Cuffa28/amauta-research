@@ -1,5 +1,5 @@
-const CACHE = 'amauta-local-v14';
-const SHELL = ['/', '/index.html', '/css/styles.css', '/js/config.js', '/js/supabase-client.js', '/js/renderer.js', '/js/admin.js', '/js/cedears.js', '/js/news.js', '/js/app.js', '/manifest.json', '/icon.svg', '/assets/amauta-logo-horizontal.png'];
+const CACHE = 'amauta-local-v18';
+const SHELL = ['/', '/index.html', '/css/styles.css', '/js/config.js', '/js/supabase-client.js', '/js/cedears.js', '/js/news.js', '/js/app.js', '/simulador/', '/manifest.json', '/icon.svg', '/assets/amauta-logo-horizontal.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));

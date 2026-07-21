@@ -224,10 +224,8 @@
     return rows[0] || null;
   }
   async function fetchInstrumentIds() {
-    const r = await fetch(`${REST()}/instruments?select=id`, { headers: headers() });
-    if (!r.ok) throw new Error(`instruments ${r.status}`);
-    const rows = await r.json();
-    return new Set(rows.map(x => String(x.id).toUpperCase()));
+    // Research se removió del portal → sin links "ver research" en el monitor.
+    return new Set();
   }
 
   // -------------- Freshness --------------

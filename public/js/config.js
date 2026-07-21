@@ -8,6 +8,6 @@ export const AMAUTA_CONFIG = {
   EMBEDS: {
     fci:       { title: 'Monitor FCIs',     subtitle: 'Fondos Comunes de Inversión · CAFCI', icon: '📊', url: 'https://monitor-fci-amauta.vercel.app/' },
     chat:      { title: 'Chat Financiero',  subtitle: 'Asistente financiero con IA',          icon: '💬', url: 'https://amauta-chat-financiero.vercel.app/' },
-    simulador: { title: 'Simulador',        subtitle: 'Escenarios y proyección de inversiones', icon: '🧮', url: null },
+    simulador: { title: 'Simulador',        subtitle: 'Comparador CPD · Banco vs Mercado',      icon: '🧮', url: '/simulador/' },
   },
 };

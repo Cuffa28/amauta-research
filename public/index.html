@@ -37,7 +37,18 @@
 <div class="login-view" id="loginView">
   <div class="login-card">
     <div class="login-brand">
-      <img src="/assets/amauta-logo-horizontal.png" alt="Amauta Inversiones Financieras" class="login-logo">
+      <div class="login-lockup">
+        <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="20,2.5 37.5,20 20,37.5 2.5,20" fill="#F3CF11"/>
+          <g stroke="#231F20" stroke-width="1.9" stroke-linecap="round">
+            <line x1="20" y1="10.4" x2="20" y2="29.6"/>
+            <line x1="10.4" y1="20" x2="29.6" y2="20"/>
+            <line x1="13.6" y1="13.6" x2="26.4" y2="26.4"/>
+            <line x1="26.4" y1="13.6" x2="13.6" y2="26.4"/>
+          </g>
+        </svg>
+        <span class="login-wordmark">AMAUTA<span>Inversiones Financieras</span></span>
+      </div>
       <span class="login-pill">Amauta Local</span>
     </div>
     <h1 class="login-title">Acceso del equipo</h1>
@@ -68,34 +79,27 @@
   <span style="font-size:10px;color:var(--am-gray-dark);">Portal</span>
 </div>
 
+<button class="nav-toggle" id="navToggle" title="Mostrar panel" aria-label="Mostrar panel">☰</button>
+
 <aside class="sidebar" id="sidebar">
   <a href="javascript:void(0)" id="sidebarCloseLink" class="sidebar-close">✕</a>
   <div class="sidebar-header">
-    <div class="sidebar-logo">
-      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-        <polygon points="18,1 35,18 18,35 1,18" fill="#F3CF11"/>
-        <g stroke="#231F20" stroke-width="2" stroke-linecap="round">
-          <line x1="18" y1="8.5" x2="18" y2="27.5"/>
-          <line x1="8.5" y1="18" x2="27.5" y2="18"/>
-          <line x1="24.7" y1="11.3" x2="11.3" y2="24.7"/>
-          <line x1="11.3" y1="11.3" x2="24.7" y2="24.7"/>
+    <div class="sidebar-logo" id="sidebarLogo" title="Ir al inicio">
+      <svg class="am-mark" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="20,2.5 37.5,20 20,37.5 2.5,20" fill="#F3CF11"/>
+        <g stroke="#231F20" stroke-width="1.9" stroke-linecap="round">
+          <line x1="20" y1="10.4" x2="20" y2="29.6"/>
+          <line x1="10.4" y1="20" x2="29.6" y2="20"/>
+          <line x1="13.6" y1="13.6" x2="26.4" y2="26.4"/>
+          <line x1="26.4" y1="13.6" x2="13.6" y2="26.4"/>
         </g>
       </svg>
       <h1>AMAUTA<span>Local</span></h1>
     </div>
-    <div class="sidebar-search">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Buscar instrumento...">
-    </div>
+    <button class="nav-collapse-btn" id="navCollapseBtn" title="Ocultar panel" aria-label="Ocultar panel">«</button>
   </div>
 
   <nav class="sidebar-nav" id="sidebarNav"></nav>
-
-  <div id="sidebarAdminEntry" class="sidebar-admin-entry">
-    <span style="min-width:24px;font-weight:700;">⚙</span>
-    <span class="inst-name">Panel Admin</span>
-    <span class="admin-badge" style="display:inline-block;">ADMIN</span>
-  </div>
 
   <div class="sidebar-footer">
     <div class="user-box">
@@ -103,8 +107,7 @@
       <span class="user-email" id="userEmail"></span>
       <button class="logout-btn" id="logoutBtn">Salir</button>
     </div>
-    <div id="sidebarInstrumentCount" style="margin-top:8px; font-size:10px; color:var(--am-gray-dark);"></div>
-    <div style="margin-top:4px; font-size:10px;">CNV Mat. 1029 · amautainversiones.com</div>
+    <div style="margin-top:8px; font-size:10px;">CNV Mat. 1029 · amautainversiones.com</div>
   </div>
 </aside>
 
