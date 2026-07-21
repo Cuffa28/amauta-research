@@ -1,0 +1,171 @@
+/**
+ * Negocio de la industria de FCIs (facturación y AUM).
+ * Fuente: fonditos.ar (MCP) · ranking_facturacion + serie_aum.
+ */
+import { fonditos } from "@/lib/fonditos";
+import FciShell from "@/components/fci/FciShell";
+import { Section, ErrorBox, EmptyBox, Chip } from "@/components/fci/ui";
+import SeriesChart from "@/components/fci/charts/SeriesChart";
+import { compactArs } from "@/lib/fci/constants";
+import type { RankingFacturacion, SerieAum } from "@/lib/fci/types";
+
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
+
+export const metadata = { title: "Negocio · Monitor FCIs · Amauta" };
+
+const PERIODS = [
+  { value: "30d", label: "30 días" },
+  { value: "mtd", label: "MTD" },
+  { value: "ytd", label: "YTD" },
+  { value: "current", label: "Actual" },
+];
+
+interface SP {
+  period?: string;
+}
+
+export default async function NegocioPage({
+  searchParams,
+}: {
+  searchParams: Promise<SP>;
+}) {
+  const sp = await searchParams;
+  const period = PERIODS.some((p) => p.value === sp.period) ? sp.period! : "30d";
+
+  const [fact, aum] = await Promise.all([
+    fonditos<RankingFacturacion>("ranking_facturacion", { period }).catch(() => null),
+    fonditos<SerieAum>("serie_aum", { compresion: "mensual" }).catch(() => null),
+  ]);
+
+  const rows = fact?.rows ?? [];
+  const maxFact = Math.max(1, ...rows.map((r) => r.facturacion_periodo));
+  const topManager = rows[0];
+
+  // AUM total de la industria por bucket = suma de todas las gestoras.
+  const aumSeries =
+    aum?.buckets.map((b, i) => {
+      const total = aum.managers.reduce((acc, mgr) => acc + (aum.data[mgr]?.[i] ?? 0), 0);
+      return { x: b, y: total };
+    }) ?? [];
+  const lastAum = aumSeries[aumSeries.length - 1];
+
+  const buildHref = (p: string) => (p === "30d" ? "/fondos/negocio" : `/fondos/negocio?period=${p}`);
+
+  return (
+    <FciShell
+      kicker="Industria · fonditos · CAFCI"
+      title="El negocio de los FCIs"
+      subtitle="Patrimonio total administrado y facturación estimada por gestora. La foto competitiva de la industria."
+      kpis={[
+        { label: "AUM industria", value: lastAum ? compactArs(lastAum.y) : "—", sub: lastAum?.x },
+        { label: "Top facturación", value: topManager ? compactArs(topManager.facturacion_periodo) : "—", sub: topManager?.manager },
+        { label: "Gestoras", value: rows.length ? String(rows.length) : "—" },
+        { label: "Período", value: PERIODS.find((p) => p.value === period)?.label ?? period },
+      ]}
+    >
+      <div className="space-y-6">
+        {/* Evolución del AUM */}
+        <Section title="Evolución del patrimonio administrado" subtitle="AUM total de la industria · mensual">
+          {!aum ? (
+            <div className="p-4">
+              <ErrorBox message="La serie de AUM no está disponible." />
+            </div>
+          ) : aumSeries.length < 2 ? (
+            <EmptyBox icon="📈" title="Sin datos de AUM" />
+          ) : (
+            <div className="p-4 sm:p-5">
+              <SeriesChart data={aumSeries} currency color="#621044" gradientId="aumArea" height={320} />
+            </div>
+          )}
+        </Section>
+
+        {/* Ranking de facturación */}
+        <div className="mb-1 flex flex-wrap items-center gap-2">
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary mr-1">
+            Período de facturación
+          </span>
+          {PERIODS.map((p) => (
+            <a
+              key={p.value}
+              href={buildHref(p.value)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-colors ${
+                period === p.value
+                  ? "bg-amauta-bordo text-white border-amauta-bordo"
+                  : "bg-white text-amauta-text-secondary border-black/10 hover:border-amauta-bordo hover:text-amauta-bordo"
+              }`}
+            >
+              {p.label}
+            </a>
+          ))}
+        </div>
+
+        <Section title="Facturación por gestora" subtitle={fact ? `${rows.length} gestoras · honorarios de gestión` : undefined}>
+          {!fact ? (
+            <div className="p-4">
+              <ErrorBox message="El ranking de facturación no está disponible." />
+            </div>
+          ) : rows.length === 0 ? (
+            <EmptyBox icon="🏦" title="Sin datos" />
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm min-w-[680px]">
+                <thead className="bg-amauta-bordo text-white">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[11px] w-10">#</th>
+                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[11px]">Gestora</th>
+                    <th className="px-3 py-3 text-center font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Tipo</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden md:table-cell">Fondos</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden lg:table-cell">AUM</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Fee prom.</th>
+                    <th className="px-4 py-3 text-right font-extrabold uppercase tracking-wider text-[11px]">Facturación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r, i) => {
+                    const w = (r.facturacion_periodo / maxFact) * 100;
+                    return (
+                      <tr key={r.manager} className={`border-t border-black/5 hover:bg-amauta-yellow/5 transition-colors ${i % 2 ? "bg-black/[0.015]" : ""}`}>
+                        <td className="px-4 py-3 text-xs tabular-nums text-amauta-text-tertiary">{i + 1}</td>
+                        <td className="px-4 py-3 font-extrabold text-amauta-text">{r.manager}</td>
+                        <td className="px-3 py-3 text-center hidden sm:table-cell">
+                          <Chip tone={r.type === "BANK" ? "blue" : "gray"}>
+                            {r.type === "BANK" ? "Banco" : "Indep."}
+                          </Chip>
+                        </td>
+                        <td className="px-3 py-3 text-right tabular-nums hidden md:table-cell text-amauta-text-secondary">
+                          {r.n_fondos}
+                        </td>
+                        <td className="px-3 py-3 text-right tabular-nums hidden lg:table-cell text-amauta-text-secondary">
+                          {compactArs(r.aum_ars)}
+                        </td>
+                        <td className="px-3 py-3 text-right tabular-nums hidden sm:table-cell text-amauta-text-secondary">
+                          {r.fee_avg.toFixed(2)}%
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <span className="tabular-nums font-bold text-amauta-bordo">
+                              {compactArs(r.facturacion_periodo)}
+                            </span>
+                            <span className="hidden md:block w-24 h-2 bg-black/5 rounded-xs overflow-hidden">
+                              <span className="block h-full bg-amauta-yellow" style={{ width: `${w}%` }} />
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Section>
+      </div>
+
+      <p className="mt-4 text-xs text-amauta-text-tertiary leading-relaxed max-w-3xl">
+        La facturación es una estimación a partir del AUM promedio del período y el fee de gestión promedio.
+        Fuente: fonditos · CAFCI.
+      </p>
+    </FciShell>
+  );
+}

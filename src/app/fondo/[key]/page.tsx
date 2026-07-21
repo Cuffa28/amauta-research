@@ -1,411 +1,306 @@
 /**
- * Detalle de un fondo (deduplicado por baseName tras BLOQUE 2).
- * URL: /fondo/[key]  donde key = encodeURIComponent(baseName del fondo).
- *
- * Datos: planilla diaria oficial de CAFCI vía getMarketSnapshotWithReturns().
- * Incluye VCP / AUM / retornos pre-calculados (1D/MTD/YTD/13M), honorarios
- * detallados por clase, metadata (benchmark, duration, region, calificación)
- * y composición de cartera más reciente desde fci_cartera.
- *
- * Visual refresh (BLOQUE 5) — tokens de amauta-design:
- *   - Hero strip dark con tagline yellow + título extrabold + badges chips
- *   - KPIs en yellow extrabold sobre fondo dark/5
- *   - Secciones encadenadas con header amauta-dark uppercase tracking
- *   - Tabla "Clases del Fondo" nueva, marca la representativa con borde yellow
- *   - Radios solo rounded-xs (3px) y rounded-sm (5px); shadow-card único
+ * Ficha completa de un fondo.
+ * URL: /fondo/[key]  donde key = encodeURIComponent(nombre del fondo).
+ * Fuente: fonditos.ar (MCP) · ficha_fondo + composicion_fondo + serie_fondo
+ *         + tenencias_fondo + metricas_renta_fija.
  */
 import Link from "next/link";
-import {
-  fmtDateAr,
-  getMarketSnapshotWithReturns,
-} from "@/lib/fondos/enriched";
-import type { ClaseInfo } from "@/lib/fondos/enriched";
-import type { Confianza } from "@/lib/fondos/estrategia";
-import { fondoBaseName } from "@/lib/fondos/client";
-import { fmtCompactCurrency, fmtNumber, fmtReturn } from "@/lib/utils/format";
-import { EstrategiaBadge, ConfianzaPill } from "@/components/EstrategiaBadge";
+import { fonditos } from "@/lib/fonditos";
+import { fmtNumber, fmtReturn } from "@/lib/utils/format";
+import { compactArs, titleCase } from "@/lib/fci/constants";
+import FciTabs from "@/components/fci/FciTabs";
+import { Section, StatTile, Chip, ErrorBox, EmptyBox } from "@/components/fci/ui";
+import SeriesChart from "@/components/fci/charts/SeriesChart";
+import type {
+  FichaFondo,
+  ComposicionFondo,
+  SerieFondo,
+  TenenciasFondo,
+  MetricasRentaFija,
+} from "@/lib/fci/types";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
-export default async function FondoDetailPage({
+// Colores de barras de composición por familia de activo.
+const TIPO_COLOR: Record<string, string> = {
+  "Tasa Dual": "bg-blue-500",
+  "Tasa CER ARS": "bg-purple-500",
+  "Tasa Fija ARS": "bg-blue-400",
+  "Tasa Flotante ARS": "bg-sky-400",
+  "Bono Soberano USD": "bg-cyan-500",
+  "Bono Provincial": "bg-teal-500",
+  "Dólar Linked": "bg-amber-400",
+  Acciones: "bg-orange-400",
+  FCI: "bg-pink-400",
+  Otros: "bg-slate-400",
+  "Resto de Activos": "bg-slate-300",
+};
+const tipoColor = (t: string) => TIPO_COLOR[t] ?? "bg-slate-400";
+
+export default async function FichaPage({
   params,
 }: {
   params: Promise<{ key: string }>;
 }) {
   const { key } = await params;
-  const displayName = decodeURIComponent(key);
+  const nombre = decodeURIComponent(key);
 
-  const snap = await getMarketSnapshotWithReturns().catch(() => null);
+  const ficha = await fonditos<FichaFondo>("ficha_fondo", { fondo: nombre }).catch(() => null);
 
-  if (!snap) {
-    return <ErrorState message="No pudimos cargar los datos de fondos." />;
-  }
-
-  // El listado dedupea por baseName, así que el key de cada row es el
-  // baseName. Tolerar URLs viejas con sufijo "- Clase X" via normalización.
-  const baseKey = fondoBaseName(displayName);
-  const fondo =
-    snap.rows.find((r) => r.key === displayName) ??
-    snap.rows.find((r) => r.key === baseKey);
-
-  if (!fondo) {
+  if (!ficha) {
     return (
-      <ErrorState
-        message={`No se encontró el fondo "${displayName}". Puede que el nombre haya cambiado.`}
-      />
+      <div className="min-h-full bg-amauta-bg-light">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+          <ErrorBox
+            title="No se encontró el fondo"
+            message={`No pudimos cargar “${nombre}”. Puede que el nombre haya cambiado o la fuente no responda.`}
+          />
+          <div className="mt-6 text-center">
+            <Link
+              href="/fondos"
+              className="inline-block rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-5 py-2.5 hover:bg-amauta-yellow-hover transition-colors"
+            >
+              ← Volver a Fondos
+            </Link>
+          </div>
+        </div>
+      </div>
     );
   }
 
-  const hasClases = fondo.clasesDisponibles.length > 0;
+  const canonical = ficha.fondo;
+  const d = ficha.datos_actuales;
+  const m = ficha.metricas;
+
+  // Datos secundarios en paralelo (todos tolerantes a fallo).
+  const [comp, serie, ten, rf] = await Promise.all([
+    fonditos<ComposicionFondo>("composicion_fondo", { fondo: canonical }).catch(() => null),
+    fonditos<SerieFondo>("serie_fondo", { fondo: canonical, dias: 365 }).catch(() => null),
+    fonditos<TenenciasFondo>("tenencias_fondo", { fondo: canonical }).catch(() => null),
+    fonditos<MetricasRentaFija>("metricas_renta_fija", { fondo: canonical }).catch(() => null),
+  ]);
+
+  const serieData = (serie?.data ?? []).map((p) => ({ x: p.fecha, y: p.vcp_norm }));
+
+  const rfMetrics = rf
+    ? [
+        { label: "Duration", value: numOrDash(rf.duration, "d") },
+        { label: "TIR", value: pctOrDash(rf.tir_pct ?? (rf.tir != null ? rf.tir * 100 : null)) },
+      ].filter((x) => x.value !== "—")
+    : [];
 
   return (
-    <div className="bg-amauta-bg-light flex-1">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+    <div className="min-h-full bg-amauta-bg-light">
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <header className="bg-amauta-dark text-white shadow-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="pt-6 pb-5">
+            <nav className="text-xs text-white/50 font-medium mb-3">
+              <Link href="/fondos" className="hover:text-amauta-yellow transition-colors">
+                Fondos
+              </Link>
+              <span className="mx-2 text-white/25">/</span>
+              <span className="text-white/70">Ficha</span>
+            </nav>
 
-        {/* ── Breadcrumb ─────────────────────────────────────────────── */}
-        <nav className="mb-4 text-xs sm:text-sm text-amauta-text-tertiary font-medium">
-          <Link href="/fondos" className="hover:text-amauta-bordo transition-colors">
-            Fondos
-          </Link>
-          <span className="mx-2 text-amauta-text-tertiary/50">/</span>
-          <span className="text-amauta-text-secondary truncate">
-            {fondo.displayName}
-          </span>
-        </nav>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-amauta-yellow font-extrabold mb-2">
+              Ficha del fondo · Cierre {d.fecha}
+            </p>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight">
+              {canonical}
+            </h1>
+            <p className="mt-2 text-sm text-white/65">
+              {ficha.gestora && <span className="font-bold text-white/85">{ficha.gestora}</span>}
+              {d.sociedad_depositaria && (
+                <>
+                  <span className="mx-2 text-white/30">·</span>
+                  <span>Depositaria: {d.sociedad_depositaria}</span>
+                </>
+              )}
+              {ficha.clase && (
+                <>
+                  <span className="mx-2 text-white/30">·</span>
+                  <span>Clase {ficha.clase}</span>
+                </>
+              )}
+            </p>
 
-        {/* ── Hero strip ─────────────────────────────────────────────── */}
-        <section className="mb-6 sm:mb-8">
-          <div className="bg-amauta-dark text-white rounded-sm overflow-hidden shadow-card">
-            <div className="px-6 py-6 sm:px-8 sm:py-7">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-amauta-yellow font-extrabold mb-3">
-                Ficha del Fondo · Cierre {fmtDateAr(fondo.fecha)}
-              </p>
-
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight">
-                {fondo.displayName}
-              </h1>
-
-              <div className="mt-2 text-sm text-white/65">
-                {fondo.gestora && <span className="font-bold text-white/80">{fondo.gestora}</span>}
-                {fondo.depositaria && (
-                  <>
-                    <span className="mx-2 text-white/30">·</span>
-                    <span>Depositaria: {fondo.depositaria}</span>
-                  </>
-                )}
-                {fondo.claseRepresentativa && (
-                  <>
-                    <span className="mx-2 text-white/30">·</span>
-                    <span>Clase mostrada: <strong className="text-white/85">{fondo.claseRepresentativa}</strong></span>
-                  </>
-                )}
-              </div>
-
-              {/* Chips de metadata + confianza */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                <EstrategiaBadge
-                  value={fondo.estrategia}
-                  confianza={fondo.estrategiaConfianza}
-                />
-                <ConfianzaPill confianza={fondo.estrategiaConfianza} />
-                {fondo.categoria && fondo.categoria !== fondo.estrategia && (
-                  <Chip tone="dark">{fondo.categoria}</Chip>
-                )}
-                {fondo.horizonte && <Chip>{fondo.horizonte}</Chip>}
-                {fondo.region && <Chip>{fondo.region}</Chip>}
-                {fondo.benchmark && fondo.benchmark !== "No Registrado" && (
-                  <Chip>BM: {fondo.benchmark}</Chip>
-                )}
-                {fondo.duration && <Chip>{fondo.duration}</Chip>}
-                {fondo.calificacion && <Chip>Cal. {fondo.calificacion}</Chip>}
-              </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {d.categoria && <Chip tone="yellow">{titleCase(d.categoria)}</Chip>}
+              {ficha.subcategoria && <ChipDark>{titleCase(ficha.subcategoria)}</ChipDark>}
+              {d.moneda && <ChipDark>{d.moneda}</ChipDark>}
+              {d.calificacion && <ChipDark>Cal. {d.calificacion}</ChipDark>}
+              {d.horizonte && <ChipDark>{d.horizonte}</ChipDark>}
             </div>
 
             {/* KPIs */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10 border-t border-white/10">
-              <Kpi label="VCP" value={fmtNumber(fondo.vcp, 4)} />
-              <Kpi
-                label="Patrimonio del fondo"
-                value={
-                  fondo.patrimonio
-                    ? (fmtCompactCurrency(fondo.patrimonio, "ARS") ?? "—")
-                    : "—"
-                }
-              />
-              <Kpi
-                label="Cuotapartes"
-                value={fondo.ccp ? fmtNumber(fondo.ccp, 0) : "—"}
-              />
-              <Kpi
-                label="Hon. Gerente (Clase rep.)"
-                value={
-                  fondo.feeGestion != null
-                    ? `${fondo.feeGestion.toFixed(2)}%`
-                    : "—"
-                }
-              />
+            <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-sm overflow-hidden">
+              <HeroKpi label="VCP" value={fmtNumber(d.vcp, 2)} />
+              <HeroKpi label="Patrimonio" value={compactArs(d.patrimonio)} />
+              <HeroKpi label="TNA" value={pctOrDash(m.tna)} />
+              <HeroKpi label="Sharpe" value={m.sharpe != null ? fmtNumber(m.sharpe, 2) : "—"} />
             </div>
           </div>
-        </section>
 
-        {/* ── Cómo se clasificó este fondo (transparencia) ─────────────── */}
-        <ClasificacionBlock
-          estrategia={fondo.estrategia}
-          confianza={fondo.estrategiaConfianza}
-          razon={fondo.estrategiaRazon}
-          codigoCafci={fondo.codigoCafci}
-          hasHoldings={fondo.cartera.length > 0}
-        />
+          <div className="border-t border-white/10">
+            <FciTabs />
+          </div>
+        </div>
+      </header>
 
-        {/* ── Composición de Cartera ─────────────────────────────────── */}
-        {fondo.cartera.length > 0 && (
-          <Section
-            title="Composición de Cartera"
-            subtitle={`Top ${fondo.cartera.length} activos · semanal · fuente CAFCI`}
-          >
-            <div className="px-6 py-5 space-y-3">
-              {fondo.cartera.map((h) => {
-                const tipoStyle = TIPO_BAR_COLOR[h.tipo_activo] ?? "bg-slate-400";
-                return (
-                  <div key={h.rank} className="flex items-center gap-3">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 text-sm mb-1.5">
-                        <span className="font-bold text-amauta-text truncate">
-                          {h.activo}
-                        </span>
-                        <span
-                          className="inline-block text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-xs text-amauta-text-secondary bg-amauta-bg-light shrink-0"
-                          title={`Tipo de activo: ${h.tipo_activo}`}
-                        >
-                          {h.tipo_activo}
-                        </span>
-                      </div>
-                      <div className="h-2 bg-amauta-bg-light rounded-xs overflow-hidden">
-                        <div
-                          className={`h-full ${tipoStyle}`}
-                          style={{ width: `${Math.min(100, h.share)}%` }}
-                        />
-                      </div>
-                    </div>
-                    <span className="text-sm font-extrabold tabular-nums text-amauta-bordo whitespace-nowrap w-14 text-right">
-                      {h.share.toFixed(1)}%
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </Section>
-        )}
-
-        {/* ── Rendimientos ───────────────────────────────────────────── */}
-        <Section
-          title="Rendimientos Históricos"
-          subtitle="Variaciones pre-calculadas por CAFCI · TNA = rendimiento × 365/días"
-        >
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-amauta-bg-light/50 text-amauta-text-tertiary">
-                <tr>
-                  <th className="px-6 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">
-                    Período
-                  </th>
-                  <th className="px-6 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">
-                    Rendimiento
-                  </th>
-                  <th className="px-6 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">
-                    TNA
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <ReturnRow label="Diario (1D)" simple={fondo.ret1d} tna={fondo.tna1d} />
-                <ReturnRow label="Mensual (MTD)" simple={fondo.retMTD} tna={fondo.tna30d} />
-                <ReturnRow label="Año en Curso (YTD)" simple={fondo.ytd} tna={null} />
-                <ReturnRow label="Interanual (13M)" simple={fondo.ret13m} tna={fondo.tna1a} />
-              </tbody>
-            </table>
+      {/* ── Contenido ────────────────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+        {/* Rendimientos */}
+        <Section title="Rendimientos" subtitle={`Historial: ${m.dias_historico ?? "—"} días · desde ${m.fecha_inicio ?? "—"}`}>
+          <div className="p-4 sm:p-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <ReturnTile label="7 días" v={m.rend_7d} />
+            <ReturnTile label="30 días" v={m.rend_30d} />
+            <ReturnTile label="90 días" v={m.rend_90d} />
+            <ReturnTile label="YTD" v={m.rend_ytd} />
+            <ReturnTile label="1 año" v={m.rend_1y} />
+          </div>
+          <div className="px-4 sm:px-5 pb-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <StatTile label="TNA" value={pctOrDash(m.tna)} />
+            <StatTile label="Volatilidad" value={pctOrDash(m.volatilidad)} />
+            <StatTile label="Sharpe" value={m.sharpe != null ? fmtNumber(m.sharpe, 2) : "—"} />
           </div>
         </Section>
 
-        {/* ── Clases del Fondo ───────────────────────────────────────── */}
-        {hasClases && (
+        {/* Evolución del VCP */}
+        <Section
+          title="Evolución del VCP"
+          subtitle={serie ? `Base 100 · ${serie.from} → ${serie.to}` : undefined}
+        >
+          <div className="p-4 sm:p-5">
+            {serieData.length > 1 ? (
+              <SeriesChart data={serieData} mode="index" color="#621044" gradientId="fichaVcp" />
+            ) : (
+              <EmptyBox icon="📈" title="Serie no disponible" message="No hay suficientes puntos para graficar la evolución." />
+            )}
+          </div>
+        </Section>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Composición */}
+          <Section title="Composición de cartera" subtitle={comp ? `Por tipo de activo` : undefined}>
+            {comp && comp.summary.length > 0 ? (
+              <div className="p-4 sm:p-5 space-y-3">
+                {comp.summary.map((s) => (
+                  <div key={s.tipo_activo} className="flex items-center gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 text-sm mb-1.5">
+                        <span className="font-bold text-amauta-text truncate">{s.tipo_activo}</span>
+                        <span className="text-xs text-amauta-text-tertiary shrink-0">
+                          {s.n_activos} activo{s.n_activos === 1 ? "" : "s"}
+                        </span>
+                      </div>
+                      <div className="h-2.5 bg-black/6 rounded-xs overflow-hidden">
+                        <div
+                          className={`h-full ${tipoColor(s.tipo_activo)}`}
+                          style={{ width: `${Math.min(100, s.peso_pct)}%` }}
+                        />
+                      </div>
+                    </div>
+                    <span className="text-sm font-extrabold tabular-nums text-amauta-bordo w-14 text-right">
+                      {s.peso_pct.toFixed(1)}%
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptyBox icon="🧩" title="Sin composición publicada" message="Este fondo no tiene desglose de cartera disponible en la fuente." />
+            )}
+          </Section>
+
+          {/* Tenencias */}
           <Section
-            title="Clases del Fondo"
-            subtitle={`${fondo.clasesDisponibles.length} ${fondo.clasesDisponibles.length === 1 ? "clase disponible" : "clases disponibles"} · honorarios y comisiones por clase`}
+            title="Principales tenencias"
+            subtitle={ten ? `Actualizado hace ${ten.age_hours}h` : undefined}
           >
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-amauta-bg-light/50 text-amauta-text-tertiary">
-                  <tr>
-                    <th className="px-6 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">Clase</th>
-                    <th className="px-3 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Patrimonio</th>
-                    <th className="px-3 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Hon. Gerente</th>
-                    <th className="px-3 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px] hidden md:table-cell">Hon. Depositaria</th>
-                    <th className="px-3 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px] hidden md:table-cell">Com. Ingreso</th>
-                    <th className="px-3 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Com. Rescate</th>
-                    <th className="px-3 py-2.5 text-center font-extrabold uppercase tracking-wider text-[11px] hidden lg:table-cell">Plazo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {fondo.clasesDisponibles.map((c, i) => (
-                    <ClaseRow
-                      key={c.codigoCafci ?? `${c.letra}-${i}`}
-                      clase={c}
-                      isRep={c.letra === fondo.claseRepresentativa}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="px-6 py-2.5 text-xs text-amauta-text-tertiary border-t border-amauta-bg-light bg-amauta-bg-light/40 leading-relaxed">
-              La fila destacada en <span className="inline-block w-2 h-2 rounded-xs bg-amauta-yellow align-middle mx-1" /> es la <strong className="text-amauta-text-secondary">clase representativa</strong> — la que usamos para los KPIs y rendimientos de arriba. Clase B es el estándar minorista; A suele tener mínimos chicos / honorarios más altos; C-G son típicamente institucionales.
+            {ten && ten.holdings.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-amauta-bg-light/60 text-amauta-text-tertiary">
+                    <tr>
+                      <th className="px-4 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">Activo</th>
+                      <th className="px-3 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Tipo</th>
+                      <th className="px-4 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Peso</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ten.holdings.map((h, i) => (
+                      <tr key={`${h.name}-${i}`} className={`border-t border-black/5 ${i % 2 ? "bg-black/[0.015]" : ""}`}>
+                        <td className="px-4 py-2.5 font-medium text-amauta-text">{h.name}</td>
+                        <td className="px-3 py-2.5 hidden sm:table-cell">
+                          <span className="inline-flex items-center gap-1.5 text-xs text-amauta-text-secondary">
+                            <span className={`w-2 h-2 rounded-full ${tipoColor(h.type)}`} />
+                            {h.type}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2.5 text-right tabular-nums font-bold text-amauta-bordo">
+                          {h.weight.toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <EmptyBox icon="📋" title="Sin tenencias disponibles" message="No hay detalle de tenencias para este fondo." />
+            )}
+          </Section>
+        </div>
+
+        {/* Métricas de renta fija (solo si aplican) */}
+        {rfMetrics.length > 0 && (
+          <Section title="Métricas de renta fija">
+            <div className="p-4 sm:p-5 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {rfMetrics.map((x) => (
+                <StatTile key={x.label} label={x.label} value={x.value} />
+              ))}
             </div>
           </Section>
         )}
 
-        {/* ── Acciones ───────────────────────────────────────────────── */}
-        <div className="mt-6 flex flex-wrap gap-3">
+        {/* Datos generales */}
+        <Section title="Datos generales">
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <Info label="Sociedad gerente" value={d.sociedad_gerente} />
+            <Info label="Depositaria" value={d.sociedad_depositaria} />
+            <Info label="Calificación" value={d.calificacion} />
+            <Info label="Hon. gestión" value={pctOrDash(d.fee_gestion)} />
+            <Info label="Hon. depositaria" value={pctOrDash(d.fee_depositaria)} />
+            <Info label="Com. rescate" value={pctOrDash(d.com_rescate)} />
+            <Info label="Com. ingreso" value={pctOrDash(d.com_ingreso)} />
+            <Info label="Plazo de rescate" value={d.plazo_rescate != null ? `${d.plazo_rescate} día${d.plazo_rescate === 1 ? "" : "s"}` : null} />
+            <Info label="Cuotapartes" value={d.ccp != null ? fmtNumber(d.ccp, 0) : null} />
+          </dl>
+        </Section>
+
+        {/* Acciones */}
+        <div className="flex flex-wrap gap-3">
           <Link
-            href={`/comparar?fondos=${encodeURIComponent(fondo.key)}`}
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs hover:bg-amauta-yellow-hover transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amauta-yellow/50 focus-visible:ring-offset-2"
+            href={`/fondos/comparar?fondos=${encodeURIComponent(canonical)}`}
+            className="inline-flex items-center rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-5 py-2.5 hover:bg-amauta-yellow-hover transition-colors"
           >
             Comparar este fondo →
           </Link>
-          <a
-            href={`/api/fondo/pdf?key=${encodeURIComponent(fondo.key)}`}
-            download
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-amauta-bordo text-white font-extrabold uppercase tracking-wider text-xs hover:bg-amauta-bordo-hover transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amauta-bordo/50 focus-visible:ring-offset-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-4 h-4"
-              aria-hidden="true"
-            >
-              <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-              <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-            </svg>
-            Descargar PDF
-          </a>
           <Link
             href="/fondos"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-amauta-bg-light text-amauta-text-secondary font-bold text-sm hover:bg-amauta-bg-light transition-colors"
+            className="inline-flex items-center rounded-sm border border-black/10 bg-white text-amauta-text-secondary font-bold text-sm px-5 py-2.5 hover:bg-amauta-bg-light transition-colors"
           >
             ← Volver al listado
           </Link>
         </div>
-
-        {/* Metadata adicional pequeña abajo */}
-        {(fondo.codigoCnv || fondo.codigoCafci || fondo.inicio) && (
-          <p className="mt-6 text-xs text-amauta-text-tertiary leading-relaxed">
-            {fondo.codigoCnv && <span>CNV #{fondo.codigoCnv}</span>}
-            {fondo.codigoCnv && (fondo.codigoCafci || fondo.inicio) && <span className="mx-2 text-amauta-text-tertiary/50">·</span>}
-            {fondo.codigoCafci && <span>CAFCI #{fondo.codigoCafci}</span>}
-            {fondo.codigoCafci && fondo.inicio && <span className="mx-2 text-amauta-text-tertiary/50">·</span>}
-            {fondo.inicio && <span>Inicio: {fmtDateAr(fondo.inicio)}</span>}
-          </p>
-        )}
       </div>
     </div>
   );
 }
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
+// ── Sub-componentes ──────────────────────────────────────────────────────────
 
-function ClasificacionBlock({
-  estrategia,
-  confianza,
-  razon,
-  codigoCafci,
-  hasHoldings,
-}: {
-  estrategia: string;
-  confianza: Confianza;
-  razon: string;
-  codigoCafci: number | null;
-  hasHoldings: boolean;
-}) {
-  // Estilos del block según nivel — visualmente claro de un vistazo si esta
-  // clasificación es indubitable o necesita revisión manual.
-  const palette: Record<Confianza, { bg: string; border: string; barFrom: string; barTo: string }> = {
-    override: { bg: "bg-blue-50",    border: "border-blue-200",    barFrom: "from-blue-400",    barTo: "to-blue-600" },
-    alta:     { bg: "bg-emerald-50", border: "border-emerald-200", barFrom: "from-emerald-400", barTo: "to-emerald-600" },
-    media:    { bg: "bg-amber-50",   border: "border-amber-200",   barFrom: "from-amber-400",   barTo: "to-amber-600" },
-    baja:     { bg: "bg-orange-50",  border: "border-orange-200",  barFrom: "from-orange-400",  barTo: "to-orange-600" },
-    macro:    { bg: "bg-slate-50",   border: "border-slate-200",   barFrom: "from-slate-400",   barTo: "to-slate-600" },
-  };
-  const p = palette[confianza];
-  const showOverrideHint = confianza === "media" || confianza === "baja" || confianza === "macro";
-  // Template SQL para que el asesor pegue en Supabase Studio si decide override.
-  const sqlTemplate = codigoCafci
-    ? `INSERT INTO fci_estrategia_override (codigo_cafci, estrategia, nota)
-VALUES (${codigoCafci}, 'CER', 'Override manual Amauta');
--- Estrategias válidas: Money Market, Lecaps, CER, Dólar Linked, Hard USD,
--- Renta Fija ARS, Renta Fija USD, Renta Variable, Renta Mixta, Otros
--- O cualquier string custom`
-    : null;
-
-  return (
-    <section className={`mb-6 rounded-sm border ${p.border} ${p.bg} shadow-card overflow-hidden`}>
-      {/* Barra de color superior — refuerza visualmente el nivel */}
-      <div className={`h-[3px] bg-gradient-to-r ${p.barFrom} ${p.barTo}`} aria-hidden />
-
-      <div className="px-6 py-5">
-        <div className="flex flex-wrap items-center gap-3 mb-2">
-          <p className="text-[11px] uppercase tracking-[0.18em] font-extrabold text-amauta-bordo">
-            Cómo se clasificó este fondo
-          </p>
-          <ConfianzaPill confianza={confianza} />
-        </div>
-
-        <p className="text-sm text-amauta-text-secondary leading-relaxed">
-          <strong className="text-amauta-text">Estrategia: {estrategia}.</strong>{" "}
-          {razon}
-        </p>
-
-        {!hasHoldings && (
-          <p className="mt-2 text-xs text-amauta-text-tertiary italic">
-            ⓘ Este fondo no tiene composición publicada en CAFCI (Money Market o cerrado / nuevo). El cron semanal lo marca como sentinel y la clasificación se basa solo en categoría macro + moneda.
-          </p>
-        )}
-
-        {showOverrideHint && codigoCafci && (
-          <details className="mt-3 group">
-            <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-wider text-amauta-bordo hover:text-amauta-bordo-hover transition-colors inline-flex items-center gap-1.5">
-              <span aria-hidden>⚙</span>
-              ¿No coincide? Override manual
-            </summary>
-            <div className="mt-3 space-y-2">
-              <p className="text-xs text-amauta-text-secondary leading-relaxed">
-                Si la mesa de Amauta conoce la estrategia real, se puede sobrescribir cargando una fila en la tabla <code className="text-[11px] bg-white px-1 py-0.5 rounded-xs border border-amauta-bg-light">fci_estrategia_override</code> de Supabase. La UI lee con TTL de 6h, así que el cambio puede tardar hasta esa ventana en propagarse.
-              </p>
-              <pre className="text-[11px] bg-amauta-dark text-amauta-yellow/90 rounded-xs p-3 overflow-x-auto font-mono leading-relaxed">
-{sqlTemplate}
-              </pre>
-            </div>
-          </details>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function Chip({
-  children,
-  tone = "outline",
-}: {
-  children: React.ReactNode;
-  tone?: "outline" | "dark";
-}) {
-  if (tone === "dark") {
-    return (
-      <span className="inline-block bg-amauta-yellow text-amauta-dark text-[11px] font-extrabold uppercase tracking-wider px-2 py-1 rounded-xs">
-        {children}
-      </span>
-    );
-  }
+function ChipDark({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-block border border-white/25 text-white/80 text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-xs">
       {children}
@@ -413,184 +308,40 @@ function Chip({
   );
 }
 
-function Kpi({ label, value }: { label: string; value: string }) {
+function HeroKpi({ label, value }: { label: string; value: string }) {
   return (
-    <div className="px-6 py-5 sm:px-8 sm:py-6">
-      <p className="text-[11px] uppercase tracking-[0.14em] text-white/55 font-bold mb-1">
-        {label}
-      </p>
-      <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-amauta-yellow leading-tight tabular-nums">
+    <div className="bg-amauta-dark px-4 py-3.5">
+      <p className="text-[10px] uppercase tracking-[0.14em] text-white/55 font-bold mb-1">{label}</p>
+      <p className="text-lg sm:text-xl lg:text-2xl font-extrabold text-amauta-yellow leading-tight tabular-nums">
         {value}
       </p>
     </div>
   );
 }
 
-function Section({
-  title,
-  subtitle,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="bg-white rounded-sm border border-amauta-bg-light shadow-card overflow-hidden mb-6">
-      <header className="bg-amauta-dark text-white px-6 py-3.5 flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-extrabold text-sm uppercase tracking-wider">
-          {title}
-        </h2>
-        {subtitle && (
-          <p className="text-[11px] text-white/55 font-medium">{subtitle}</p>
-        )}
-      </header>
-      {children}
-    </section>
-  );
+function ReturnTile({ label, v }: { label: string; v: number | null | undefined }) {
+  const r = fmtReturn(v ?? null, 2);
+  const tone = v == null ? "default" : v > 0 ? "pos" : v < 0 ? "neg" : "default";
+  return <StatTile label={label} value={r.text} tone={tone} />;
 }
 
-function ReturnRow({
-  label,
-  simple,
-  tna,
-}: {
-  label: string;
-  simple: number | null | undefined;
-  tna: number | null | undefined;
-}) {
-  const simpleFmt = fmtReturn(simple ?? null, 2);
-  const tnaFmt = fmtReturn(tna ?? null, 2);
+function Info({ label, value }: { label: string; value: string | null | undefined }) {
   return (
-    <tr className="border-t border-amauta-bg-light">
-      <td className="px-6 py-3.5 text-amauta-text-secondary font-medium">{label}</td>
-      <td
-        className={`px-6 py-3.5 text-right tabular-nums font-extrabold ${simpleFmt.colorClass}`}
-      >
-        {simpleFmt.text}
-      </td>
-      <td
-        className={`px-6 py-3.5 text-right tabular-nums text-xs font-bold ${tnaFmt.colorClass}`}
-      >
-        {tnaFmt.text}
-      </td>
-    </tr>
-  );
-}
-
-function ClaseRow({
-  clase,
-  isRep,
-}: {
-  clase: ClaseInfo;
-  isRep: boolean;
-}) {
-  // La clase representativa lleva un borde-l yellow + bg sutil amarillo
-  // para que el asesor sepa cuál es la "default" del listado.
-  const rowCls = isRep
-    ? "border-l-[3px] border-l-amauta-yellow bg-amauta-yellow/5"
-    : "";
-  return (
-    <tr className={`border-t border-amauta-bg-light ${rowCls}`}>
-      <td className="px-6 py-3 align-top">
-        <div className="font-extrabold text-amauta-bordo">
-          {clase.letra ? `Clase ${clase.letra}` : clase.claseNombre.split(" - ").slice(-1)[0]}
-        </div>
-        {isRep && (
-          <span className="inline-block mt-1 text-[10px] uppercase tracking-wider font-extrabold text-amauta-bordo bg-amauta-yellow/30 px-1.5 py-0.5 rounded-xs">
-            Representativa
-          </span>
-        )}
-      </td>
-      <td className="px-3 py-3 text-right tabular-nums font-bold align-top">
-        {clase.patrimonio ? fmtCompactCurrency(clase.patrimonio, "ARS") : "—"}
-      </td>
-      <td className="px-3 py-3 text-right tabular-nums font-medium align-top">
-        <FeePct value={clase.feeGestion} />
-      </td>
-      <td className="px-3 py-3 text-right tabular-nums font-medium hidden md:table-cell align-top">
-        <FeePct value={clase.feeDepositaria} />
-      </td>
-      <td className="px-3 py-3 text-right tabular-nums font-medium hidden md:table-cell align-top">
-        <FeePct value={clase.comIngreso} dim />
-      </td>
-      <td className="px-3 py-3 text-right tabular-nums font-medium align-top">
-        <FeePct value={clase.comRescate} dim />
-      </td>
-      <td className="px-3 py-3 text-center tabular-nums text-xs hidden lg:table-cell align-top text-amauta-text-secondary">
-        {clase.plazoRescate != null
-          ? `${clase.plazoRescate}d`
-          : "—"}
-      </td>
-    </tr>
-  );
-}
-
-function FeePct({
-  value,
-  dim,
-}: {
-  value: number | null | undefined;
-  dim?: boolean;
-}) {
-  if (value == null) {
-    return <span className="text-amauta-text-tertiary/60">—</span>;
-  }
-  if (value === 0) {
-    return <span className="text-amauta-text-tertiary">0%</span>;
-  }
-  return (
-    <span className={dim ? "text-amauta-text-secondary" : "text-amauta-text"}>
-      {value.toFixed(2)}%
-    </span>
-  );
-}
-
-/**
- * Colores Tailwind para las barras de la composición de cartera, agrupadas
- * por tipo_activo (output de cartera-client.ts:classifyActivo).
- *
- * Mapeo intuitivo: liquidez = verdes, ARS soberano = azules/violetas, USD =
- * cian/índigo, equity = naranja, otros = grises.
- */
-const TIPO_BAR_COLOR: Record<string, string> = {
-  // Cash equivalents — tonos verdes
-  "Plazo Fijo":   "bg-emerald-400",
-  "Cta Cte":      "bg-emerald-300",
-  "Caución":      "bg-teal-400",
-  "Cheque":       "bg-teal-300",
-  // Soberano ARS tasa fija — azules
-  "Lecap":        "bg-blue-500",
-  "Bonte":        "bg-blue-400",
-  // Soberano ARS CER — violetas
-  "Lecer":        "bg-purple-500",
-  "Boncer":       "bg-purple-400",
-  // ARS atado al USD — ámbar
-  "Dólar Linked": "bg-amber-400",
-  // USD — cian / índigo
-  "Hard USD":     "bg-cyan-500",
-  "ON":           "bg-indigo-400",
-  // Equity / FCI / agregado / otros — grises y naranjas
-  "Acciones":     "bg-orange-400",
-  "FCI":          "bg-pink-300",
-  "Resto":        "bg-slate-300",
-  "Otros":        "bg-slate-400",
-};
-
-function ErrorState({ message }: { message: string }) {
-  return (
-    <div className="flex-1 flex items-center justify-center bg-amauta-bg-light p-6">
-      <div className="bg-white rounded-sm border border-amauta-bg-light shadow-card p-10 text-center max-w-md">
-        <div className="text-6xl mb-3" aria-hidden>⚠️</div>
-        <h1 className="text-xl font-extrabold text-amauta-bordo">No se pudo cargar</h1>
-        <p className="mt-2 text-sm text-amauta-text-secondary">{message}</p>
-        <Link
-          href="/fondos"
-          className="mt-5 inline-block rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-5 py-2.5 hover:bg-amauta-yellow-hover transition-colors"
-        >
-          ← Volver al listado
-        </Link>
-      </div>
+    <div className="px-5 py-3.5 border-t border-black/5 sm:odd:border-r lg:[&:not(:nth-child(3n))]:border-r border-black/5">
+      <dt className="text-[11px] uppercase tracking-wider font-extrabold text-amauta-text-tertiary mb-0.5">
+        {label}
+      </dt>
+      <dd className="text-sm font-bold text-amauta-text">{value ?? "—"}</dd>
     </div>
   );
+}
+
+function pctOrDash(v: number | null | undefined): string {
+  if (v == null || isNaN(v)) return "—";
+  return `${v.toLocaleString("es-AR", { maximumFractionDigits: 2 })}%`;
+}
+
+function numOrDash(v: number | null | undefined, suffix = ""): string {
+  if (v == null || isNaN(v)) return "—";
+  return `${v.toLocaleString("es-AR", { maximumFractionDigits: 2 })}${suffix}`;
 }
