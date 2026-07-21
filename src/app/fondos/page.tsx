@@ -139,7 +139,7 @@ export default async function FondosPage({
   const horizonteOpts = ["Corto Plazo", "Mediano Plazo", "Largo Plazo"];
 
   return (
-    <div className="bg-surface-base flex-1">
+    <div className="bg-amauta-bg-light flex-1">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         {/* ── Hero strip ──────────────────────────────────────────────── */}
@@ -166,15 +166,15 @@ export default async function FondosPage({
         </section>
 
         {/* ── Filtros ─────────────────────────────────────────────────── */}
-        <form className="bg-surface-raised rounded-sm border border-brand-border shadow-card mb-6 sm:mb-8">
-          <div className="px-6 py-4 border-b border-brand-border flex items-center justify-between gap-4">
+        <form className="bg-white rounded-sm border border-amauta-bg-light shadow-card mb-6 sm:mb-8">
+          <div className="px-6 py-4 border-b border-amauta-bg-light flex items-center justify-between gap-4">
             <p className="text-[11px] uppercase tracking-[0.18em] font-extrabold text-amauta-bordo">
               Filtros
             </p>
             {anyFilter && (
               <Link
                 href="/fondos"
-                className="text-xs font-bold text-text-tertiary hover:text-amauta-bordo transition-colors"
+                className="text-xs font-bold text-amauta-text-tertiary hover:text-amauta-bordo transition-colors"
               >
                 Limpiar todo
               </Link>
@@ -184,7 +184,7 @@ export default async function FondosPage({
             <div>
               <label
                 htmlFor="q"
-                className="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-text-tertiary mb-1.5"
+                className="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary mb-1.5"
               >
                 Buscar por nombre
               </label>
@@ -194,7 +194,7 @@ export default async function FondosPage({
                 type="text"
                 defaultValue={query}
                 placeholder="Ej: Galileo CER, Compass Renta Fija, Premium…"
-                className="w-full rounded-sm border border-brand-border bg-surface-raised px-3.5 py-2.5 text-sm font-medium placeholder:text-text-tertiary/60 focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
+                className="w-full rounded-sm border border-amauta-bg-light bg-white px-3.5 py-2.5 text-sm font-medium placeholder:text-amauta-text-tertiary/60 focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
               />
             </div>
 
@@ -219,10 +219,10 @@ export default async function FondosPage({
         </form>
 
         {/* ── Resultados ─────────────────────────────────────────────── */}
-        <div className="bg-surface-raised rounded-sm border border-brand-border shadow-card overflow-hidden">
+        <div className="bg-white rounded-sm border border-amauta-bg-light shadow-card overflow-hidden">
           {/* Banner de contexto cuando hay podium */}
           {showPodium && pageRows.length >= 3 && (
-            <div className="px-6 py-2.5 text-xs font-medium border-b border-brand-border bg-amauta-yellow/10 text-amauta-bordo flex items-center gap-2">
+            <div className="px-6 py-2.5 text-xs font-medium border-b border-amauta-bg-light bg-amauta-yellow/10 text-amauta-bordo flex items-center gap-2">
               <span aria-hidden>🏆</span>
               <span>
                 <strong className="font-extrabold">Top 3 destacado</strong> según el orden actual dentro del filtro aplicado.
@@ -261,14 +261,14 @@ export default async function FondosPage({
                     // + tint sutil de fondo. Sin podium → zebra alternada.
                     const rowBg =
                       podiumRank === 1 ? "bg-amauta-yellow/10 border-l-[3px] border-l-amauta-yellow"
-                    : podiumRank === 2 ? "bg-surface-overlay border-l-[3px] border-l-slate-400"
-                    : podiumRank === 3 ? "bg-surface-overlay border-l-[3px] border-l-amber-600"
-                    : i % 2 === 0 ? "" : "bg-surface-overlay/35";
+                    : podiumRank === 2 ? "bg-slate-100/70 border-l-[3px] border-l-slate-400"
+                    : podiumRank === 3 ? "bg-amber-50 border-l-[3px] border-l-amber-700"
+                    : i % 2 === 0 ? "" : "bg-amauta-bg-light/35";
 
                     return (
                       <tr
                         key={r.key}
-                        className={`border-t border-brand-border hover:bg-amauta-yellow/5 transition-colors ${rowBg}`}
+                        className={`border-t border-amauta-bg-light hover:bg-amauta-yellow/5 transition-colors ${rowBg}`}
                       >
                         <td className="px-3 py-3.5 align-top">
                           {podiumRank > 0 ? (
@@ -279,7 +279,7 @@ export default async function FondosPage({
                               {podiumRank === 1 ? "🥇" : podiumRank === 2 ? "🥈" : "🥉"}
                             </span>
                           ) : (
-                            <span className="tabular-nums text-text-tertiary text-xs">
+                            <span className="tabular-nums text-amauta-text-tertiary text-xs">
                               {globalIdx + 1}
                             </span>
                           )}
@@ -291,10 +291,10 @@ export default async function FondosPage({
                           >
                             {r.displayName}
                           </Link>
-                          <div className="mt-0.5 text-xs text-text-tertiary truncate">
+                          <div className="mt-0.5 text-xs text-amauta-text-tertiary truncate">
                             {r.gestora ?? "—"}
                             {r.claseRepresentativa ? (
-                              <span className="text-text-tertiary/70">
+                              <span className="text-amauta-text-tertiary/70">
                                 {" · Clase "}{r.claseRepresentativa}
                               </span>
                             ) : null}
@@ -313,7 +313,7 @@ export default async function FondosPage({
                               {r.moneda}
                             </span>
                           ) : (
-                            <span className="text-text-tertiary">—</span>
+                            <span className="text-amauta-text-tertiary">—</span>
                           )}
                         </td>
                         <td className="px-3 py-3.5 text-right tabular-nums whitespace-nowrap font-medium align-top">
@@ -350,9 +350,9 @@ export default async function FondosPage({
 
           {/* Paginación */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between gap-4 px-4 sm:px-6 py-3.5 border-t border-brand-border bg-surface-overlay/40 text-sm">
-              <span className="text-text-tertiary text-xs sm:text-sm">
-                Página <strong className="text-text-primary">{safePage}</strong> de {totalPages}
+            <div className="flex items-center justify-between gap-4 px-4 sm:px-6 py-3.5 border-t border-amauta-bg-light bg-amauta-bg-light/40 text-sm">
+              <span className="text-amauta-text-tertiary text-xs sm:text-sm">
+                Página <strong className="text-amauta-text">{safePage}</strong> de {totalPages}
                 <span className="hidden sm:inline">
                   {" · "}{total.toLocaleString("es-AR")} resultados
                 </span>
@@ -367,8 +367,8 @@ export default async function FondosPage({
           )}
         </div>
 
-        <p className="mt-4 text-xs text-text-tertiary leading-relaxed max-w-3xl">
-          <strong className="text-text-secondary">Mensual:</strong> desde fin de mes anterior · <strong className="text-text-secondary">Interanual:</strong> vs misma fecha del año anterior · Hacé click en{" "}
+        <p className="mt-4 text-xs text-amauta-text-tertiary leading-relaxed max-w-3xl">
+          <strong className="text-amauta-text-secondary">Mensual:</strong> desde fin de mes anterior · <strong className="text-amauta-text-secondary">Interanual:</strong> vs misma fecha del año anterior · Hacé click en{" "}
           <span aria-hidden>↕</span> para ordenar · click en el nombre para la ficha completa ·{" "}
           <span className="text-amber-500 font-extrabold">⚠</span> indica posible artefacto de datos (corrección de VCP o distribución), verificar con la fuente oficial.
         </p>
@@ -429,7 +429,7 @@ function SelectFilter({
     <div>
       <label
         htmlFor={id}
-        className="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-text-tertiary mb-1.5"
+        className="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary mb-1.5"
       >
         {label}
       </label>
@@ -437,7 +437,7 @@ function SelectFilter({
         id={id}
         name={id}
         defaultValue={value}
-        className="w-full rounded-sm border border-brand-border bg-surface-raised px-3.5 py-2.5 text-sm font-medium focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
+        className="w-full rounded-sm border border-amauta-bg-light bg-white px-3.5 py-2.5 text-sm font-medium focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
       >
         <option value="">Todas</option>
         {options.map((o) => (
@@ -503,7 +503,7 @@ function PageLink({
 }) {
   if (disabled) {
     return (
-      <span className="inline-flex items-center justify-center w-9 h-9 rounded-xs text-text-tertiary/40 cursor-not-allowed">
+      <span className="inline-flex items-center justify-center w-9 h-9 rounded-xs text-amauta-text-tertiary/40 cursor-not-allowed">
         {children}
       </span>
     );
@@ -511,7 +511,7 @@ function PageLink({
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center w-9 h-9 rounded-xs font-bold text-text-secondary hover:bg-amauta-yellow hover:text-amauta-dark transition-colors"
+      className="inline-flex items-center justify-center w-9 h-9 rounded-xs font-bold text-amauta-text-secondary hover:bg-amauta-yellow hover:text-amauta-dark transition-colors"
     >
       {children}
     </Link>
@@ -527,7 +527,7 @@ function EmptyRow({ anyFilter }: { anyFilter: boolean }) {
           <p className="text-base font-extrabold text-amauta-bordo mb-1">
             Sin resultados con esos filtros
           </p>
-          <p className="text-sm text-text-secondary max-w-xs">
+          <p className="text-sm text-amauta-text-secondary max-w-xs">
             Probá ampliar el rango o limpiar los filtros para ver todo el mercado.
           </p>
           {anyFilter && (
@@ -546,11 +546,11 @@ function EmptyRow({ anyFilter }: { anyFilter: boolean }) {
 
 function ErrorState({ message }: { message: string }) {
   return (
-    <div className="flex-1 flex items-center justify-center bg-surface-base">
-      <div className="bg-surface-raised rounded-sm border border-brand-border shadow-card p-10 text-center max-w-md">
+    <div className="flex-1 flex items-center justify-center bg-amauta-bg-light">
+      <div className="bg-white rounded-sm border border-amauta-bg-light shadow-card p-10 text-center max-w-md">
         <div className="text-6xl mb-3">⚠️</div>
         <h1 className="text-xl font-extrabold text-amauta-bordo">No se pudo cargar</h1>
-        <p className="mt-2 text-sm text-text-secondary">{message}</p>
+        <p className="mt-2 text-sm text-amauta-text-secondary">{message}</p>
       </div>
     </div>
   );

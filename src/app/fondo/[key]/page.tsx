@@ -60,16 +60,16 @@ export default async function FondoDetailPage({
   const hasClases = fondo.clasesDisponibles.length > 0;
 
   return (
-    <div className="bg-surface-base flex-1">
+    <div className="bg-amauta-bg-light flex-1">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
-        <nav className="mb-4 text-xs sm:text-sm text-text-tertiary font-medium">
+        <nav className="mb-4 text-xs sm:text-sm text-amauta-text-tertiary font-medium">
           <Link href="/fondos" className="hover:text-amauta-bordo transition-colors">
             Fondos
           </Link>
-          <span className="mx-2 text-text-tertiary/50">/</span>
-          <span className="text-text-secondary truncate">
+          <span className="mx-2 text-amauta-text-tertiary/50">/</span>
+          <span className="text-amauta-text-secondary truncate">
             {fondo.displayName}
           </span>
         </nav>
@@ -171,17 +171,17 @@ export default async function FondoDetailPage({
                   <div key={h.rank} className="flex items-center gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 text-sm mb-1.5">
-                        <span className="font-bold text-text-primary truncate">
+                        <span className="font-bold text-amauta-text truncate">
                           {h.activo}
                         </span>
                         <span
-                          className="inline-block text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-xs text-text-secondary bg-surface-overlay shrink-0"
+                          className="inline-block text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-xs text-amauta-text-secondary bg-amauta-bg-light shrink-0"
                           title={`Tipo de activo: ${h.tipo_activo}`}
                         >
                           {h.tipo_activo}
                         </span>
                       </div>
-                      <div className="h-2 bg-surface-overlay rounded-xs overflow-hidden">
+                      <div className="h-2 bg-amauta-bg-light rounded-xs overflow-hidden">
                         <div
                           className={`h-full ${tipoStyle}`}
                           style={{ width: `${Math.min(100, h.share)}%` }}
@@ -205,7 +205,7 @@ export default async function FondoDetailPage({
         >
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-surface-overlay/50 text-text-tertiary">
+              <thead className="bg-amauta-bg-light/50 text-amauta-text-tertiary">
                 <tr>
                   <th className="px-6 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">
                     Período
@@ -236,7 +236,7 @@ export default async function FondoDetailPage({
           >
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-surface-overlay/50 text-text-tertiary">
+                <thead className="bg-amauta-bg-light/50 text-amauta-text-tertiary">
                   <tr>
                     <th className="px-6 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">Clase</th>
                     <th className="px-3 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Patrimonio</th>
@@ -258,8 +258,8 @@ export default async function FondoDetailPage({
                 </tbody>
               </table>
             </div>
-            <div className="px-6 py-2.5 text-xs text-text-tertiary border-t border-brand-border bg-surface-overlay/40 leading-relaxed">
-              La fila destacada en <span className="inline-block w-2 h-2 rounded-xs bg-amauta-yellow align-middle mx-1" /> es la <strong className="text-text-secondary">clase representativa</strong> — la que usamos para los KPIs y rendimientos de arriba. Clase B es el estándar minorista; A suele tener mínimos chicos / honorarios más altos; C-G son típicamente institucionales.
+            <div className="px-6 py-2.5 text-xs text-amauta-text-tertiary border-t border-amauta-bg-light bg-amauta-bg-light/40 leading-relaxed">
+              La fila destacada en <span className="inline-block w-2 h-2 rounded-xs bg-amauta-yellow align-middle mx-1" /> es la <strong className="text-amauta-text-secondary">clase representativa</strong> — la que usamos para los KPIs y rendimientos de arriba. Clase B es el estándar minorista; A suele tener mínimos chicos / honorarios más altos; C-G son típicamente institucionales.
             </div>
           </Section>
         )}
@@ -291,7 +291,7 @@ export default async function FondoDetailPage({
           </a>
           <Link
             href="/fondos"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-brand-border text-text-secondary font-bold text-sm hover:bg-surface-overlay transition-colors"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-amauta-bg-light text-amauta-text-secondary font-bold text-sm hover:bg-amauta-bg-light transition-colors"
           >
             ← Volver al listado
           </Link>
@@ -299,11 +299,11 @@ export default async function FondoDetailPage({
 
         {/* Metadata adicional pequeña abajo */}
         {(fondo.codigoCnv || fondo.codigoCafci || fondo.inicio) && (
-          <p className="mt-6 text-xs text-text-tertiary leading-relaxed">
+          <p className="mt-6 text-xs text-amauta-text-tertiary leading-relaxed">
             {fondo.codigoCnv && <span>CNV #{fondo.codigoCnv}</span>}
-            {fondo.codigoCnv && (fondo.codigoCafci || fondo.inicio) && <span className="mx-2 text-text-tertiary/50">·</span>}
+            {fondo.codigoCnv && (fondo.codigoCafci || fondo.inicio) && <span className="mx-2 text-amauta-text-tertiary/50">·</span>}
             {fondo.codigoCafci && <span>CAFCI #{fondo.codigoCafci}</span>}
-            {fondo.codigoCafci && fondo.inicio && <span className="mx-2 text-text-tertiary/50">·</span>}
+            {fondo.codigoCafci && fondo.inicio && <span className="mx-2 text-amauta-text-tertiary/50">·</span>}
             {fondo.inicio && <span>Inicio: {fmtDateAr(fondo.inicio)}</span>}
           </p>
         )}
@@ -330,11 +330,11 @@ function ClasificacionBlock({
   // Estilos del block según nivel — visualmente claro de un vistazo si esta
   // clasificación es indubitable o necesita revisión manual.
   const palette: Record<Confianza, { bg: string; border: string; barFrom: string; barTo: string }> = {
-    override: { bg: "bg-blue-500/10",    border: "border-blue-500/30",    barFrom: "from-blue-400",    barTo: "to-blue-600" },
-    alta:     { bg: "bg-emerald-500/10", border: "border-emerald-500/30", barFrom: "from-emerald-400", barTo: "to-emerald-600" },
-    media:    { bg: "bg-amber-500/10",   border: "border-amber-500/30",   barFrom: "from-amber-400",   barTo: "to-amber-600" },
-    baja:     { bg: "bg-orange-500/10",  border: "border-orange-500/30",  barFrom: "from-orange-400",  barTo: "to-orange-600" },
-    macro:    { bg: "bg-slate-500/10",   border: "border-slate-500/30",   barFrom: "from-slate-400",   barTo: "to-slate-600" },
+    override: { bg: "bg-blue-50",    border: "border-blue-200",    barFrom: "from-blue-400",    barTo: "to-blue-600" },
+    alta:     { bg: "bg-emerald-50", border: "border-emerald-200", barFrom: "from-emerald-400", barTo: "to-emerald-600" },
+    media:    { bg: "bg-amber-50",   border: "border-amber-200",   barFrom: "from-amber-400",   barTo: "to-amber-600" },
+    baja:     { bg: "bg-orange-50",  border: "border-orange-200",  barFrom: "from-orange-400",  barTo: "to-orange-600" },
+    macro:    { bg: "bg-slate-50",   border: "border-slate-200",   barFrom: "from-slate-400",   barTo: "to-slate-600" },
   };
   const p = palette[confianza];
   const showOverrideHint = confianza === "media" || confianza === "baja" || confianza === "macro";
@@ -360,13 +360,13 @@ VALUES (${codigoCafci}, 'CER', 'Override manual Amauta');
           <ConfianzaPill confianza={confianza} />
         </div>
 
-        <p className="text-sm text-text-secondary leading-relaxed">
-          <strong className="text-text-primary">Estrategia: {estrategia}.</strong>{" "}
+        <p className="text-sm text-amauta-text-secondary leading-relaxed">
+          <strong className="text-amauta-text">Estrategia: {estrategia}.</strong>{" "}
           {razon}
         </p>
 
         {!hasHoldings && (
-          <p className="mt-2 text-xs text-text-tertiary italic">
+          <p className="mt-2 text-xs text-amauta-text-tertiary italic">
             ⓘ Este fondo no tiene composición publicada en CAFCI (Money Market o cerrado / nuevo). El cron semanal lo marca como sentinel y la clasificación se basa solo en categoría macro + moneda.
           </p>
         )}
@@ -378,8 +378,8 @@ VALUES (${codigoCafci}, 'CER', 'Override manual Amauta');
               ¿No coincide? Override manual
             </summary>
             <div className="mt-3 space-y-2">
-              <p className="text-xs text-text-secondary leading-relaxed">
-                Si la mesa de Amauta conoce la estrategia real, se puede sobrescribir cargando una fila en la tabla <code className="text-[11px] bg-surface-raised px-1 py-0.5 rounded-xs border border-brand-border">fci_estrategia_override</code> de Supabase. La UI lee con TTL de 6h, así que el cambio puede tardar hasta esa ventana en propagarse.
+              <p className="text-xs text-amauta-text-secondary leading-relaxed">
+                Si la mesa de Amauta conoce la estrategia real, se puede sobrescribir cargando una fila en la tabla <code className="text-[11px] bg-white px-1 py-0.5 rounded-xs border border-amauta-bg-light">fci_estrategia_override</code> de Supabase. La UI lee con TTL de 6h, así que el cambio puede tardar hasta esa ventana en propagarse.
               </p>
               <pre className="text-[11px] bg-amauta-dark text-amauta-yellow/90 rounded-xs p-3 overflow-x-auto font-mono leading-relaxed">
 {sqlTemplate}
@@ -436,7 +436,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="bg-surface-raised rounded-sm border border-brand-border shadow-card overflow-hidden mb-6">
+    <section className="bg-white rounded-sm border border-amauta-bg-light shadow-card overflow-hidden mb-6">
       <header className="bg-amauta-dark text-white px-6 py-3.5 flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="font-extrabold text-sm uppercase tracking-wider">
           {title}
@@ -462,8 +462,8 @@ function ReturnRow({
   const simpleFmt = fmtReturn(simple ?? null, 2);
   const tnaFmt = fmtReturn(tna ?? null, 2);
   return (
-    <tr className="border-t border-brand-border">
-      <td className="px-6 py-3.5 text-text-secondary font-medium">{label}</td>
+    <tr className="border-t border-amauta-bg-light">
+      <td className="px-6 py-3.5 text-amauta-text-secondary font-medium">{label}</td>
       <td
         className={`px-6 py-3.5 text-right tabular-nums font-extrabold ${simpleFmt.colorClass}`}
       >
@@ -491,7 +491,7 @@ function ClaseRow({
     ? "border-l-[3px] border-l-amauta-yellow bg-amauta-yellow/5"
     : "";
   return (
-    <tr className={`border-t border-brand-border ${rowCls}`}>
+    <tr className={`border-t border-amauta-bg-light ${rowCls}`}>
       <td className="px-6 py-3 align-top">
         <div className="font-extrabold text-amauta-bordo">
           {clase.letra ? `Clase ${clase.letra}` : clase.claseNombre.split(" - ").slice(-1)[0]}
@@ -517,7 +517,7 @@ function ClaseRow({
       <td className="px-3 py-3 text-right tabular-nums font-medium align-top">
         <FeePct value={clase.comRescate} dim />
       </td>
-      <td className="px-3 py-3 text-center tabular-nums text-xs hidden lg:table-cell align-top text-text-secondary">
+      <td className="px-3 py-3 text-center tabular-nums text-xs hidden lg:table-cell align-top text-amauta-text-secondary">
         {clase.plazoRescate != null
           ? `${clase.plazoRescate}d`
           : "—"}
@@ -534,13 +534,13 @@ function FeePct({
   dim?: boolean;
 }) {
   if (value == null) {
-    return <span className="text-text-tertiary/60">—</span>;
+    return <span className="text-amauta-text-tertiary/60">—</span>;
   }
   if (value === 0) {
-    return <span className="text-text-tertiary">0%</span>;
+    return <span className="text-amauta-text-tertiary">0%</span>;
   }
   return (
-    <span className={dim ? "text-text-secondary" : "text-text-primary"}>
+    <span className={dim ? "text-amauta-text-secondary" : "text-amauta-text"}>
       {value.toFixed(2)}%
     </span>
   );
@@ -579,11 +579,11 @@ const TIPO_BAR_COLOR: Record<string, string> = {
 
 function ErrorState({ message }: { message: string }) {
   return (
-    <div className="flex-1 flex items-center justify-center bg-surface-base p-6">
-      <div className="bg-surface-raised rounded-sm border border-brand-border shadow-card p-10 text-center max-w-md">
+    <div className="flex-1 flex items-center justify-center bg-amauta-bg-light p-6">
+      <div className="bg-white rounded-sm border border-amauta-bg-light shadow-card p-10 text-center max-w-md">
         <div className="text-6xl mb-3" aria-hidden>⚠️</div>
         <h1 className="text-xl font-extrabold text-amauta-bordo">No se pudo cargar</h1>
-        <p className="mt-2 text-sm text-text-secondary">{message}</p>
+        <p className="mt-2 text-sm text-amauta-text-secondary">{message}</p>
         <Link
           href="/fondos"
           className="mt-5 inline-block rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-5 py-2.5 hover:bg-amauta-yellow-hover transition-colors"

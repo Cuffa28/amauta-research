@@ -44,9 +44,9 @@ export default async function CompararPage({
 
   if (!snap) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-surface-base">
-        <div className="bg-surface-raised rounded-lg p-8 text-center">
-          <p className="text-text-secondary">
+      <div className="flex-1 flex items-center justify-center bg-amauta-bg-light">
+        <div className="bg-white rounded-lg p-8 text-center">
+          <p className="text-amauta-text-secondary">
             No pudimos cargar los datos de fondos. Volvé a intentar en unos minutos.
           </p>
         </div>
@@ -84,20 +84,20 @@ export default async function CompararPage({
   };
 
   return (
-    <div className="bg-surface-base flex-1">
+    <div className="bg-amauta-bg-light flex-1">
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="mb-6">
           <h1 className="text-3xl font-extrabold text-amauta-bordo">
             Comparador de fondos
           </h1>
-          <p className="mt-1 text-sm text-text-secondary">
+          <p className="mt-1 text-sm text-amauta-text-secondary">
             Hasta {MAX_FONDOS} clases lado a lado · cierre{" "}
             {fmtDateAr(snap.fecha)} · permalink compartible
           </p>
         </div>
 
         {/* Search box to add fondos */}
-        <form className="bg-surface-raised rounded-lg border border-brand-border p-4 mb-6">
+        <form className="bg-white rounded-lg border border-amauta-bg-light p-4 mb-6">
           {selectedKeys.length > 0 && (
             <input
               type="hidden"
@@ -107,7 +107,7 @@ export default async function CompararPage({
           )}
           <label
             htmlFor="q"
-            className="block text-xs font-bold uppercase tracking-wider text-text-tertiary mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-amauta-text-tertiary mb-1"
           >
             Agregar fondos{" "}
             {selected.length > 0 && `(${selected.length}/${MAX_FONDOS})`}
@@ -119,7 +119,7 @@ export default async function CompararPage({
               type="text"
               defaultValue={query}
               placeholder="Ej: Galileo Premium, Pellegrini Renta…"
-              className="flex-1 rounded-md border border-brand-border bg-surface-raised px-3 py-2 text-sm focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30"
+              className="flex-1 rounded-md border border-amauta-bg-light bg-white px-3 py-2 text-sm focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30"
               disabled={selectedKeys.length >= MAX_FONDOS}
             />
             <button
@@ -132,33 +132,33 @@ export default async function CompararPage({
           </div>
 
           {searchResults.length > 0 && (
-            <div className="mt-3 max-h-64 overflow-y-auto border border-brand-border rounded-md">
+            <div className="mt-3 max-h-64 overflow-y-auto border border-amauta-bg-light rounded-md">
               {searchResults.map((r) => {
                 const already = selectedKeys.includes(r.key);
                 return (
                   <Link
                     key={r.key}
                     href={already ? "#" : buildAddHref(r.key)}
-                    className={`flex items-center justify-between px-3 py-2 text-sm border-b border-brand-border last:border-0 ${
+                    className={`flex items-center justify-between px-3 py-2 text-sm border-b border-amauta-bg-light last:border-0 ${
                       already
                         ? "opacity-50 pointer-events-none"
-                        : "hover:bg-surface-overlay/50"
+                        : "hover:bg-amauta-bg-light/50"
                     }`}
                   >
                     <span>
                       <span className="font-medium text-amauta-bordo">
                         {r.displayName}
                       </span>
-                      <span className="ml-2 text-xs text-text-tertiary">
+                      <span className="ml-2 text-xs text-amauta-text-tertiary">
                         {r.categoria ?? "—"} · {r.gestora ?? "—"}
                         {r.moneda && r.moneda !== "Pesos" && (
-                          <span className="ml-1 text-blue-400 font-semibold">
+                          <span className="ml-1 text-blue-600 font-semibold">
                             {r.moneda}
                           </span>
                         )}
                       </span>
                     </span>
-                    <span className="text-xs text-text-secondary tabular-nums whitespace-nowrap">
+                    <span className="text-xs text-amauta-text-secondary tabular-nums whitespace-nowrap">
                       {r.patrimonio
                         ? fmtCompactCurrency(r.patrimonio, "ARS")
                         : "—"}
@@ -169,7 +169,7 @@ export default async function CompararPage({
             </div>
           )}
           {query && searchResults.length === 0 && (
-            <p className="mt-3 text-sm text-text-tertiary">
+            <p className="mt-3 text-sm text-amauta-text-tertiary">
               Sin resultados para &quot;{query}&quot;.
             </p>
           )}
@@ -177,17 +177,17 @@ export default async function CompararPage({
 
         {/* Comparison table */}
         {selected.length === 0 ? (
-          <div className="bg-surface-raised rounded-lg border border-brand-border p-12 text-center">
+          <div className="bg-white rounded-lg border border-amauta-bg-light p-12 text-center">
             <h2 className="text-xl font-bold text-amauta-bordo">
               Empezá agregando hasta {MAX_FONDOS} fondos
             </h2>
-            <p className="mt-2 text-sm text-text-secondary">
+            <p className="mt-2 text-sm text-amauta-text-secondary">
               Usá el buscador de arriba para sumar clases. La URL se actualiza
               sola — copiala para compartirla con tus compañeros.
             </p>
           </div>
         ) : (
-          <div className="bg-surface-raised rounded-lg border border-brand-border overflow-hidden">
+          <div className="bg-white rounded-lg border border-amauta-bg-light overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -327,7 +327,7 @@ export default async function CompararPage({
                 </tbody>
               </table>
             </div>
-            <div className="border-t border-brand-border bg-surface-overlay/30 px-4 py-3 text-xs text-text-tertiary">
+            <div className="border-t border-amauta-bg-light bg-amauta-bg-light/30 px-4 py-3 text-xs text-amauta-text-tertiary">
               Rendimientos calculados sobre VCP diario · Hacé click en el nombre del fondo para ver la ficha completa ·{" "}
               <span className="text-amber-500 font-semibold">⚠</span> = posible artefacto de datos, verificar con la fuente oficial
             </div>
@@ -342,10 +342,10 @@ export default async function CompararPage({
 
 function SectionDivider({ label, colSpan }: { label: string; colSpan: number }) {
   return (
-    <tr className="bg-surface-overlay/60">
+    <tr className="bg-amauta-bg-light/60">
       <td
         colSpan={colSpan}
-        className="px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-widest text-text-tertiary"
+        className="px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-widest text-amauta-text-tertiary"
       >
         {label}
       </td>
@@ -366,14 +366,14 @@ function ComparisonRow({
   align?: "left" | "right";
 }) {
   return (
-    <tr className="border-t border-brand-border">
-      <td className="px-3 py-2 font-bold text-text-tertiary uppercase text-xs">
+    <tr className="border-t border-amauta-bg-light">
+      <td className="px-3 py-2 font-bold text-amauta-text-tertiary uppercase text-xs">
         {label}
       </td>
       {rows.map((r) => (
         <td
           key={r.key}
-          className={`px-3 py-2 ${align === "right" ? "text-right tabular-nums" : ""} text-text-secondary`}
+          className={`px-3 py-2 ${align === "right" ? "text-right tabular-nums" : ""} text-amauta-text-secondary`}
         >
           {get(r)}
         </td>
@@ -401,8 +401,8 @@ function ComparisonReturnRow({
   );
 
   return (
-    <tr className="border-t border-brand-border">
-      <td className="px-3 py-2 font-bold text-text-tertiary uppercase text-xs">
+    <tr className="border-t border-amauta-bg-light">
+      <td className="px-3 py-2 font-bold text-amauta-text-tertiary uppercase text-xs">
         {label}
       </td>
       {rows.map((r) => {

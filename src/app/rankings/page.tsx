@@ -55,9 +55,9 @@ export default async function RankingsPage({
 
   if (!snap) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-surface-base">
-        <div className="bg-surface-raised rounded-lg p-8 text-center">
-          <p className="text-text-secondary">
+      <div className="flex-1 flex items-center justify-center bg-amauta-bg-light">
+        <div className="bg-white rounded-lg p-8 text-center">
+          <p className="text-amauta-text-secondary">
             No pudimos cargar los datos de fondos. Volvé a intentar en unos minutos.
           </p>
         </div>
@@ -112,21 +112,21 @@ export default async function RankingsPage({
   };
 
   return (
-    <div className="bg-surface-base flex-1">
+    <div className="bg-amauta-bg-light flex-1">
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="mb-6">
           <h1 className="text-3xl font-extrabold text-amauta-bordo">
             Rankings de fondos
           </h1>
-          <p className="mt-1 text-sm text-text-secondary">
+          <p className="mt-1 text-sm text-amauta-text-secondary">
             Top {TOP_N} por rendimiento en el período seleccionado · cierre{" "}
             {fmtDateAr(snap.fecha)}
           </p>
         </div>
 
         {/* Period tabs */}
-        <div className="bg-surface-raised rounded-lg border border-brand-border p-3 mb-6 flex flex-wrap gap-2 items-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-text-tertiary mr-1">
+        <div className="bg-white rounded-lg border border-amauta-bg-light p-3 mb-6 flex flex-wrap gap-2 items-center">
+          <span className="text-xs font-bold uppercase tracking-wider text-amauta-text-tertiary mr-1">
             Período:
           </span>
           {PERIODOS.map((p) => (
@@ -136,14 +136,14 @@ export default async function RankingsPage({
               className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-colors ${
                 validPeriodo === p.key
                   ? "bg-amauta-bordo text-white"
-                  : "bg-surface-overlay text-text-secondary hover:bg-amauta-yellow/20"
+                  : "bg-amauta-bg-light text-amauta-text-secondary hover:bg-amauta-yellow/20"
               }`}
             >
               {p.label}
             </Link>
           ))}
           <div className="ml-auto flex flex-wrap gap-1 items-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-text-tertiary mr-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-amauta-text-tertiary mr-1">
               Estrategia:
             </span>
             <Link
@@ -151,7 +151,7 @@ export default async function RankingsPage({
               className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
                 !estrategiaFilter
                   ? "bg-amauta-dark text-white"
-                  : "bg-surface-overlay text-text-secondary hover:bg-amauta-yellow/20"
+                  : "bg-amauta-bg-light text-amauta-text-secondary hover:bg-amauta-yellow/20"
               }`}
             >
               Todas
@@ -163,7 +163,7 @@ export default async function RankingsPage({
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
                   estrategiaFilter === e
                     ? "bg-amauta-dark text-white"
-                    : "bg-surface-overlay text-text-secondary hover:bg-amauta-yellow/20"
+                    : "bg-amauta-bg-light text-amauta-text-secondary hover:bg-amauta-yellow/20"
                 }`}
               >
                 {e}
@@ -173,8 +173,8 @@ export default async function RankingsPage({
         </div>
 
         {groups.length === 0 ? (
-          <div className="bg-surface-raised rounded-lg border border-brand-border p-12 text-center">
-            <p className="text-text-secondary">
+          <div className="bg-white rounded-lg border border-amauta-bg-light p-12 text-center">
+            <p className="text-amauta-text-secondary">
               No hay datos de rendimiento disponibles para este período. Los
               datos aparecen el siguiente día hábil.
             </p>
@@ -193,7 +193,7 @@ export default async function RankingsPage({
           </div>
         )}
 
-        <p className="mt-6 text-xs text-text-tertiary">
+        <p className="mt-6 text-xs text-amauta-text-tertiary">
           Rendimientos calculados sobre VCP diario ·{" "}
           <span className="text-amber-500 font-semibold">⚠</span> = posible artefacto de datos
           (corrección de VCP o distribución), verificar con la fuente oficial
@@ -221,7 +221,7 @@ function EstrategiaCard({
 }) {
   const slug = encodeURIComponent(group.estrategia);
   return (
-    <article className="bg-surface-raised rounded-lg border border-brand-border overflow-hidden">
+    <article className="bg-white rounded-lg border border-amauta-bg-light overflow-hidden">
       <header className="bg-amauta-dark text-white px-4 py-3 flex items-end justify-between gap-3">
         <div>
           <h2 className="font-extrabold">{group.estrategia}</h2>
@@ -238,7 +238,7 @@ function EstrategiaCard({
         </Link>
       </header>
       <table className="w-full text-sm">
-        <thead className="bg-surface-overlay/50 text-text-tertiary text-xs uppercase">
+        <thead className="bg-amauta-bg-light/50 text-amauta-text-tertiary text-xs uppercase">
           <tr>
             <th className="px-3 py-2 text-left font-bold w-8">#</th>
             <th className="px-3 py-2 text-left font-bold">Fondo / Clase</th>
@@ -253,9 +253,9 @@ function EstrategiaCard({
             return (
               <tr
                 key={r.key}
-                className="border-t border-brand-border hover:bg-surface-overlay/40"
+                className="border-t border-amauta-bg-light hover:bg-amauta-bg-light/40"
               >
-                <td className="px-3 py-2 text-text-tertiary tabular-nums">
+                <td className="px-3 py-2 text-amauta-text-tertiary tabular-nums">
                   {i + 1}
                 </td>
                 <td className="px-3 py-2">
@@ -266,12 +266,12 @@ function EstrategiaCard({
                     {r.displayName}
                   </Link>
                   {r.gestora && (
-                    <div className="text-xs text-text-tertiary font-normal">
+                    <div className="text-xs text-amauta-text-tertiary font-normal">
                       {r.gestora}
                     </div>
                   )}
                 </td>
-                <td className="px-3 py-2 text-right tabular-nums whitespace-nowrap text-text-secondary">
+                <td className="px-3 py-2 text-right tabular-nums whitespace-nowrap text-amauta-text-secondary">
                   {fmtNumber(r.vcp, 4)}
                 </td>
                 <td
