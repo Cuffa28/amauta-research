@@ -43,12 +43,12 @@ export default function FlowsChart({
     <div style={{ width: "100%", height }}>
       <ResponsiveContainer>
         <BarChart data={data} margin={{ top: 8, right: 12, left: 8, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
           <XAxis
             dataKey="fecha"
             tick={{ fontSize: 11, fill: "#8A8487" }}
             tickLine={false}
-            axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
+            axisLine={false}
             minTickGap={28}
           />
           <YAxis
@@ -58,22 +58,25 @@ export default function FlowsChart({
             width={64}
             tickFormatter={fmtCompact}
           />
-          <ReferenceLine y={0} stroke="rgba(0,0,0,0.2)" />
+          <ReferenceLine y={0} stroke="rgba(255,255,255,0.15)" />
           <Tooltip
             cursor={{ fill: "rgba(243,207,17,0.08)" }}
             formatter={(v: number) => [fmtCompact(v), "Flujo neto"]}
             contentStyle={{
-              borderRadius: 6,
-              border: "1px solid rgba(0,0,0,0.08)",
+              background: "#2C2728",
+              borderRadius: 8,
+              border: "1px solid #3A3433",
+              color: "#F5F2F0",
               fontSize: 12,
               fontFamily: "inherit",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
             }}
-            labelStyle={{ fontWeight: 700, color: "#231F20" }}
+            itemStyle={{ color: "#F5F2F0" }}
+            labelStyle={{ fontWeight: 700, color: "#F5F2F0" }}
           />
           <Bar dataKey="flujo_ars" radius={[2, 2, 0, 0]}>
             {data.map((d, i) => (
-              <Cell key={i} fill={d.flujo_ars >= 0 ? "#27AE60" : "#C0392B"} />
+              <Cell key={i} fill={d.flujo_ars >= 0 ? "#34D399" : "#FB7185"} />
             ))}
           </Bar>
         </BarChart>

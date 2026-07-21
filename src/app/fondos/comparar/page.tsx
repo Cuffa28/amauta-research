@@ -114,14 +114,14 @@ export default async function CompararPage({
               return (
                 <div
                   key={s.fondo}
-                  className="bg-white rounded-sm border border-black/5 shadow-card p-4 border-l-[3px]"
+                  className="bg-surface-raised rounded-lg border border-brand-border p-4 border-l-[3px]"
                   style={{ borderLeftColor: s.color }}
                 >
-                  <p className="text-xs font-bold text-amauta-text-secondary leading-snug line-clamp-2 min-h-[2.4em]">
+                  <p className="text-xs font-bold text-text-secondary leading-snug line-clamp-2 min-h-[2.4em]">
                     {s.fondo}
                   </p>
                   <p className={`mt-2 text-2xl font-extrabold tabular-nums ${r.colorClass}`}>{r.text}</p>
-                  <p className="text-[11px] text-amauta-text-tertiary mt-0.5">en el período</p>
+                  <p className="text-[11px] text-text-tertiary mt-0.5">en el período</p>
                 </div>
               );
             })}
@@ -136,9 +136,9 @@ export default async function CompararPage({
         </div>
       )}
 
-      <p className="mt-4 text-xs text-amauta-text-tertiary leading-relaxed max-w-3xl">
+      <p className="mt-4 text-xs text-text-tertiary leading-relaxed max-w-3xl">
         Todas las series arrancan en 100 en la fecha inicial para comparar rendimiento relativo.{" "}
-        <Link href="/fondos" className="text-amauta-bordo font-bold hover:underline">
+        <Link href="/fondos" className="text-amauta-yellow font-bold hover:underline">
           Buscar fondos
         </Link>{" "}
         para conocer los nombres exactos. Fuente: fonditos · CAFCI.

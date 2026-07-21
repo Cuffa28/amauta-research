@@ -75,14 +75,14 @@ export default async function NegocioPage({
             <EmptyBox icon="📈" title="Sin datos de AUM" />
           ) : (
             <div className="p-4 sm:p-5">
-              <SeriesChart data={aumSeries} currency color="#621044" gradientId="aumArea" height={320} />
+              <SeriesChart data={aumSeries} currency color="#F3CF11" gradientId="aumArea" height={320} />
             </div>
           )}
         </Section>
 
         {/* Ranking de facturación */}
         <div className="mb-1 flex flex-wrap items-center gap-2">
-          <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary mr-1">
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-text-tertiary mr-1">
             Período de facturación
           </span>
           {PERIODS.map((p) => (
@@ -91,8 +91,8 @@ export default async function NegocioPage({
               href={buildHref(p.value)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-colors ${
                 period === p.value
-                  ? "bg-amauta-bordo text-white border-amauta-bordo"
-                  : "bg-white text-amauta-text-secondary border-black/10 hover:border-amauta-bordo hover:text-amauta-bordo"
+                  ? "bg-amauta-yellow text-amauta-dark border-amauta-yellow"
+                  : "bg-surface-raised text-text-secondary border-brand-border hover:border-amauta-yellow hover:text-text-primary"
               }`}
             >
               {p.label}
@@ -110,44 +110,44 @@ export default async function NegocioPage({
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[680px]">
-                <thead className="bg-amauta-bordo text-white">
+                <thead className="text-text-tertiary border-b border-brand-border">
                   <tr>
-                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[11px] w-10">#</th>
-                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[11px]">Gestora</th>
-                    <th className="px-3 py-3 text-center font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Tipo</th>
-                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden md:table-cell">Fondos</th>
-                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden lg:table-cell">AUM</th>
-                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Fee prom.</th>
-                    <th className="px-4 py-3 text-right font-extrabold uppercase tracking-wider text-[11px]">Facturación</th>
+                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[10px] w-10">#</th>
+                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[10px]">Gestora</th>
+                    <th className="px-3 py-3 text-center font-extrabold uppercase tracking-wider text-[10px] hidden sm:table-cell">Tipo</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[10px] hidden md:table-cell">Fondos</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[10px] hidden lg:table-cell">AUM</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[10px] hidden sm:table-cell">Fee prom.</th>
+                    <th className="px-4 py-3 text-right font-extrabold uppercase tracking-wider text-[10px]">Facturación</th>
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map((r, i) => {
                     const w = (r.facturacion_periodo / maxFact) * 100;
                     return (
-                      <tr key={r.manager} className={`border-t border-black/5 hover:bg-amauta-yellow/5 transition-colors ${i % 2 ? "bg-black/[0.015]" : ""}`}>
-                        <td className="px-4 py-3 text-xs tabular-nums text-amauta-text-tertiary">{i + 1}</td>
-                        <td className="px-4 py-3 font-extrabold text-amauta-text">{r.manager}</td>
+                      <tr key={r.manager} className={`border-b border-brand-border hover:bg-surface-overlay transition-colors ${i % 2 ? "bg-white/[0.02]" : ""}`}>
+                        <td className="px-4 py-3 text-xs tabular-nums text-text-tertiary">{i + 1}</td>
+                        <td className="px-4 py-3 font-extrabold text-text-primary">{r.manager}</td>
                         <td className="px-3 py-3 text-center hidden sm:table-cell">
                           <Chip tone={r.type === "BANK" ? "blue" : "gray"}>
                             {r.type === "BANK" ? "Banco" : "Indep."}
                           </Chip>
                         </td>
-                        <td className="px-3 py-3 text-right tabular-nums hidden md:table-cell text-amauta-text-secondary">
+                        <td className="px-3 py-3 text-right tabular-nums hidden md:table-cell text-text-secondary">
                           {r.n_fondos}
                         </td>
-                        <td className="px-3 py-3 text-right tabular-nums hidden lg:table-cell text-amauta-text-secondary">
+                        <td className="px-3 py-3 text-right tabular-nums hidden lg:table-cell text-text-secondary">
                           {compactArs(r.aum_ars)}
                         </td>
-                        <td className="px-3 py-3 text-right tabular-nums hidden sm:table-cell text-amauta-text-secondary">
+                        <td className="px-3 py-3 text-right tabular-nums hidden sm:table-cell text-text-secondary">
                           {r.fee_avg.toFixed(2)}%
                         </td>
                         <td className="px-4 py-3 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <span className="tabular-nums font-bold text-amauta-bordo">
+                            <span className="tabular-nums font-bold text-amauta-yellow">
                               {compactArs(r.facturacion_periodo)}
                             </span>
-                            <span className="hidden md:block w-24 h-2 bg-black/5 rounded-xs overflow-hidden">
+                            <span className="hidden md:block w-24 h-2 bg-surface-overlay rounded-xs overflow-hidden">
                               <span className="block h-full bg-amauta-yellow" style={{ width: `${w}%` }} />
                             </span>
                           </div>
@@ -162,7 +162,7 @@ export default async function NegocioPage({
         </Section>
       </div>
 
-      <p className="mt-4 text-xs text-amauta-text-tertiary leading-relaxed max-w-3xl">
+      <p className="mt-4 text-xs text-text-tertiary leading-relaxed max-w-3xl">
         La facturación es una estimación a partir del AUM promedio del período y el fee de gestión promedio.
         Fuente: fonditos · CAFCI.
       </p>

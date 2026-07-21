@@ -1,10 +1,10 @@
 /**
- * Primitivas de UI compartidas por las vistas de FCIs (estilo claro on-brand).
+ * Primitivas de UI compartidas por las vistas de FCIs (tema oscuro del portal).
  * Todos son server components sin estado.
  */
 import type { ReactNode } from "react";
 
-/** Tarjeta con header oscuro uppercase + cuerpo blanco. */
+/** Tarjeta plana surface-raised con header de título + cuadradito bordó. */
 export function Section({
   title,
   subtitle,
@@ -20,12 +20,15 @@ export function Section({
 }) {
   return (
     <section
-      className={`bg-white rounded-sm border border-black/5 shadow-card overflow-hidden ${className}`}
+      className={`bg-surface-raised border border-brand-border rounded-lg overflow-hidden ${className}`}
     >
-      <header className="bg-amauta-dark text-white px-5 sm:px-6 py-3.5 flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-extrabold text-sm uppercase tracking-wider">{title}</h2>
-        {subtitle && <p className="text-[11px] text-white/55 font-medium">{subtitle}</p>}
-        {right}
+      <header className="px-5 py-4 border-b border-brand-border flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <span className="w-[9px] h-[9px] rounded-sm bg-amauta-bordo shrink-0" aria-hidden />
+          <h2 className="font-bold text-sm uppercase tracking-wider text-text-primary">{title}</h2>
+        </div>
+        {subtitle && <p className="text-[11px] text-text-tertiary font-medium">{subtitle}</p>}
+        {right && <div className="ml-auto">{right}</div>}
       </header>
       {children}
     </section>
@@ -46,19 +49,19 @@ export function StatTile({
 }) {
   const valueColor =
     tone === "pos"
-      ? "text-emerald-600"
+      ? "text-emerald-400"
       : tone === "neg"
-        ? "text-red-600"
-        : "text-amauta-text";
+        ? "text-rose-400"
+        : "text-text-primary";
   return (
-    <div className="bg-white rounded-sm border border-black/5 border-t-[3px] border-t-amauta-yellow shadow-card px-4 py-3.5">
-      <p className="text-[10px] uppercase tracking-[0.12em] font-extrabold text-amauta-text-tertiary mb-1">
+    <div className="bg-surface-raised rounded-lg border border-brand-border border-t-2 border-t-amauta-yellow px-4 py-3.5">
+      <p className="text-[10px] uppercase tracking-[0.12em] font-extrabold text-text-tertiary mb-1">
         {label}
       </p>
       <p className={`text-xl sm:text-2xl font-extrabold leading-none tabular-nums ${valueColor}`}>
         {value}
       </p>
-      {sub && <p className="text-[11px] text-amauta-text-tertiary mt-1">{sub}</p>}
+      {sub && <p className="text-[11px] text-text-tertiary mt-1">{sub}</p>}
     </div>
   );
 }
@@ -72,11 +75,11 @@ export function Chip({
   tone?: "bordo" | "yellow" | "blue" | "green" | "gray";
 }) {
   const cls: Record<string, string> = {
-    bordo: "bg-amauta-bordo/8 text-amauta-bordo",
-    yellow: "bg-amauta-yellow/25 text-[#7a6800]",
-    blue: "bg-blue-100 text-blue-700",
-    green: "bg-emerald-100 text-emerald-700",
-    gray: "bg-black/6 text-amauta-text-secondary",
+    bordo: "bg-amauta-bordo/25 text-[#C77DA6]",
+    yellow: "bg-amauta-yellow/15 text-amauta-yellow",
+    blue: "bg-blue-500/15 text-blue-300",
+    green: "bg-emerald-500/15 text-emerald-300",
+    gray: "bg-surface-overlay text-text-secondary",
   };
   return (
     <span
@@ -96,12 +99,12 @@ export function ErrorBox({
   message?: string;
 }) {
   return (
-    <div className="bg-white rounded-sm border border-black/5 shadow-card p-8 sm:p-10 text-center">
+    <div className="bg-surface-raised rounded-lg border border-brand-border p-8 sm:p-10 text-center">
       <div className="text-4xl mb-3" aria-hidden>
         ⚠️
       </div>
-      <h3 className="text-base font-extrabold text-amauta-bordo">{title}</h3>
-      <p className="mt-2 text-sm text-amauta-text-secondary max-w-md mx-auto">
+      <h3 className="text-base font-extrabold text-amauta-yellow">{title}</h3>
+      <p className="mt-2 text-sm text-text-secondary max-w-md mx-auto">
         {message ??
           "La fuente de datos no respondió. Volvé a intentar en unos minutos."}
       </p>
@@ -124,9 +127,9 @@ export function EmptyBox({
       <div className="text-4xl mb-3 opacity-40" aria-hidden>
         {icon}
       </div>
-      <p className="text-base font-extrabold text-amauta-bordo">{title}</p>
+      <p className="text-base font-extrabold text-text-primary">{title}</p>
       {message && (
-        <p className="mt-1.5 text-sm text-amauta-text-secondary max-w-sm mx-auto">
+        <p className="mt-1.5 text-sm text-text-secondary max-w-sm mx-auto">
           {message}
         </p>
       )}

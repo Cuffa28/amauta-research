@@ -15,7 +15,7 @@ import {
   YAxis,
 } from "recharts";
 
-export const COMPARE_COLORS = ["#621044", "#2980B9", "#27AE60", "#d9b80f"];
+export const COMPARE_COLORS = ["#F3CF11", "#C77DA6", "#6BA6FF", "#5FD0A0"];
 
 interface Row {
   fecha: string;
@@ -35,12 +35,12 @@ export default function CompareChart({
     <div style={{ width: "100%", height }}>
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 8, right: 16, left: 4, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
           <XAxis
             dataKey="fecha"
             tick={{ fontSize: 11, fill: "#8A8487" }}
             tickLine={false}
-            axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
+            axisLine={false}
             minTickGap={44}
           />
           <YAxis
@@ -57,15 +57,17 @@ export default function CompareChart({
               name,
             ]}
             contentStyle={{
-              borderRadius: 6,
-              border: "1px solid rgba(0,0,0,0.08)",
+              background: "#2C2728",
+              borderRadius: 8,
+              border: "1px solid #3A3433",
+              color: "#F5F2F0",
               fontSize: 12,
               fontFamily: "inherit",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
             }}
-            labelStyle={{ fontWeight: 700, color: "#231F20" }}
+            labelStyle={{ fontWeight: 700, color: "#F5F2F0" }}
           />
-          <Legend wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
+          <Legend wrapperStyle={{ fontSize: 12, paddingTop: 8, color: "#B8B2B3" }} />
           {keys.map((k, i) => (
             <Line
               key={k}

@@ -91,7 +91,7 @@ export default async function FondosPage({
         {clase && <input type="hidden" name="clase" value={clase} />}
         <label
           htmlFor="q"
-          className="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-bordo mb-1.5"
+          className="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-yellow mb-1.5"
         >
           Buscar fondo
         </label>
@@ -102,11 +102,11 @@ export default async function FondosPage({
             type="text"
             defaultValue={q}
             placeholder="Ej: Galileo Renta Fija, Delta Pesos, Mercado Pago…"
-            className="flex-1 rounded-sm border border-black/10 bg-white px-4 py-3 text-sm font-medium placeholder:text-amauta-text-tertiary/60 focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors shadow-card"
+            className="flex-1 rounded-sm border border-brand-border bg-surface-raised text-text-primary px-4 py-3 text-sm font-medium placeholder:text-text-tertiary focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
           />
           <button
             type="submit"
-            className="rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-6 py-3 hover:bg-amauta-yellow-hover transition-colors shadow-card"
+            className="rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-6 py-3 hover:bg-amauta-yellow-hover transition-colors"
           >
             Buscar
           </button>
@@ -132,7 +132,7 @@ export default async function FondosPage({
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm min-w-[560px]">
-                  <thead className="bg-amauta-bordo text-white">
+                  <thead className="text-text-tertiary border-b border-brand-border">
                     <tr>
                       <Th className="text-left">Fondo</Th>
                       <Th className="text-left hidden sm:table-cell">Categoría</Th>
@@ -144,25 +144,25 @@ export default async function FondosPage({
                     {search.data.map((r, i) => (
                       <tr
                         key={r.fondo}
-                        className={`border-t border-black/5 hover:bg-amauta-yellow/5 transition-colors ${i % 2 ? "bg-black/[0.015]" : ""}`}
+                        className={`border-b border-brand-border hover:bg-surface-overlay transition-colors ${i % 2 ? "bg-white/[0.02]" : ""}`}
                       >
                         <td className="px-4 py-3">
                           <Link
                             href={`/fondo/${encodeURIComponent(r.fondo)}`}
-                            className="font-extrabold text-amauta-bordo hover:underline"
+                            className="font-extrabold text-text-primary hover:text-amauta-yellow transition-colors"
                           >
                             {r.fondo}
                           </Link>
-                          <div className="mt-0.5 text-xs text-amauta-text-tertiary sm:hidden">
+                          <div className="mt-0.5 text-xs text-text-tertiary sm:hidden">
                             {titleCase(r.categoria)} · {r.moneda}
                           </div>
                         </td>
                         <td className="px-4 py-3 hidden sm:table-cell">
                           <Chip tone="gray">{titleCase(r.categoria)}</Chip>
-                          <span className="ml-2 text-xs text-amauta-text-tertiary">{r.moneda}</span>
+                          <span className="ml-2 text-xs text-text-tertiary">{r.moneda}</span>
                         </td>
-                        <td className="px-4 py-3 text-right tabular-nums font-medium">{fmtNumber(r.vcp, 2)}</td>
-                        <td className="px-4 py-3 text-right tabular-nums font-medium">{compactArs(r.patrimonio)}</td>
+                        <td className="px-4 py-3 text-right tabular-nums font-medium text-text-primary">{fmtNumber(r.vcp, 2)}</td>
+                        <td className="px-4 py-3 text-right tabular-nums font-medium text-text-primary">{compactArs(r.patrimonio)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -175,7 +175,7 @@ export default async function FondosPage({
 
       {/* ── Filtros del ranking ───────────────────────────────────────── */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary mr-1">
+        <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-text-tertiary mr-1">
           Período
         </span>
         {PERIODOS.map((p) => (
@@ -184,8 +184,8 @@ export default async function FondosPage({
             href={buildHref({ periodo: p.value })}
             className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-colors ${
               periodo === p.value
-                ? "bg-amauta-bordo text-white border-amauta-bordo"
-                : "bg-white text-amauta-text-secondary border-black/10 hover:border-amauta-bordo hover:text-amauta-bordo"
+                ? "bg-amauta-yellow text-amauta-dark border-amauta-yellow"
+                : "bg-surface-raised text-text-secondary border-brand-border hover:border-amauta-yellow hover:text-text-primary"
             }`}
           >
             {p.label}
@@ -200,14 +200,14 @@ export default async function FondosPage({
         <FilterSelect id="clase" label="Clase" value={clase} options={[...CLASES]} />
         <button
           type="submit"
-          className="rounded-sm bg-amauta-dark text-white font-extrabold uppercase tracking-wider text-xs px-5 py-2.5 hover:bg-amauta-dark-hover transition-colors"
+          className="rounded-sm bg-surface-overlay border border-brand-border text-text-primary font-extrabold uppercase tracking-wider text-xs px-5 py-2.5 hover:border-amauta-yellow transition-colors"
         >
           Aplicar
         </button>
         {(categoria || clase) && (
           <Link
             href={buildHref({ categoria: "", clase: "" })}
-            className="text-xs font-bold text-amauta-text-tertiary hover:text-amauta-bordo transition-colors py-2.5"
+            className="text-xs font-bold text-text-tertiary hover:text-amauta-yellow transition-colors py-2.5"
           >
             Limpiar
           </Link>
@@ -228,7 +228,7 @@ export default async function FondosPage({
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
-              <thead className="bg-amauta-bordo text-white">
+              <thead className="text-text-tertiary border-b border-brand-border">
                 <tr>
                   <Th className="text-left w-12">#</Th>
                   <Th className="text-left">Fondo</Th>
@@ -246,16 +246,16 @@ export default async function FondosPage({
                     i === 0
                       ? "bg-amauta-yellow/10"
                       : i === 1
-                        ? "bg-slate-100/60"
+                        ? "bg-white/[0.04]"
                         : i === 2
-                          ? "bg-amber-50"
+                          ? "bg-amber-500/[0.06]"
                           : i % 2
-                            ? "bg-black/[0.015]"
+                            ? "bg-white/[0.02]"
                             : "";
                   return (
                     <tr
                       key={r.fondo}
-                      className={`border-t border-black/5 hover:bg-amauta-yellow/5 transition-colors ${rowBg}`}
+                      className={`border-b border-brand-border hover:bg-surface-overlay transition-colors ${rowBg}`}
                     >
                       <td className="px-4 py-3 align-top">
                         {podium ? (
@@ -263,17 +263,17 @@ export default async function FondosPage({
                             {i === 0 ? "🥇" : i === 1 ? "🥈" : "🥉"}
                           </span>
                         ) : (
-                          <span className="tabular-nums text-amauta-text-tertiary text-xs">{i + 1}</span>
+                          <span className="tabular-nums text-text-tertiary text-xs">{i + 1}</span>
                         )}
                       </td>
                       <td className="px-4 py-3 max-w-[24rem]">
                         <Link
                           href={`/fondo/${encodeURIComponent(r.fondo)}`}
-                          className="font-extrabold text-amauta-bordo hover:underline leading-snug"
+                          className="font-extrabold text-text-primary hover:text-amauta-yellow transition-colors leading-snug"
                         >
                           {r.fondo}
                         </Link>
-                        <div className="mt-0.5 text-xs text-amauta-text-tertiary md:hidden">
+                        <div className="mt-0.5 text-xs text-text-tertiary md:hidden">
                           {titleCase(r.categoria)}
                           {r.moneda ? ` · ${r.moneda}` : ""}
                         </div>
@@ -281,16 +281,16 @@ export default async function FondosPage({
                       <td className="px-4 py-3 hidden md:table-cell align-top">
                         <Chip tone="gray">{titleCase(r.categoria)}</Chip>
                         {r.moneda && (
-                          <span className="ml-2 text-xs text-amauta-text-tertiary">{r.moneda}</span>
+                          <span className="ml-2 text-xs text-text-tertiary">{r.moneda}</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-center hidden sm:table-cell align-top tabular-nums font-medium">
+                      <td className="px-4 py-3 text-center hidden sm:table-cell align-top tabular-nums font-medium text-text-secondary">
                         {r.clase ?? "—"}
                       </td>
                       <td className={`px-4 py-3 text-right tabular-nums font-extrabold align-top ${ret.colorClass}`}>
                         {ret.text}
                       </td>
-                      <td className="px-4 py-3 text-right tabular-nums text-xs font-bold text-amauta-text-secondary align-top">
+                      <td className="px-4 py-3 text-right tabular-nums text-xs font-bold text-text-secondary align-top">
                         {fmtPercent(r.tna_pct, 1)}
                       </td>
                     </tr>
@@ -302,9 +302,9 @@ export default async function FondosPage({
         )}
       </Section>
 
-      <p className="mt-4 text-xs text-amauta-text-tertiary leading-relaxed max-w-3xl">
-        <strong className="text-amauta-text-secondary">Retorno:</strong> variación del VCP en el período ·{" "}
-        <strong className="text-amauta-text-secondary">TNA:</strong> tasa nominal anualizada (para períodos
+      <p className="mt-4 text-xs text-text-tertiary leading-relaxed max-w-3xl">
+        <strong className="text-text-secondary">Retorno:</strong> variación del VCP en el período ·{" "}
+        <strong className="text-text-secondary">TNA:</strong> tasa nominal anualizada (para períodos
         cortos puede resultar poco representativa). Fuente: fonditos · CAFCI. Este material es informativo y no
         constituye recomendación de inversión.
       </p>
@@ -316,7 +316,7 @@ export default async function FondosPage({
 
 function Th({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <th className={`px-4 py-3 font-extrabold uppercase tracking-wider text-[11px] whitespace-nowrap ${className}`}>
+    <th className={`px-4 py-3 font-extrabold uppercase tracking-wider text-[10px] whitespace-nowrap ${className}`}>
       {children}
     </th>
   );
@@ -339,7 +339,7 @@ function FilterSelect({
     <div className="flex flex-col gap-1">
       <label
         htmlFor={id}
-        className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary"
+        className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-text-tertiary"
       >
         {label}
       </label>
@@ -347,7 +347,7 @@ function FilterSelect({
         id={id}
         name={id}
         defaultValue={value}
-        className="rounded-sm border border-black/10 bg-white px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors min-w-[9rem]"
+        className="rounded-sm border border-brand-border bg-surface-overlay text-text-primary px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors min-w-[9rem] [color-scheme:dark]"
       >
         <option value="">Todas</option>
         {options.map((o) => (

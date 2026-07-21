@@ -82,19 +82,19 @@ export default async function TenenciasPage({
                 <div key={r.categoria} className="flex items-center gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 text-sm mb-1.5">
-                      <span className="font-bold text-amauta-text truncate">{titleCase(r.categoria)}</span>
-                      <span className="text-xs text-amauta-text-tertiary shrink-0">
+                      <span className="font-bold text-text-primary truncate">{titleCase(r.categoria)}</span>
+                      <span className="text-xs text-text-tertiary shrink-0">
                         {((r.n_fondos / totalFondos) * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div className="h-2.5 bg-black/6 rounded-xs overflow-hidden">
+                    <div className="h-2.5 bg-surface-overlay rounded-xs overflow-hidden">
                       <div
                         className={`h-full ${CAT_COLOR[r.categoria] ?? "bg-slate-400"}`}
                         style={{ width: `${(r.n_fondos / maxCat) * 100}%` }}
                       />
                     </div>
                   </div>
-                  <span className="text-sm font-extrabold tabular-nums text-amauta-bordo w-12 text-right">
+                  <span className="text-sm font-extrabold tabular-nums text-amauta-yellow w-12 text-right">
                     {r.n_fondos}
                   </span>
                 </div>
@@ -105,18 +105,18 @@ export default async function TenenciasPage({
 
         {/* Exposición a un activo */}
         <Section title="Exposición a un activo">
-          <div className="p-4 sm:p-5 border-b border-black/5">
+          <div className="p-4 sm:p-5 border-b border-brand-border">
             <form method="get" action="/fondos/tenencias" className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 name="activo"
                 defaultValue={activo}
                 placeholder="Ticker o nombre del activo (ej: TZX28, AO27, GD30)"
-                className="flex-1 rounded-sm border border-black/10 bg-white px-4 py-2.5 text-sm font-medium placeholder:text-amauta-text-tertiary/60 focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
+                className="flex-1 rounded-sm border border-brand-border bg-surface-overlay text-text-primary px-4 py-2.5 text-sm font-medium placeholder:text-text-tertiary focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
               />
               <button
                 type="submit"
-                className="rounded-sm bg-amauta-dark text-white font-extrabold uppercase tracking-wider text-xs px-6 py-2.5 hover:bg-amauta-dark-hover transition-colors"
+                className="rounded-sm bg-amauta-yellow text-amauta-dark font-extrabold uppercase tracking-wider text-xs px-6 py-2.5 hover:bg-amauta-yellow-hover transition-colors"
               >
                 Buscar exposición
               </button>
@@ -141,30 +141,30 @@ export default async function TenenciasPage({
             />
           ) : (
             <>
-              <div className="px-4 sm:px-5 py-3 flex flex-wrap gap-2 border-b border-black/5 bg-amauta-bg-light/40">
+              <div className="px-4 sm:px-5 py-3 flex flex-wrap gap-2 border-b border-brand-border bg-surface-overlay/40">
                 <MiniStat label="Fondos expuestos" value={String(exposicion.total_fondos)} />
                 <MiniStat label="Peso promedio" value={`${exposicion.peso_promedio.toFixed(2)}%`} />
                 <MiniStat label="Peso máx." value={`${exposicion.peso_max.toFixed(2)}%`} />
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm min-w-[480px]">
-                  <thead className="bg-amauta-bg-light/60 text-amauta-text-tertiary">
+                  <thead className="text-text-tertiary border-b border-brand-border">
                     <tr>
-                      <th className="px-4 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">Fondo</th>
-                      <th className="px-3 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Categoría</th>
-                      <th className="px-4 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Peso</th>
+                      <th className="px-4 py-2.5 text-left font-extrabold uppercase tracking-wider text-[10px]">Fondo</th>
+                      <th className="px-3 py-2.5 text-left font-extrabold uppercase tracking-wider text-[10px] hidden sm:table-cell">Categoría</th>
+                      <th className="px-4 py-2.5 text-right font-extrabold uppercase tracking-wider text-[10px]">Peso</th>
                     </tr>
                   </thead>
                   <tbody>
                     {exposicion.fondos.map((f, i) => {
                       const peso = pesoOf(f);
                       return (
-                        <tr key={`${f.fondo}-${i}`} className={`border-t border-black/5 ${i % 2 ? "bg-black/[0.015]" : ""}`}>
-                          <td className="px-4 py-2.5 font-bold text-amauta-text">{f.fondo}</td>
+                        <tr key={`${f.fondo}-${i}`} className={`border-b border-brand-border ${i % 2 ? "bg-white/[0.02]" : ""}`}>
+                          <td className="px-4 py-2.5 font-bold text-text-primary">{f.fondo}</td>
                           <td className="px-3 py-2.5 hidden sm:table-cell">
-                            {f.categoria ? <Chip tone="gray">{titleCase(String(f.categoria))}</Chip> : <span className="text-amauta-text-tertiary">—</span>}
+                            {f.categoria ? <Chip tone="gray">{titleCase(String(f.categoria))}</Chip> : <span className="text-text-tertiary">—</span>}
                           </td>
-                          <td className="px-4 py-2.5 text-right tabular-nums font-bold text-amauta-bordo">
+                          <td className="px-4 py-2.5 text-right tabular-nums font-bold text-amauta-yellow">
                             {peso != null ? `${peso.toFixed(2)}%` : "—"}
                           </td>
                         </tr>
@@ -181,14 +181,14 @@ export default async function TenenciasPage({
         <Section title="Curva de rendimientos">
           {curva ? (
             <div className="p-4 sm:p-5">
-              <p className="text-sm text-amauta-text-secondary mb-3">
+              <p className="text-sm text-text-secondary mb-3">
                 Datos de curva disponibles desde la fuente.
               </p>
               <details className="group">
-                <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-wider text-amauta-bordo hover:text-amauta-bordo-hover transition-colors">
+                <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-wider text-amauta-yellow hover:text-amauta-yellow-hover transition-colors">
                   Ver datos crudos
                 </summary>
-                <pre className="mt-3 text-xs bg-amauta-bg-light rounded-sm p-4 overflow-x-auto text-amauta-text-secondary">
+                <pre className="mt-3 text-xs bg-surface-overlay border border-brand-border rounded-sm p-4 overflow-x-auto text-text-secondary">
                   {JSON.stringify(curva, null, 2).slice(0, 4000)}
                 </pre>
               </details>
@@ -209,9 +209,9 @@ export default async function TenenciasPage({
 
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-white rounded-sm border border-black/5 px-3 py-2">
-      <p className="text-[10px] uppercase tracking-wider font-extrabold text-amauta-text-tertiary">{label}</p>
-      <p className="text-sm font-extrabold text-amauta-bordo tabular-nums">{value}</p>
+    <div className="bg-surface-raised rounded-lg border border-brand-border px-3 py-2">
+      <p className="text-[10px] uppercase tracking-wider font-extrabold text-text-tertiary">{label}</p>
+      <p className="text-sm font-extrabold text-amauta-yellow tabular-nums">{value}</p>
     </div>
   );
 }

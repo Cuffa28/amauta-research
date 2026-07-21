@@ -50,7 +50,7 @@ export default async function FichaPage({
 
   if (!ficha) {
     return (
-      <div className="min-h-full bg-amauta-bg-light">
+      <div className="min-h-full">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
           <ErrorBox
             title="No se encontró el fondo"
@@ -91,66 +91,64 @@ export default async function FichaPage({
     : [];
 
   return (
-    <div className="min-h-full bg-amauta-bg-light">
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <header className="bg-amauta-dark text-white shadow-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="pt-6 pb-5">
-            <nav className="text-xs text-white/50 font-medium mb-3">
-              <Link href="/fondos" className="hover:text-amauta-yellow transition-colors">
-                Fondos
-              </Link>
-              <span className="mx-2 text-white/25">/</span>
-              <span className="text-white/70">Ficha</span>
-            </nav>
+    <div className="min-h-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        {/* ── Hero plano ───────────────────────────────────────────────── */}
+        <header className="relative overflow-hidden bg-surface-raised border border-brand-border rounded-lg p-6 sm:p-8 mb-6">
+          <span className="absolute top-0 left-0 h-full w-1 bg-amauta-yellow" aria-hidden />
+          <nav className="text-xs text-text-tertiary font-medium mb-3">
+            <Link href="/fondos" className="hover:text-amauta-yellow transition-colors">
+              Fondos
+            </Link>
+            <span className="mx-2 text-text-tertiary/60">/</span>
+            <span className="text-text-secondary">Ficha</span>
+          </nav>
 
-            <p className="text-[11px] uppercase tracking-[0.18em] text-amauta-yellow font-extrabold mb-2">
-              Ficha del fondo · Cierre {d.fecha}
-            </p>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight">
-              {canonical}
-            </h1>
-            <p className="mt-2 text-sm text-white/65">
-              {ficha.gestora && <span className="font-bold text-white/85">{ficha.gestora}</span>}
-              {d.sociedad_depositaria && (
-                <>
-                  <span className="mx-2 text-white/30">·</span>
-                  <span>Depositaria: {d.sociedad_depositaria}</span>
-                </>
-              )}
-              {ficha.clase && (
-                <>
-                  <span className="mx-2 text-white/30">·</span>
-                  <span>Clase {ficha.clase}</span>
-                </>
-              )}
-            </p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-amauta-yellow font-extrabold mb-2">
+            Ficha del fondo · Cierre {d.fecha}
+          </p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight text-text-primary">
+            {canonical}
+          </h1>
+          <p className="mt-2 text-sm text-text-secondary">
+            {ficha.gestora && <span className="font-bold text-text-primary">{ficha.gestora}</span>}
+            {d.sociedad_depositaria && (
+              <>
+                <span className="mx-2 text-text-tertiary/60">·</span>
+                <span>Depositaria: {d.sociedad_depositaria}</span>
+              </>
+            )}
+            {ficha.clase && (
+              <>
+                <span className="mx-2 text-text-tertiary/60">·</span>
+                <span>Clase {ficha.clase}</span>
+              </>
+            )}
+          </p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {d.categoria && <Chip tone="yellow">{titleCase(d.categoria)}</Chip>}
-              {ficha.subcategoria && <ChipDark>{titleCase(ficha.subcategoria)}</ChipDark>}
-              {d.moneda && <ChipDark>{d.moneda}</ChipDark>}
-              {d.calificacion && <ChipDark>Cal. {d.calificacion}</ChipDark>}
-              {d.horizonte && <ChipDark>{d.horizonte}</ChipDark>}
-            </div>
-
-            {/* KPIs */}
-            <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-sm overflow-hidden">
-              <HeroKpi label="VCP" value={fmtNumber(d.vcp, 2)} />
-              <HeroKpi label="Patrimonio" value={compactArs(d.patrimonio)} />
-              <HeroKpi label="TNA" value={pctOrDash(m.tna)} />
-              <HeroKpi label="Sharpe" value={m.sharpe != null ? fmtNumber(m.sharpe, 2) : "—"} />
-            </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {d.categoria && <Chip tone="yellow">{titleCase(d.categoria)}</Chip>}
+            {ficha.subcategoria && <ChipDark>{titleCase(ficha.subcategoria)}</ChipDark>}
+            {d.moneda && <ChipDark>{d.moneda}</ChipDark>}
+            {d.calificacion && <ChipDark>Cal. {d.calificacion}</ChipDark>}
+            {d.horizonte && <ChipDark>{d.horizonte}</ChipDark>}
           </div>
 
-          <div className="border-t border-white/10">
-            <FciTabs />
+          {/* KPIs */}
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <HeroKpi label="VCP" value={fmtNumber(d.vcp, 2)} />
+            <HeroKpi label="Patrimonio" value={compactArs(d.patrimonio)} />
+            <HeroKpi label="TNA" value={pctOrDash(m.tna)} />
+            <HeroKpi label="Sharpe" value={m.sharpe != null ? fmtNumber(m.sharpe, 2) : "—"} />
           </div>
+        </header>
+
+        <div className="border-b border-brand-border mb-6">
+          <FciTabs />
         </div>
-      </header>
 
-      {/* ── Contenido ────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+        {/* ── Contenido ──────────────────────────────────────────────── */}
+        <div className="space-y-6">
         {/* Rendimientos */}
         <Section title="Rendimientos" subtitle={`Historial: ${m.dias_historico ?? "—"} días · desde ${m.fecha_inicio ?? "—"}`}>
           <div className="p-4 sm:p-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -174,7 +172,7 @@ export default async function FichaPage({
         >
           <div className="p-4 sm:p-5">
             {serieData.length > 1 ? (
-              <SeriesChart data={serieData} mode="index" color="#621044" gradientId="fichaVcp" />
+              <SeriesChart data={serieData} mode="index" color="#F3CF11" gradientId="fichaVcp" />
             ) : (
               <EmptyBox icon="📈" title="Serie no disponible" message="No hay suficientes puntos para graficar la evolución." />
             )}
@@ -190,19 +188,19 @@ export default async function FichaPage({
                   <div key={s.tipo_activo} className="flex items-center gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 text-sm mb-1.5">
-                        <span className="font-bold text-amauta-text truncate">{s.tipo_activo}</span>
-                        <span className="text-xs text-amauta-text-tertiary shrink-0">
+                        <span className="font-bold text-text-primary truncate">{s.tipo_activo}</span>
+                        <span className="text-xs text-text-tertiary shrink-0">
                           {s.n_activos} activo{s.n_activos === 1 ? "" : "s"}
                         </span>
                       </div>
-                      <div className="h-2.5 bg-black/6 rounded-xs overflow-hidden">
+                      <div className="h-2.5 bg-surface-overlay rounded-xs overflow-hidden">
                         <div
                           className={`h-full ${tipoColor(s.tipo_activo)}`}
                           style={{ width: `${Math.min(100, s.peso_pct)}%` }}
                         />
                       </div>
                     </div>
-                    <span className="text-sm font-extrabold tabular-nums text-amauta-bordo w-14 text-right">
+                    <span className="text-sm font-extrabold tabular-nums text-amauta-yellow w-14 text-right">
                       {s.peso_pct.toFixed(1)}%
                     </span>
                   </div>
@@ -221,24 +219,24 @@ export default async function FichaPage({
             {ten && ten.holdings.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="bg-amauta-bg-light/60 text-amauta-text-tertiary">
+                  <thead className="text-text-tertiary border-b border-brand-border">
                     <tr>
-                      <th className="px-4 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px]">Activo</th>
-                      <th className="px-3 py-2.5 text-left font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Tipo</th>
-                      <th className="px-4 py-2.5 text-right font-extrabold uppercase tracking-wider text-[11px]">Peso</th>
+                      <th className="px-4 py-2.5 text-left font-extrabold uppercase tracking-wider text-[10px]">Activo</th>
+                      <th className="px-3 py-2.5 text-left font-extrabold uppercase tracking-wider text-[10px] hidden sm:table-cell">Tipo</th>
+                      <th className="px-4 py-2.5 text-right font-extrabold uppercase tracking-wider text-[10px]">Peso</th>
                     </tr>
                   </thead>
                   <tbody>
                     {ten.holdings.map((h, i) => (
-                      <tr key={`${h.name}-${i}`} className={`border-t border-black/5 ${i % 2 ? "bg-black/[0.015]" : ""}`}>
-                        <td className="px-4 py-2.5 font-medium text-amauta-text">{h.name}</td>
+                      <tr key={`${h.name}-${i}`} className={`border-b border-brand-border ${i % 2 ? "bg-white/[0.02]" : ""}`}>
+                        <td className="px-4 py-2.5 font-medium text-text-primary">{h.name}</td>
                         <td className="px-3 py-2.5 hidden sm:table-cell">
-                          <span className="inline-flex items-center gap-1.5 text-xs text-amauta-text-secondary">
+                          <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
                             <span className={`w-2 h-2 rounded-full ${tipoColor(h.type)}`} />
                             {h.type}
                           </span>
                         </td>
-                        <td className="px-4 py-2.5 text-right tabular-nums font-bold text-amauta-bordo">
+                        <td className="px-4 py-2.5 text-right tabular-nums font-bold text-amauta-yellow">
                           {h.weight.toFixed(1)}%
                         </td>
                       </tr>
@@ -288,10 +286,11 @@ export default async function FichaPage({
           </Link>
           <Link
             href="/fondos"
-            className="inline-flex items-center rounded-sm border border-black/10 bg-white text-amauta-text-secondary font-bold text-sm px-5 py-2.5 hover:bg-amauta-bg-light transition-colors"
+            className="inline-flex items-center rounded-sm border border-brand-border bg-surface-overlay text-text-secondary font-bold text-sm px-5 py-2.5 hover:text-text-primary hover:border-amauta-yellow transition-colors"
           >
             ← Volver al listado
           </Link>
+        </div>
         </div>
       </div>
     </div>
@@ -302,7 +301,7 @@ export default async function FichaPage({
 
 function ChipDark({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-block border border-white/25 text-white/80 text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-xs">
+    <span className="inline-block border border-brand-border text-text-secondary text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-xs">
       {children}
     </span>
   );
@@ -310,8 +309,8 @@ function ChipDark({ children }: { children: React.ReactNode }) {
 
 function HeroKpi({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-amauta-dark px-4 py-3.5">
-      <p className="text-[10px] uppercase tracking-[0.14em] text-white/55 font-bold mb-1">{label}</p>
+    <div className="bg-surface-overlay border border-brand-border rounded-lg px-4 py-3.5">
+      <p className="text-[10px] uppercase tracking-[0.14em] text-text-tertiary font-bold mb-1">{label}</p>
       <p className="text-lg sm:text-xl lg:text-2xl font-extrabold text-amauta-yellow leading-tight tabular-nums">
         {value}
       </p>
@@ -327,11 +326,11 @@ function ReturnTile({ label, v }: { label: string; v: number | null | undefined 
 
 function Info({ label, value }: { label: string; value: string | null | undefined }) {
   return (
-    <div className="px-5 py-3.5 border-t border-black/5 sm:odd:border-r lg:[&:not(:nth-child(3n))]:border-r border-black/5">
-      <dt className="text-[11px] uppercase tracking-wider font-extrabold text-amauta-text-tertiary mb-0.5">
+    <div className="px-5 py-3.5 border-t border-brand-border sm:odd:border-r lg:[&:not(:nth-child(3n))]:border-r border-brand-border">
+      <dt className="text-[11px] uppercase tracking-wider font-extrabold text-text-tertiary mb-0.5">
         {label}
       </dt>
-      <dd className="text-sm font-bold text-amauta-text">{value ?? "—"}</dd>
+      <dd className="text-sm font-bold text-text-primary">{value ?? "—"}</dd>
     </div>
   );
 }

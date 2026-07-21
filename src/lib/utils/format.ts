@@ -58,18 +58,18 @@ export function fmtReturn(
   outlierThreshold?: number,
 ): { text: string; colorClass: string; isOutlier: boolean } {
   if (value == null || isNaN(value)) {
-    return { text: "—", colorClass: "text-amauta-text-tertiary", isOutlier: false };
+    return { text: "—", colorClass: "text-text-tertiary", isOutlier: false };
   }
   const isOutlier = outlierThreshold != null && Math.abs(value) > outlierThreshold;
   const sign = value >= 0 ? "+" : "";
   const base = `${sign}${fmtNumber(value, decimals)}%`;
   const text = isOutlier ? `${base} ⚠` : base;
   const colorClass = isOutlier
-    ? "text-amber-500 font-semibold"
+    ? "text-amber-400 font-semibold"
     : value > 0
-      ? "text-emerald-600 font-semibold"
+      ? "text-emerald-400 font-semibold"
       : value < 0
-        ? "text-red-600 font-semibold"
-        : "text-amauta-text-secondary";
+        ? "text-rose-400 font-semibold"
+        : "text-text-secondary";
   return { text, colorClass, isOutlier };
 }

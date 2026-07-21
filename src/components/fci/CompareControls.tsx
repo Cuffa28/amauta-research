@@ -36,15 +36,15 @@ export default function CompareControls({
   return (
     <form
       onSubmit={submit}
-      className="bg-white rounded-sm border border-black/5 shadow-card p-5 mb-6"
+      className="bg-surface-raised rounded-lg border border-brand-border p-5 mb-6"
     >
-      <p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-bordo mb-3">
+      <p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-yellow mb-3">
         Elegí de 2 a 4 fondos
       </p>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {fondos.map((f, i) => (
           <div key={i} className="flex flex-col gap-1">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-amauta-text-tertiary">
+            <label className="text-[11px] font-bold uppercase tracking-wider text-text-tertiary">
               Fondo {i + 1}
             </label>
             <input
@@ -52,21 +52,21 @@ export default function CompareControls({
               value={f}
               onChange={(e) => update(i, e.target.value)}
               placeholder={i < 2 ? "Ej: Delta Pesos" : "Opcional"}
-              className="rounded-sm border border-black/10 bg-white px-3 py-2.5 text-sm font-medium placeholder:text-amauta-text-tertiary/50 focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
+              className="rounded-sm border border-brand-border bg-surface-overlay text-text-primary px-3 py-2.5 text-sm font-medium placeholder:text-text-tertiary focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
             />
           </div>
         ))}
       </div>
       <div className="mt-4 flex flex-wrap items-end gap-3">
         <div className="flex flex-col gap-1">
-          <label className="text-[11px] font-bold uppercase tracking-wider text-amauta-text-tertiary">
+          <label className="text-[11px] font-bold uppercase tracking-wider text-text-tertiary">
             Desde
           </label>
           <input
             type="date"
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="rounded-sm border border-black/10 bg-white px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors"
+            className="rounded-sm border border-brand-border bg-surface-overlay text-text-primary px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-amauta-yellow focus:ring-2 focus:ring-amauta-yellow/30 transition-colors [color-scheme:dark]"
           />
         </div>
         <button

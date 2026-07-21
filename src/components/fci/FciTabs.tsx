@@ -20,7 +20,7 @@ export default function FciTabs() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-1 overflow-x-auto -mb-px scrollbar-none" aria-label="Secciones de FCIs">
+    <nav className="flex gap-6 overflow-x-auto -mb-px scrollbar-none" aria-label="Secciones de FCIs">
       {TABS.map((t) => {
         const active =
           t.href === "/fondos"
@@ -30,10 +30,10 @@ export default function FciTabs() {
           <Link
             key={t.href}
             href={t.href}
-            className={`whitespace-nowrap px-4 py-3 text-[13px] font-bold uppercase tracking-wider border-b-2 transition-colors ${
+            className={`whitespace-nowrap py-3 text-[13px] font-bold uppercase tracking-wider border-b-2 transition-colors ${
               active
                 ? "border-amauta-yellow text-amauta-yellow"
-                : "border-transparent text-white/55 hover:text-white/90 hover:border-white/25"
+                : "border-transparent text-text-secondary hover:text-text-primary"
             }`}
           >
             {t.label}

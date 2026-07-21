@@ -107,13 +107,13 @@ export default async function FlujosPage({
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[560px]">
-                <thead className="bg-amauta-bordo text-white">
+                <thead className="text-text-tertiary border-b border-brand-border">
                   <tr>
-                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[11px] w-10">#</th>
-                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[11px]">Gestora</th>
-                    <th className="px-3 py-3 text-center font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Tipo</th>
-                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[11px] hidden sm:table-cell">Fondos</th>
-                    <th className="px-4 py-3 text-right font-extrabold uppercase tracking-wider text-[11px]">Flujo neto</th>
+                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[10px] w-10">#</th>
+                    <th className="px-4 py-3 text-left font-extrabold uppercase tracking-wider text-[10px]">Gestora</th>
+                    <th className="px-3 py-3 text-center font-extrabold uppercase tracking-wider text-[10px] hidden sm:table-cell">Tipo</th>
+                    <th className="px-3 py-3 text-right font-extrabold uppercase tracking-wider text-[10px] hidden sm:table-cell">Fondos</th>
+                    <th className="px-4 py-3 text-right font-extrabold uppercase tracking-wider text-[10px]">Flujo neto</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -121,25 +121,25 @@ export default async function FlujosPage({
                     const pos = r.flujo_ars >= 0;
                     const w = (Math.abs(r.flujo_ars) / maxAbs) * 100;
                     return (
-                      <tr key={r.manager} className={`border-t border-black/5 hover:bg-amauta-yellow/5 transition-colors ${i % 2 ? "bg-black/[0.015]" : ""}`}>
-                        <td className="px-4 py-3 text-xs tabular-nums text-amauta-text-tertiary">{i + 1}</td>
-                        <td className="px-4 py-3 font-extrabold text-amauta-text">{r.manager}</td>
+                      <tr key={r.manager} className={`border-b border-brand-border hover:bg-surface-overlay transition-colors ${i % 2 ? "bg-white/[0.02]" : ""}`}>
+                        <td className="px-4 py-3 text-xs tabular-nums text-text-tertiary">{i + 1}</td>
+                        <td className="px-4 py-3 font-extrabold text-text-primary">{r.manager}</td>
                         <td className="px-3 py-3 text-center hidden sm:table-cell">
                           <Chip tone={r.type === "BANK" ? "blue" : "gray"}>
                             {r.type === "BANK" ? "Banco" : "Indep."}
                           </Chip>
                         </td>
-                        <td className="px-3 py-3 text-right tabular-nums hidden sm:table-cell text-amauta-text-secondary">
+                        <td className="px-3 py-3 text-right tabular-nums hidden sm:table-cell text-text-secondary">
                           {r.n_fondos}
                         </td>
                         <td className="px-4 py-3 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <span className={`tabular-nums font-bold ${pos ? "text-emerald-600" : "text-red-600"}`}>
+                            <span className={`tabular-nums font-bold ${pos ? "text-emerald-400" : "text-rose-400"}`}>
                               {compactArs(r.flujo_ars)}
                             </span>
-                            <span className="hidden md:block w-24 h-2 bg-black/5 rounded-xs overflow-hidden">
+                            <span className="hidden md:block w-24 h-2 bg-surface-overlay rounded-xs overflow-hidden">
                               <span
-                                className={`block h-full ${pos ? "bg-emerald-500" : "bg-red-500"}`}
+                                className={`block h-full ${pos ? "bg-emerald-400" : "bg-rose-400"}`}
                                 style={{ width: `${w}%` }}
                               />
                             </span>
@@ -155,7 +155,7 @@ export default async function FlujosPage({
         </Section>
       </div>
 
-      <p className="mt-4 text-xs text-amauta-text-tertiary leading-relaxed max-w-3xl">
+      <p className="mt-4 text-xs text-text-tertiary leading-relaxed max-w-3xl">
         Flujos netos en pesos (suscripciones menos rescates). La captación por gestora corresponde a la ventana
         por defecto de la fuente. Fuente: fonditos · CAFCI.
       </p>
@@ -178,7 +178,7 @@ function FilterChips({
 }) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-amauta-text-tertiary">
+      <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-text-tertiary">
         {label}
       </span>
       {options.map((o) => (
@@ -187,8 +187,8 @@ function FilterChips({
           href={buildHref({ [field]: o.value })}
           className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-colors ${
             value === o.value
-              ? "bg-amauta-bordo text-white border-amauta-bordo"
-              : "bg-white text-amauta-text-secondary border-black/10 hover:border-amauta-bordo hover:text-amauta-bordo"
+              ? "bg-amauta-yellow text-amauta-dark border-amauta-yellow"
+              : "bg-surface-raised text-text-secondary border-brand-border hover:border-amauta-yellow hover:text-text-primary"
           }`}
         >
           {o.label}

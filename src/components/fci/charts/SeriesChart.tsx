@@ -32,7 +32,7 @@ function fmtCompact(n: number): string {
 
 export default function SeriesChart({
   data,
-  color = "#621044",
+  color = "#F3CF11",
   height = 300,
   mode = "plain",
   currency = false,
@@ -64,12 +64,12 @@ export default function SeriesChart({
               <stop offset="100%" stopColor={color} stopOpacity={0.02} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
           <XAxis
             dataKey="x"
             tick={{ fontSize: 11, fill: "#8A8487" }}
             tickLine={false}
-            axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
+            axisLine={false}
             minTickGap={40}
           />
           <YAxis
@@ -83,13 +83,16 @@ export default function SeriesChart({
           <Tooltip
             formatter={(v: number) => [fmtTip(v), currency ? "AUM" : mode === "index" ? "Base 100" : "Valor"]}
             contentStyle={{
-              borderRadius: 6,
-              border: "1px solid rgba(0,0,0,0.08)",
+              background: "#2C2728",
+              borderRadius: 8,
+              border: "1px solid #3A3433",
+              color: "#F5F2F0",
               fontSize: 12,
               fontFamily: "inherit",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
             }}
-            labelStyle={{ fontWeight: 700, color: "#231F20" }}
+            itemStyle={{ color: "#F5F2F0" }}
+            labelStyle={{ fontWeight: 700, color: "#F5F2F0" }}
           />
           <Area
             type="monotone"
