@@ -30,7 +30,7 @@ export default function FciShell({
   children: ReactNode;
 }) {
   return (
-    <div className="space-y-5">
+    <div className="max-w-5xl mx-auto space-y-5">
       {/* ── Encabezado (texto, como CEDEARs) ─────────────────────────── */}
       <div>
         {kicker && (
