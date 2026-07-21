@@ -918,5 +918,23 @@ document.getElementById('cust-rate').addEventListener('input',calc);
 document.getElementById('b-gadm').addEventListener('input',calc);
 calc();
 </script>
+<style id="amauta-brand-override">
+  /* Override de marca Amauta — recolorea el navy a carbón y ensancha el widget.
+     Va al final del documento a propósito: gana sobre el :root del widget. */
+  :root{
+    --dk:#231F20;            /* header y secciones oscuras → carbón raised */
+    --dk2:#2C2728;           /* superficies alternas → overlay */
+    --border:rgba(243,207,17,0.16);
+    --border2:#3A3433;       /* borde del widget → borde de marca sobrio */
+  }
+  html, body{ background:#1C1819; }
+  body{ padding:26px 22px; }
+  .widget{
+    max-width:1080px;
+    border:1px solid #3A3433;
+    box-shadow:0 10px 44px rgba(0,0,0,0.45);
+  }
+  @media (max-width:640px){ body{ padding:14px 10px; } }
+</style>
 </body>
 </html>
