@@ -92,6 +92,36 @@
       : `<div class="nw-empty">No hay titulares que coincidan con el filtro.</div>`;
 
     state.container.innerHTML = `
+      <style>
+        .nw-view{font-family: 'Fira Sans', Arial, sans-serif;color:#F5F2F0;background:transparent;padding:12px}
+        .ced-header{margin-bottom:10px}
+        .ced-title{font-size:16px;margin:0;color:#F5F2F0;font-weight:600}
+        .ced-title span{color:#F3CF11;font-weight:700}
+        .ced-subtitle{margin:6px 0 0;color:#B8B2B3;font-size:13px}
+
+        .nw-controls{display:flex;gap:10px;align-items:center;margin:12px 0}
+        .nw-select{background:#2C2728;color:#F5F2F0;border:1px solid #3A3433;padding:8px 10px;border-radius:8px;font-size:13px}
+        .ced-search{display:flex;align-items:center;gap:8px;flex:1;background:#231F20;border:1px solid #3A3433;padding:8px 10px;border-radius:8px}
+        .ced-search input{background:transparent;border:0;color:#F5F2F0;outline:none;font-size:13px;width:100%}
+        .ced-search-icon{color:#B8B2B3}
+
+        .nw-list{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+        .nw-item{background:#231F20;border:1px solid #3A3433;border-radius:10px;padding:12px 14px;transition:transform .18s, box-shadow .18s}
+        .nw-item:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+        .nw-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+        .nw-especie{background:transparent;color:#F3CF11;font-weight:700;text-decoration:none;font-size:12px;padding:2px 6px;border-radius:6px}
+        .nw-time{color:#B8B2B3;font-size:12px}
+        .nw-source{color:#8A8487;font-size:12px}
+        .nw-headline{color:#F5F2F0;font-size:15px;font-weight:600;line-height:1.4}
+        .nw-empty{color:#B8B2B3;padding:14px;background:#2C2728;border:1px solid #3A3433;border-radius:10px}
+
+        .ced-legend-note{color:#8A8487;font-size:12px;margin-top:12px}
+
+        .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:transparent;color:#B8B2B3}
+        .loading .spinner{width:36px;height:36px;margin-bottom:8px}
+        .empty-state{padding:20px;background:#2C2728;border:1px solid #3A3433;border-radius:10px;color:#B8B2B3}
+      </style>
+
       <div class="nw-view">
         <div class="ced-header">
           <h2 class="ced-title">Noticias <span>Reuters</span></h2>
