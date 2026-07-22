@@ -1,6 +1,6 @@
-import { useState } from 'react';
-
 "use client";
+
+import { useState } from 'react';
 
 export default function EmbedFrame({
   src,
