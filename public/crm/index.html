@@ -726,8 +726,20 @@ function amautaFecha_(s){
     window.storage = { get: async function(){ return null; }, set: async function(){} };
     return;
   }
-  var sb = window.supabase.createClient(SB_URL, SB_ANON);
+  var sb = window.supabase.createClient(SB_URL, SB_ANON, { auth: { persistSession:false, autoRefreshToken:true } });
   window.__crmSb = sb;
+  /* Hidrata la sesion del portal (login de equipo) guardada en localStorage 'amauta:session' */
+  var authReady = (async function(){
+    try{
+      var raw = localStorage.getItem('amauta:session');
+      if(!raw){ console.warn('[CRM] sin sesion del portal; logueate para que persista.'); return false; }
+      var s = JSON.parse(raw);
+      if(!s || !s.access_token || !s.refresh_token) return false;
+      var r = await sb.auth.setSession({ access_token:s.access_token, refresh_token:s.refresh_token });
+      if(r.error){ console.error('[CRM auth] setSession:', r.error.message); return false; }
+      return true;
+    }catch(e){ console.error('[CRM auth]', e && e.message); return false; }
+  })();
 
   function actToRow(a){ return {
     id:a.id, fecha:a.fecha||null, asesor:a.asesor||null, cliente:a.cliente||null,
@@ -760,6 +772,7 @@ function amautaFecha_(s){
 
   async function get(key){
     try{
+      await authReady;
       if(key==='amauta_crm_config_v2'){
         var rc = await sb.from('crm_config').select('config').eq('id','global').maybeSingle();
         if(rc.error) throw rc.error;
@@ -793,6 +806,7 @@ function amautaFecha_(s){
 
   async function set(key, value){
     try{
+      await authReady;
       var parsed = JSON.parse(value);
       if(key==='amauta_crm_config_v2'){
         var uc = await sb.from('crm_config').upsert({ id:'global', config:parsed, updated_at:new Date().toISOString() }, { onConflict:'id' });
