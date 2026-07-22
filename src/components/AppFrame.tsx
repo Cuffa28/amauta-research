@@ -20,6 +20,7 @@ const TOOLS = [
   { href: "/chat", title: "Chat Financiero", sub: "Asistente financiero con IA", icon: "💬", short: "Chat" },
   { href: "/simulador", title: "Simulador", sub: "Comparador CPD · Banco vs Mercado", icon: "🧮", short: "Simulador" },
   { href: "/noticias", title: "Noticias", sub: "Reuters · universo CEDEARs", icon: "📰", short: "Noticias" },
+  { href: "/crm", title: "CRM", sub: "Gestión comercial y clientes", icon: "🤝", short: "CRM" },
 ];
 
 const AmautaMark = ({ size = 36 }: { size?: number }) => (
