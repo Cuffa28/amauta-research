@@ -63,8 +63,13 @@ export async function fonditos<T = unknown>(
     } catch {
       errBody = "(sin cuerpo)";
     }
+    const cf = {
+      ray: res.headers.get("cf-ray"),
+      mitigated: res.headers.get("cf-mitigated"),
+      server: res.headers.get("server"),
+    };
     console.error(
-      `[fonditos] ${tool} → HTTP ${res.status} | keyPresent=${!!API_KEY} keyLen=${API_KEY?.length ?? 0} | body=${errBody}`,
+      `[fonditos] ${tool} → HTTP ${res.status} | keyPresent=${!!API_KEY} keyLen=${API_KEY?.length ?? 0} | cf-ray=${cf.ray} cf-mitigated=${cf.mitigated} server=${cf.server} | body=${errBody}`,
     );
     throw new FonditosError(`${tool}: HTTP ${res.status}`);
   }
