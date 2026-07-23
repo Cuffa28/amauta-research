@@ -21,10 +21,26 @@ export async function fonditos<T = unknown>(
 ): Promise<T> {
   if (!API_KEY) throw new FonditosError("Falta FONDITOS_API_KEY");
 
+  // Caché: por defecto NO cacheamos (`no-store`). El Data Cache de Vercel
+  // sobrevive a los redeploys y guarda también respuestas de error (p.ej. un
+  // 401 con la key vieja), así que un fallo transitorio "envenena" la vista por
+  // hasta `revalidate` segundos incluso después de arreglar la key. Tráfico
+  // interno bajo → preferimos dato fresco. Un caller puede pedir cache pasando
+  // `opts.revalidate` explícito.
+  const cacheOpt = opts.revalidate
+    ? { next: { revalidate: opts.revalidate } }
+    : { cache: "no-store" as const };
+
   const res = await fetch(MCP_URL, {
     method: "POST",
     headers: {
+      // fonditos acepta ambas formas server-to-server. Desde los servidores de
+      // Vercel el gate rechazaba (401) si solo iba `Authorization: Bearer`;
+      // mandamos también `X-API-Key` (la alternativa que ellos confirmaron que
+      // ya funcionaba desde Vercel). Belt-and-suspenders: si una variante del
+      // gate falla, la otra pasa.
       Authorization: `Bearer ${API_KEY}`,
+      "X-API-Key": API_KEY,
       "Content-Type": "application/json",
       Accept: "application/json, text/event-stream",
     },
@@ -34,8 +50,7 @@ export async function fonditos<T = unknown>(
       method: "tools/call",
       params: { name: tool, arguments: args },
     }),
-    // Datos diarios: cacheamos por defecto 30 min salvo override.
-    next: { revalidate: opts.revalidate ?? 1800 },
+    ...cacheOpt,
   });
 
   if (!res.ok) {
