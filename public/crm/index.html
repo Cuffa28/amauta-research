@@ -659,7 +659,8 @@ table.hist tr:hover td{background:var(--surface-overlay);}
         <textarea readonly style="margin-top:8px;font-family:monospace;font-size:11px;min-height:360px;" onclick="this.select()">// === Amauta CRM (HTML) · Web App puente ===
 // Proyecto INDEPENDIENTE en tu cuenta. Abre la planilla del equipo por ID.
 // Funciona aunque no seas el dueño, mientras tengas permiso de Editor.
-var SHEET_ID = '1uY7I8MV_HdsaN-Vhl4uL9b_cKLuRaqybeAv8yq8UjcI';
+var SHEET_ID          = '1uY7I8MV_HdsaN-Vhl4uL9b_cKLuRaqybeAv8yq8UjcI'; // Actividades (pestaña BASE_ACTIVIDAD)
+var CLIENTES_SHEET_ID = '1l4n1Jl_OtCTLTLWhwnOGWfyPS3hY3MGJKXWkdlUsaN0'; // Clientes (pestaña clientes_maestro)
 
 function doPost(e){
   var lock = LockService.getScriptLock();
@@ -707,7 +708,7 @@ function doGet(e){
   var ss = SpreadsheetApp.openById(SHEET_ID);
   return ContentService.createTextOutput(JSON.stringify({
     actividad: amautaLeerBase_(ss),
-    clientes:  amautaLeerClientes_(ss)
+    clientes:  amautaLeerClientes_()
   })).setMimeType(ContentService.MimeType.JSON);
 }
 function amautaLeerBase_(ss){
@@ -723,8 +724,9 @@ function amautaLeerBase_(ss){
   }
   return out;
 }
-function amautaLeerClientes_(ss){
-  var sh = ss.getSheetByName('CLIENTES'); if(!sh) return [];
+function amautaLeerClientes_(){
+  var ss = SpreadsheetApp.openById(CLIENTES_SHEET_ID);
+  var sh = ss.getSheetByName('clientes_maestro'); if(!sh) return [];
   return sh.getDataRange().getValues();
 }
 // Convierte 'YYYY-MM-DD' en una fecha a medianoche (se guarda sin hora, igual que tus botones).
@@ -739,7 +741,7 @@ function amautaFecha_(s){
           5. Ejecutar como: <strong>Yo</strong>. Quién tiene acceso: <strong>Cualquier usuario</strong>. → Implementar.<br>
           6. Autorizá los permisos (te va a pedir acceso a tus Hojas de cálculo; es porque abre la planilla por ID).<br>
           7. Copiá la URL que termina en <strong>/exec</strong> y pegala arriba.<br>
-          <strong>Nota:</strong> este proyecto es aparte del script con los botones de la planilla (esos siguen igual). Si tu pestaña CLIENTES tiene el AUM con otro encabezado, avisame.
+          <strong>Nota:</strong> este proyecto es aparte del script con los botones de la planilla (esos siguen igual). Los <strong>clientes</strong> se leen de la planilla nueva por <code>CLIENTES_SHEET_ID</code> (pestaña <strong>clientes_maestro</strong>) y las <strong>actividades</strong> siguen en la planilla original (<code>SHEET_ID</code>). La pestaña clientes_maestro necesita una fila de encabezados con columnas de nombre, asesor y AUM.
         </div>
       </details>
     </div>
