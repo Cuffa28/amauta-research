@@ -1179,6 +1179,14 @@ function levenshtein(a,b){
 }
 function getClientesFor(asesor){
   const base = CLIENTES_POR_ASESOR[asesor] || [];
+  // Con el maestro de clientes cargado (planilla clientes_maestro), el desplegable
+  // usa SOLO los grupos económicos del roster. NO sumamos nombres sueltos de
+  // actividades históricas: esas traían el cliente individual (ej. "SERMETAL
+  // S.R.L") que ahora vive dentro de su grupo económico ("GUERCI RODOLFO EUGENIO").
+  if(Object.keys(CLIENTES_AUM).length > 0){
+    return base.filter(nombreValido_);
+  }
+  // Fallback (sin roster sincronizado): sugerimos también lo registrado en actividades.
   const loggedExtra = [...new Set(ACTIVITIES.filter(a=>a.asesor===asesor).map(a=>a.cliente))]
     .filter(c=>!base.some(b=>normalizeName(b)===normalizeName(c)));
   // Solo nombres reales en el desplegable (sin códigos sueltos tipo 00001-00).
