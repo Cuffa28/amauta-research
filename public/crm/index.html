@@ -2644,7 +2644,7 @@ async function syncDesdeSheets(){
     let cliCount=0;
     if(data.clientes && data.clientes.length>1){
       const cli = rowsToClientes(data.clientes);
-      Object.assign(CLIENTES_AUM, cli);
+      CLIENTES_AUM = cli;   // REEMPLAZA (el maestro manda): borra los que ya no están (ej. individuales plegados a su grupo)
       cliCount = Object.keys(cli).length;
     }
     rebuildClientesIndex();
@@ -2802,7 +2802,7 @@ async function autoSyncClientesFromSheet(){
       const cli=rowsToClientes(data.clientes);
       const n=Object.keys(cli).length;
       if(n){
-        Object.assign(CLIENTES_AUM, cli);   // suma/actualiza; no borra
+        CLIENTES_AUM = cli;   // REEMPLAZA: el maestro (clientes_maestro) manda; borra los que ya no están
         rebuildClientesIndex();
         await saveClientes();
         populateSelects();
