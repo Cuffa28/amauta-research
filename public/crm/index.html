@@ -2582,12 +2582,13 @@ function rowsToClientes(rows){
   const asesorCol = findCol(headers,'asesor','productor','asesor/a');
   const aumCol    = findCol(headers,'aum','patrimonio','tenencia','valuacion','valor','monto','saldo','total');
 
-  // Columna de NOMBRE: primero por encabezado (razón social / denominación / nombre
-  // / cliente), pero SOLO si sus valores parecen nombres. Si el candidato trae
-  // códigos (ej. la columna "CLIENTE" es en realidad el código de comitente),
-  // se descarta y se busca la mejor columna de texto de toda la hoja.
+  // Columna de NOMBRE: se prioriza el GRUPO ECONÓMICO (planilla clientes_maestro),
+  // así el CRM agrupa por grupo y no por cliente individual. Si no existe esa
+  // columna, cae a razón social / denominación / nombre / cliente. En todos los
+  // casos SOLO se acepta si sus valores parecen nombres (no códigos); si no, se
+  // busca la mejor columna de texto de toda la hoja.
   let nombreCol = -1;
-  const cands = ['razon social','razón social','denominacion','denominación','nombre','cliente','apellido y nombre','apellido'];
+  const cands = ['grupo economico','grupo_economico','grupoeconomico','razon social','razón social','denominacion','denominación','nombre','cliente','apellido y nombre','apellido'];
   for(const c of cands){
     const idx = findCol(headers, c);
     if(idx>=0 && idx!==asesorCol && idx!==aumCol && fraccionNombres_(rows, idx) >= 0.6){ nombreCol = idx; break; }
