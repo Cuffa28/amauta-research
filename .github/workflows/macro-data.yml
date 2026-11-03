@@ -2,7 +2,7 @@ name: Actualizar datos macro
 on:
   workflow_dispatch:
   push:
-    branches: ['codex/macro-lab-cloud']
+    branches: ['main']
     paths: ['scripts/macro/**', '.github/workflows/macro-data.yml']
   schedule:
     # Días hábiles, 09:17 y 19:17 de Argentina. INDEC/BCRA no son feeds intradiarios garantizados.
