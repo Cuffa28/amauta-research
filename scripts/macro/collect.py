@@ -10,6 +10,7 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'public'/'macro-lab'/'live'
 INDEC='https://api.indec.gob.ar/v1/canasta-crianza'
 BCRA='https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias'
+RISK='https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais'
 class SourceError(Exception):pass
 def stamp():return datetime.now(timezone.utc).isoformat()
 def token_value(raw):
@@ -79,8 +80,8 @@ def catalog():
         result.extend(page)
         if len(page)<1000:return result
     raise SourceError('Se alcanzó el límite de páginas del catálogo BCRA.')
-def monetary(meta,sid):
-    variable=int(meta['idVariable']);today=datetime.now(timezone.utc).date();start=date(today.year-3,today.month,1).isoformat();rows=[]
+def monetary(meta,sid,start=None):
+    variable=int(meta['idVariable']);today=datetime.now(timezone.utc).date();start=start or date(today.year-3,today.month,1).isoformat();rows=[]
     for offset in range(0,15000,3000):
         response=fetch(BCRA+'/'+str(variable)+'?'+urlencode({'Desde':start,'Hasta':today.isoformat(),'Limit':3000,'Offset':offset}))
         results=response.get('results')
@@ -92,6 +93,29 @@ def monetary(meta,sid):
     frequency=meta.get('periodicidad','D');frequency='Q' if frequency=='T' else frequency
     if frequency not in ('D','M','Q','A','S'):raise SourceError('Frecuencia BCRA no reconocida.')
     return {'id':sid,'name':str(meta['descripcion']),'topic':'Dinero','provider':'BCRA','unit':str(meta.get('unidadExpresion','unidad no informada')),'frequency':frequency,'sourceUrl':BCRA+'/'+str(variable),'retrievedAt':stamp(),'note':note,'points':points(rows,'fecha','valor')}
+
+def inflation(entries):
+    result=[]
+    for variable,sid,label in [(27,'inflation_mom','Inflación mensual'),(28,'inflation_yoy','Inflación interanual')]:
+        meta=next((m for m in entries if int(m['idVariable'])==variable),None)
+        description=str(meta.get('descripcion','')).lower() if meta else ''
+        if not meta or 'inflaci' not in description or not any(w in description for w in ('mensual', 'interanual','anual')):
+            raise SourceError('El catálogo cambió la identidad de las variables de inflación 27/28.')
+        if variable==27 and 'mensual' not in description or variable==28 and not any(w in description for w in ('interanual','anual')):
+            raise SourceError('La frecuencia económica de inflación no coincide con la variable esperada.')
+        series=monetary(meta,sid,'2003-01-01')
+        series.update(id=sid,name=label,topic='Precios',provider='BCRA · fuente INDEC',unit='%',frequency='M',valueType='rate',official=True)
+        series['note']='IPC publicado por BCRA, variable '+str(variable)+'. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.'
+        series['points']=points([{'month':p['date'][:7],'value':p['value']} for p in series['points']],'month','value')
+        result.append(series)
+    return result
+
+def country_risk():
+    rows=fetch(RISK)
+    if not isinstance(rows,list):raise SourceError('Cambió el esquema de riesgo país de ArgentinaDatos.')
+    observations=points(rows,'fecha','valor')
+    if any(p['value']<0 or p['value']>100000 for p in observations):raise SourceError('Riesgo país fuera de rango; se conserva la versión anterior.')
+    return {'id':'risk','name':'Riesgo país · referencia publicada','topic':'Mercado','provider':'ArgentinaDatos · Ámbito','unit':'pb','frequency':'D','official':False,'sourceUrl':RISK,'retrievedAt':stamp(),'note':'Referencia de riesgo país distribuida por ArgentinaDatos, que identifica a Ámbito como fuente. Servicio no oficial; no es una conexión directa al EMBI de J.P. Morgan. No se mezcla con la estimación propia de BondTerminal. Fecha de observación diaria; puede tener rezago. Datos: https://argentinadatos.com/docs/operations/get-finanzas-indices-riesgo-pais','points':observations}
 def collect(previous=None):
     previous=previous or {};series={s['id']:s for s in previous.get('series',[])};failures=[];success=[]
     try:
@@ -111,6 +135,13 @@ def collect(previous=None):
         if not purchase or 'compra' not in label or 'divisa' not in label or not ('usd' in unit or 'dólar' in unit or 'dolar' in unit):raise SourceError('La variable candidata de compras de divisas no coincide con su definición/unidad. Validar BCRA_PURCHASES_ID; no se reemplazó por otra serie.')
         series['purchases']=monetary(purchase,'purchases');success.append('BCRA · compra de divisas')
     except (SourceError,ValueError,KeyError,TypeError) as e:failures.append({'source':'BCRA','message':str(e) if isinstance(e,SourceError) else 'Metadatos BCRA inválidos; no se importaron datos ambiguos.','at':stamp()})
+    try:
+        for s in inflation(entries if 'entries' in locals() else catalog()):series[s['id']]=s
+        success.append('BCRA · inflación')
+    except (SourceError,ValueError,KeyError,TypeError) as e:failures.append({'source':'BCRA · inflación','message':str(e) if isinstance(e,SourceError) else 'Metadatos de inflación inválidos.','at':stamp()})
+    try:
+        series['risk']=country_risk();success.append('ArgentinaDatos · riesgo país')
+    except SourceError as e:failures.append({'source':'ArgentinaDatos','message':str(e),'at':stamp()})
     return {'schemaVersion':1,'generatedAt':stamp(),'series':list(series.values()),'failures':failures,'updatedSources':success,'lsegValuesIncluded':False}
 def main():
     OUT.mkdir(parents=True,exist_ok=True);target=OUT/'latest.json';previous={}
