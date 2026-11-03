@@ -1,8 +1,8 @@
 """Colector de datos públicos para GitHub Actions. Solo escribe el snapshot normalizado."""
 from pathlib import Path
-from urllib.request import Request,urlopen
+from urllib.request import Request,urlopen,build_opener,HTTPRedirectHandler
 from urllib.error import HTTPError,URLError
-from urllib.parse import urlencode
+from urllib.parse import urlencode,urlsplit
 from datetime import datetime,timezone,date
 import json,os,re,base64,hashlib,time,sys
 
@@ -27,11 +27,18 @@ def token_value(raw):
     except Exception:raise SourceError('No se pudo interpretar el formato del token INDEC.') from None
     return token
 def fetch(url,token=None):
+    # La credencial INDEC queda vinculada exclusivamente a su origen HTTPS.
+    if token and (urlsplit(url).scheme!='https' or urlsplit(url).netloc!='api.indec.gob.ar'):
+        raise SourceError('La credencial INDEC no puede enviarse a este destino.')
     headers={'Accept':'application/json','User-Agent':'AmautaMacroLab/0.3'}
     if token:headers['Authorization']='Bearer '+token
+    class NoCredentialRedirect(HTTPRedirectHandler):
+        def redirect_request(self,*args,**kwargs):
+            raise SourceError('La consulta autenticada no admite redirecciones.')
+    opener=build_opener(NoCredentialRedirect()).open if token else urlopen
     for attempt in range(3):
         try:
-            with urlopen(Request(url,headers=headers),timeout=25) as response:
+            with opener(Request(url,headers=headers),timeout=25) as response:
                 content=response.read(12_000_001)
                 if len(content)>12_000_000:raise SourceError('Respuesta demasiado grande. No se importó parcialmente.')
                 return json.loads(content)
@@ -177,6 +184,30 @@ def rem_expectations():
         if not all(row.get(k) for k in ['informe','indicador','periodo','muestra','unidad']):raise SourceError('REM: faltan metadatos de horizonte o muestra.')
         if not isinstance(row.get('mediana'),(int,float)) or not math.isfinite(row['mediana']):raise SourceError('REM: mediana no válida.')
     return {'sourceUrl':url,'provider':'BCRA REM vía ArgentinaDatos','retrievedAt':stamp(),'rows':rows,'note':'Expectativas de participantes encuestados; no son proyecciones propias del BCRA. El informe y el horizonte objetivo son fechas distintas. Percentiles entre participantes no son intervalos de confianza.'}
+def monitor_bundle():
+    # Peticiones sin token ni cookies. fetch rechaza credenciales en este dominio.
+    base='https://monitorargy.com/api/v1/';result={'provider':'Monitor Argy','sourceUrl':'https://monitorargy.com','retrievedAt':stamp(),'attribution':'Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.','errors':[]}
+    for name,key in [('series','catalog'),('calendario','calendar'),('coyuntura','outlook')]:
+        try:
+            payload=fetch(base+name)
+            required={'catalog':'series','calendar':'eventos','outlook':'secciones'}[key]
+            if not isinstance(payload,dict) or not isinstance(payload.get(required),list):raise SourceError('Cambió el esquema de Monitor Argy: '+name)
+            result[key]=payload
+        except SourceError as e:result['errors'].append({'source':name,'message':str(e)})
+        time.sleep(.4)
+    if not result.get('catalog',{}).get('series'):raise SourceError('Monitor Argy no devolvió un catálogo válido.')
+    ids={s['id'] for s in result['catalog']['series']};result['histories']={}
+    featured=['emae_desest','ipc_mensual','empleo_privado_desest','pobreza_nowcast','tc_mayorista','saldo_comercial','tasa_tamar','base_monetaria','resultado_primario','supermercados_desest','isac_desest','petroleo']
+    for sid in featured:
+        if sid not in ids:continue
+        try:
+            packet=fetch(base+'series/'+sid+'?desde=2020-01')
+            if packet.get('id')!=sid or not isinstance(packet.get('puntos'),list):raise SourceError('Identidad o puntos de Monitor Argy no válidos.')
+            result['histories'][sid]=packet
+        except SourceError as e:result['errors'].append({'source':sid,'message':str(e)})
+        time.sleep(.4)
+    return result
+
 def collect(previous=None):
     previous=previous or {};series={s['id']:s for s in previous.get('series',[])};failures=[];success=[]
     try:
@@ -217,6 +248,16 @@ def collect(previous=None):
     except SourceError as e:
         if previous.get('expectations'):packet['expectations']=previous['expectations']
         packet['expectationsError']=str(e)
+    if os.environ.get('INDEC_API_TOKEN'):
+        try:
+            incoming=monitor_bundle();older=previous.get('monitor',{})
+            for key in ['calendar','outlook']:
+                if key not in incoming and key in older:incoming[key]=older[key]
+            incoming['histories']={**older.get('histories',{}),**incoming['histories']}
+            packet['monitor']=incoming;success.append('Monitor Argy · catálogo, calendario y coyuntura')
+        except SourceError as e:
+            if previous.get('monitor'):packet['monitor']=previous['monitor']
+            packet['monitorError']=str(e)
     return packet
 def main():
     OUT.mkdir(parents=True,exist_ok=True);target=OUT/'latest.json';previous={}
