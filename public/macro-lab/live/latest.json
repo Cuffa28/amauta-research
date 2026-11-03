@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T18:57:09.896191+00:00",
+  "generatedAt": "2026-11-03T18:58:10.272584+00:00",
   "series": [
     {
       "id": "crianza0",
@@ -10,7 +10,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-03T18:56:42.851553+00:00",
+      "retrievedAt": "2026-11-03T18:57:45.161714+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -187,7 +187,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-03T18:56:42.851837+00:00",
+      "retrievedAt": "2026-11-03T18:57:45.161941+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -364,7 +364,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-03T18:56:42.851966+00:00",
+      "retrievedAt": "2026-11-03T18:57:45.162005+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -541,7 +541,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-03T18:56:42.852068+00:00",
+      "retrievedAt": "2026-11-03T18:57:45.162067+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -718,7 +718,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/1",
-      "retrievedAt": "2026-11-03T18:56:45.132585+00:00",
+      "retrievedAt": "2026-11-03T18:57:47.221723+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Reservas internacionales brutas; no netas ni de libre disponibilidad.",
       "points": [
         {
@@ -3631,7 +3631,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/78",
-      "retrievedAt": "2026-11-03T18:56:45.664933+00:00",
+      "retrievedAt": "2026-11-03T18:57:48.177284+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Factor de variación de reservas por compra de divisas; conservar fecha de observación y metodología. No equivale a la variación total de reservas ni necesariamente al momento de concertación de la intervención.",
       "points": [
         {
@@ -6540,7 +6540,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/27",
-      "retrievedAt": "2026-11-03T18:56:45.948219+00:00",
+      "retrievedAt": "2026-11-03T18:57:49.145715+00:00",
       "note": "IPC publicado por BCRA, variable 27. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -7695,7 +7695,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/28",
-      "retrievedAt": "2026-11-03T18:56:46.400820+00:00",
+      "retrievedAt": "2026-11-03T18:57:49.515081+00:00",
       "note": "IPC publicado por BCRA, variable 28. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -8851,7 +8851,7 @@
       "frequency": "D",
       "official": false,
       "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais",
-      "retrievedAt": "2026-11-03T18:56:47.159946+00:00",
+      "retrievedAt": "2026-11-03T18:57:50.176752+00:00",
       "note": "Referencia de riesgo país distribuida por ArgentinaDatos, que identifica a Ámbito como fuente. Servicio no oficial; no es una conexión directa al EMBI de J.P. Morgan. No se mezcla con la estimación propia de BondTerminal. Fecha de observación diaria; puede tener rezago. Datos: https://argentinadatos.com/docs/operations/get-finanzas-indices-riesgo-pais",
       "points": [
         {
@@ -39809,7 +39809,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipc_nacional?descripcion=ilike.%2Ageneral%2A&region=ilike.%2Anacional%2A&tipo_de_indicador=eq.Indice&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:49.003680+00:00",
+      "retrievedAt": "2026-11-03T18:57:51.575183+00:00",
       "dimensions": {},
       "note": "INDEC · IPC nacional · nivel general. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -40292,7 +40292,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:50.937825+00:00",
+      "retrievedAt": "2026-11-03T18:57:53.245927+00:00",
       "dimensions": {
         "codigo": "0"
       },
@@ -40773,7 +40773,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:50.938567+00:00",
+      "retrievedAt": "2026-11-03T18:57:53.246480+00:00",
       "dimensions": {
         "codigo": "100"
       },
@@ -41254,7 +41254,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:50.939238+00:00",
+      "retrievedAt": "2026-11-03T18:57:53.246981+00:00",
       "dimensions": {
         "codigo": "110"
       },
@@ -41735,7 +41735,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:50.939931+00:00",
+      "retrievedAt": "2026-11-03T18:57:53.247477+00:00",
       "dimensions": {
         "codigo": "120"
       },
@@ -42216,7 +42216,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:50.940606+00:00",
+      "retrievedAt": "2026-11-03T18:57:53.247991+00:00",
       "dimensions": {
         "codigo": "200"
       },
@@ -42697,7 +42697,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+desestacionalizada",
-      "retrievedAt": "2026-11-03T18:56:52.442393+00:00",
+      "retrievedAt": "2026-11-03T18:57:54.738930+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie desestacionalizada"
       },
@@ -43802,7 +43802,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+original",
-      "retrievedAt": "2026-11-03T18:56:52.443537+00:00",
+      "retrievedAt": "2026-11-03T18:57:54.739790+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie original"
       },
@@ -44907,7 +44907,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipi_manufacturero?descripcion=eq.IPI+Manufacturero+-+Nivel+general&tipo_de_indicador=eq.%C3%8Dndice&serie=eq.Serie+desestacionalizada&periodo=gte.201601",
-      "retrievedAt": "2026-11-03T18:56:53.719751+00:00",
+      "retrievedAt": "2026-11-03T18:57:55.807222+00:00",
       "dimensions": {},
       "note": "INDEC · Industria · desestacionalizada. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -45434,7 +45434,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.A",
-      "retrievedAt": "2026-11-03T18:56:57.482567+00:00",
+      "retrievedAt": "2026-11-03T18:57:58.997733+00:00",
       "dimensions": {
         "codigo": "A"
       },
@@ -45915,7 +45915,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.B",
-      "retrievedAt": "2026-11-03T18:56:57.484382+00:00",
+      "retrievedAt": "2026-11-03T18:57:58.999049+00:00",
       "dimensions": {
         "codigo": "B"
       },
@@ -46396,7 +46396,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.C",
-      "retrievedAt": "2026-11-03T18:56:57.486114+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.000310+00:00",
       "dimensions": {
         "codigo": "C"
       },
@@ -46877,7 +46877,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.D",
-      "retrievedAt": "2026-11-03T18:56:57.487853+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.001575+00:00",
       "dimensions": {
         "codigo": "D"
       },
@@ -47358,7 +47358,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.E",
-      "retrievedAt": "2026-11-03T18:56:57.489578+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.002831+00:00",
       "dimensions": {
         "codigo": "E"
       },
@@ -47839,7 +47839,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.F",
-      "retrievedAt": "2026-11-03T18:56:57.491290+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.004075+00:00",
       "dimensions": {
         "codigo": "F"
       },
@@ -48320,7 +48320,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.G",
-      "retrievedAt": "2026-11-03T18:56:57.493036+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.005335+00:00",
       "dimensions": {
         "codigo": "G"
       },
@@ -48801,7 +48801,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.H",
-      "retrievedAt": "2026-11-03T18:56:57.494757+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.006592+00:00",
       "dimensions": {
         "codigo": "H"
       },
@@ -49282,7 +49282,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.I",
-      "retrievedAt": "2026-11-03T18:56:57.496514+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.007848+00:00",
       "dimensions": {
         "codigo": "I"
       },
@@ -49763,7 +49763,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.J",
-      "retrievedAt": "2026-11-03T18:56:57.498273+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.009112+00:00",
       "dimensions": {
         "codigo": "J"
       },
@@ -50244,7 +50244,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.K",
-      "retrievedAt": "2026-11-03T18:56:57.500021+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.010366+00:00",
       "dimensions": {
         "codigo": "K"
       },
@@ -50725,7 +50725,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.L",
-      "retrievedAt": "2026-11-03T18:56:57.501757+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.011615+00:00",
       "dimensions": {
         "codigo": "L"
       },
@@ -51206,7 +51206,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.M",
-      "retrievedAt": "2026-11-03T18:56:57.506281+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.015479+00:00",
       "dimensions": {
         "codigo": "M"
       },
@@ -51687,7 +51687,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.N",
-      "retrievedAt": "2026-11-03T18:56:57.508031+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.016744+00:00",
       "dimensions": {
         "codigo": "N"
       },
@@ -52168,7 +52168,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.O",
-      "retrievedAt": "2026-11-03T18:56:57.509775+00:00",
+      "retrievedAt": "2026-11-03T18:57:59.018002+00:00",
       "dimensions": {
         "codigo": "O"
       },
@@ -52649,7 +52649,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA&tipo_de_indicador=eq.CBA&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.452363+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.407616+00:00",
       "dimensions": {
         "codigo": "CBA",
         "tipo_de_indicador": "CBA"
@@ -53135,7 +53135,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT&tipo_de_indicador=eq.CBT&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.453049+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.408119+00:00",
       "dimensions": {
         "codigo": "CBT",
         "tipo_de_indicador": "CBT"
@@ -53621,7 +53621,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.453668+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.408555+00:00",
       "dimensions": {
         "codigo": "CBA H2",
         "tipo_de_indicador": "Hogar 2"
@@ -54107,7 +54107,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.455052+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.409712+00:00",
       "dimensions": {
         "codigo": "CBT H2",
         "tipo_de_indicador": "Hogar 2"
@@ -54594,7 +54594,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.455461+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.410042+00:00",
       "inputs": [
         "salarios",
         "ipc"
@@ -55078,7 +55078,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.455526+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.410096+00:00",
       "inputs": [
         "salarios_reg",
         "ipc"
@@ -55562,7 +55562,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.455584+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.410145+00:00",
       "inputs": [
         "salarios_priv",
         "ipc"
@@ -56046,7 +56046,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.455637+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.410190+00:00",
       "inputs": [
         "salarios_pub",
         "ipc"
@@ -56530,7 +56530,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-03T18:56:59.455689+00:00",
+      "retrievedAt": "2026-11-03T18:58:00.410233+00:00",
       "inputs": [
         "salarios_no_reg",
         "ipc"
@@ -57020,7 +57020,7 @@
   "expectations": {
     "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/rem/ultimo",
     "provider": "BCRA REM vía ArgentinaDatos",
-    "retrievedAt": "2026-11-03T18:56:59.680912+00:00",
+    "retrievedAt": "2026-11-03T18:58:00.952738+00:00",
     "rows": [
       {
         "informe": "2026-09",
@@ -60460,7 +60460,7 @@
   "monitor": {
     "provider": "Monitor Argy",
     "sourceUrl": "https://monitorargy.com",
-    "retrievedAt": "2026-11-03T18:56:59.680940+00:00",
+    "retrievedAt": "2026-11-03T18:58:00.952785+00:00",
     "attribution": "Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.",
     "errors": [],
     "catalog": {
@@ -144372,6 +144372,6 @@
       }
     }
   },
-  "collectionStartedAt": "2026-11-03T18:56:41.269276+00:00",
+  "collectionStartedAt": "2026-11-03T18:57:44.015380+00:00",
   "retainedSeries": []
 }
