@@ -342,6 +342,7 @@ function amautaSourceDecision(meta,direct,tolerance,now=Date.now()){
 }
 function amautaPrepareSources(packet){
  amautaQualityPacket=packet;amautaAudits=[];amautaDirectPackets.clear();
+ for(const id of Object.keys(amautaSourceMappings))if(monHistoryCache.get(id)?.packet?.amautaDirect)monHistoryCache.delete(id);
  const catalog=packet.monitor?.catalog?.series||[];
  for(const [id,[sid,tolerance]] of Object.entries(amautaSourceMappings)){
   const meta=catalog.find(s=>s.id===id),direct=packet.series?.find(s=>s.id===sid);if(!meta)continue;
