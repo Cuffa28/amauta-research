@@ -127,6 +127,8 @@ async function refreshSnapshot(){
 }
 $('#load-official').textContent='Leer última actualización →';$('#load-official').onclick=refreshSnapshot;
 $('#official-service').hidden=true;$('#bcra-chooser').hidden=true;$('#demo-reset').hidden=true;
+document.querySelector('.hero-footer span').textContent='Riesgo país: proveedor pendiente. No se muestra una serie de ejemplo.';
+document.querySelector('footer div').innerHTML='AMAUTA INVERSIONES FINANCIERAS · CNV Mat. 1029<br>Herramienta informativa de research. Cada serie conserva su fuente y fecha de observación.';
 document.querySelector('.connection>p').textContent='El colector se ejecuta en GitHub Actions con la clave protegida. Este panel lee el último snapshot; no vuelve a consultar INDEC al abrir cada gráfico.';
 document.querySelectorAll('.source-card .state')[0].textContent='La clave se configura una vez como secreto INDEC_API_TOKEN del repositorio. Nunca se entrega al navegador ni se solicita por chat.';
 document.querySelectorAll('.source-card .state')[1].textContent='Consulta automática mediante el colector. El estado del último intento y las fechas de cada serie se muestran en el panel.';
