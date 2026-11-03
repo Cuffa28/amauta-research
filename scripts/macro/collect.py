@@ -125,6 +125,58 @@ def indec_dimensions():
         unique={json.dumps({k:v for k,v in r.items() if k not in ['periodo','anio','mes','valor','observaciones']},sort_keys=True,ensure_ascii=False) for r in rows}
         result[endpoint]=[json.loads(r) for r in sorted(unique)]
     return result
+
+def indec_series(endpoint,filters,groups,order,topic):
+    token=token_value(os.environ.get('INDEC_API_TOKEN'));rows=[];base='https://api.indec.gob.ar/v1/'+endpoint
+    for offset in range(0,30000,1000):
+        page=fetch(base+'?'+urlencode({**filters,'order':order,'limit':1000,'offset':offset}),token)
+        if not isinstance(page,list):raise SourceError('Cambió el esquema INDEC de '+endpoint)
+        rows.extend(page)
+        if len(page)<1000:break
+    else:raise SourceError('Consulta INDEC incompleta; no se importó parcialmente.')
+    result=[]
+    for sid,name,matching,unit in groups:
+        subset=[r for r in rows if all(str(r.get(k,''))==str(v) for k,v in matching.items())]
+        if not subset:raise SourceError('INDEC no devolvió la apertura exacta: '+name)
+        # Una fecha duplicada rechaza bases, coberturas o clasificaciones superpuestas.
+        result.append({'id':sid,'name':name,'topic':topic,'provider':'INDEC','official':True,'unit':unit,'frequency':'M','sourceUrl':base+'?'+urlencode({**filters,**{k:'eq.'+str(v) for k,v in matching.items()}}),'retrievedAt':stamp(),'dimensions':matching,'note':'INDEC · '+name+'. Apertura: '+json.dumps(matching,ensure_ascii=False)+'. Se conserva el período observado. Revisiones y valores provisionales según la fuente.','points':points(subset,'periodo','valor')})
+    return result
+
+def research_indec():
+    # Los filtros son aperturas verificadas en el catálogo; no se selecciona la primera serie disponible.
+    standard='periodo,clasificador,nivel,codigo,descripcion,anio,mes,indicador,tipo_de_indicador'
+    definitions=[
+      ('ipc_nacional',{'descripcion':'ilike.*general*','region':'ilike.*nacional*','tipo_de_indicador':'eq.Indice','periodo':'gte.201701'},[('ipc','IPC nacional · nivel general',{},'índice')],standard+',region','Precios'),
+      ('indice_salarios',{'tipo_de_indicador':'eq.Indice','codigo':'in.(0,100,110,120,200)','periodo':'gte.201701'},[(sid,name,{'codigo':code},'índice') for sid,name,code in [('salarios','Salarios · nivel general','0'),('salarios_reg','Salarios · total registrado','100'),('salarios_priv','Salarios · privado registrado','110'),('salarios_pub','Salarios · sector público','120'),('salarios_no_reg','Salarios · no registrado','200')]],standard,'Ingresos'),
+      ('estimador-mensual-de-actividad-economica-nivel-general',{'tipo_de_indicador':'eq.Índice base 2004=100','periodo':'gte.200401'},[('emae','EMAE · desestacionalizado',{'tipo_de_indicador_descripcion':'Índice serie desestacionalizada'},'índice'),('emae_original','EMAE · serie original',{'tipo_de_indicador_descripcion':'Índice serie original'},'índice')],'periodo,tipo_de_indicador,tipo_de_indicador_descripcion,anio,mes','Actividad'),
+      ('ipi_manufacturero',{'descripcion':'eq.IPI Manufacturero - Nivel general','tipo_de_indicador':'eq.Índice','serie':'eq.Serie desestacionalizada','periodo':'gte.201601'},[('industria','Industria · desestacionalizada',{},'índice')],'periodo,indicador,cuadro_web,codigo_CLaNAE_2004,descripcion,serie,tipo_de_indicador,anio,mes','Actividad'),
+      ('estimador-mensual-de-actividad-economica-sectores',{'tipo_de_indicador':'eq.Índice base 2004=100','periodo':'gte.201701'},None,'periodo,codigo,descripcion,tipo_de_indicador,anio,mes','Actividad'),
+      ('valorizacion_canastas_cba_cbt',{'codigo':'in.(CBA,CBT,CBA H2,CBT H2)','tipo_de_indicador':'in.(CBA,CBT,Hogar 2)','region':'eq.GBA','periodo':'gte.201701'},[(sid,name,{'codigo':code,'tipo_de_indicador':kind},'ARS') for sid,name,code,kind in [('cba','CBA · adulto equivalente · GBA','CBA','CBA'),('cbt','CBT · adulto equivalente · GBA','CBT','CBT'),('cba_hogar','CBA · hogar de 4 · GBA','CBA H2','Hogar 2'),('cbt_hogar','CBT · hogar de 4 · GBA','CBT H2','Hogar 2')]],standard+',region','Ingresos')
+    ]
+    result=[];errors=[]
+    sector_names={'A':'Agro','B':'Pesca','C':'Minería','D':'Industria manufacturera','E':'Electricidad, gas y agua','F':'Construcción','G':'Comercio','H':'Hoteles y restaurantes','I':'Transporte y comunicaciones','J':'Intermediación financiera','K':'Servicios inmobiliarios y empresariales','L':'Administración pública','M':'Enseñanza','N':'Salud','O':'Otros servicios'}
+    for endpoint,filters,groups,order,topic in definitions:
+        try:
+            if groups is None:groups=[('sector_'+code,'EMAE · '+name,{'codigo':code},'índice') for code,name in sector_names.items()]
+            result.extend(indec_series(endpoint,filters,groups,order,topic))
+        except SourceError as e:errors.append({'source':'INDEC · '+endpoint,'message':str(e),'at':stamp()})
+    return result,errors
+
+def real_wage(nominal,prices):
+    price={p['date']:p['value'] for p in prices['points'] if p['value']>0}
+    common=[p for p in nominal['points'] if p['date'] in price and p['value']>0]
+    if not common:raise SourceError('No hay meses comunes para calcular salario real.')
+    base=common[0]['value']/price[common[0]['date']]
+    return {'id':nominal['id']+'_real','name':nominal['name']+' · real','topic':'Ingresos','provider':'Amauta · cálculo con INDEC','official':False,'derived':True,'unit':'índice real base común=100','frequency':'M','sourceUrl':nominal['sourceUrl'],'retrievedAt':stamp(),'inputs':[nominal['id'],'ipc'],'baseDate':common[0]['date'],'note':'Cálculo propio: (índice de salarios / IPC nacional) normalizado a 100 en '+common[0]['date']+'. Solo meses comunes. No representa un sueldo en pesos ni microdatos individuales.','points':[{'date':p['date'],'value':(p['value']/price[p['date']])/base*100} for p in common]}
+
+def rem_expectations():
+    url='https://api.argentinadatos.com/v1/finanzas/rem/ultimo';rows=fetch(url)
+    if not isinstance(rows,list) or not rows:raise SourceError('REM sin observaciones válidas.')
+    import math
+    for row in rows:
+        if not all(row.get(k) for k in ['informe','indicador','periodo','muestra','unidad']):raise SourceError('REM: faltan metadatos de horizonte o muestra.')
+        if not isinstance(row.get('mediana'),(int,float)) or not math.isfinite(row['mediana']):raise SourceError('REM: mediana no válida.')
+    return {'sourceUrl':url,'provider':'BCRA REM vía ArgentinaDatos','retrievedAt':stamp(),'rows':rows,'note':'Expectativas de participantes encuestados; no son proyecciones propias del BCRA. El informe y el horizonte objetivo son fechas distintas. Percentiles entre participantes no son intervalos de confianza.'}
 def collect(previous=None):
     previous=previous or {};series={s['id']:s for s in previous.get('series',[])};failures=[];success=[]
     try:
@@ -151,9 +203,20 @@ def collect(previous=None):
     try:
         series['risk']=country_risk();success.append('ArgentinaDatos · riesgo país')
     except SourceError as e:failures.append({'source':'ArgentinaDatos','message':str(e),'at':stamp()})
+    # En ausencia de clave se omite esta expansión; las series existentes mantienen su estado.
+    if os.environ.get('INDEC_API_TOKEN'):
+        new,errors=research_indec();failures.extend(errors)
+        for s in new:series[s['id']]=s
+        if new:success.append('INDEC · actividad, salarios y canastas')
+        for sid in ['salarios','salarios_reg','salarios_priv','salarios_pub','salarios_no_reg']:
+            if sid in series and 'ipc' in series:
+                try:series[sid+'_real']=real_wage(series[sid],series['ipc'])
+                except SourceError:pass
     packet={'schemaVersion':1,'generatedAt':stamp(),'series':list(series.values()),'failures':failures,'updatedSources':success,'lsegValuesIncluded':False}
-    try:packet['indecDimensions']=indec_dimensions()
-    except SourceError:pass
+    try:packet['expectations']=rem_expectations();success.append('REM · expectativas de mercado')
+    except SourceError as e:
+        if previous.get('expectations'):packet['expectations']=previous['expectations']
+        packet['expectationsError']=str(e)
     return packet
 def main():
     OUT.mkdir(parents=True,exist_ok=True);target=OUT/'latest.json';previous={}
