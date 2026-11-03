@@ -34,4 +34,12 @@ jobs:
           git add public/macro-lab/live
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'data(macro): actualizar observaciones oficiales'
-          git push origin HEAD:${GITHUB_REF_NAME}
+          # Integrar cambios de código que hayan llegado durante la descarga.
+          # Nunca usar force: si hay conflicto de datos, conservar el remoto y fallar.
+          for attempt in 1 2 3; do
+            git fetch origin "${GITHUB_REF_NAME}" || exit 1
+            git rebase FETCH_HEAD || exit 1
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
