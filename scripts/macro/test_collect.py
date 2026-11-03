@@ -23,6 +23,8 @@ class CollectorTests(unittest.TestCase):
         with patch.object(c,'crianza',side_effect=c.SourceError('Autenticación rechazada')),patch.object(c,'catalog',side_effect=c.SourceError('Fuente indisponible')):
             packet=c.collect({'series':[old]})
         self.assertEqual(packet['series'],[old]);self.assertEqual(len(packet['failures']),4);self.assertEqual(packet['updatedSources'],[])
+        self.assertEqual(packet['retainedSeries'],['crianza0'])
+        self.assertGreaterEqual(packet['generatedAt'],packet['collectionStartedAt'])
     def test_purchase_candidate_cannot_be_silently_misidentified(self):
         entries=[{'idVariable':1,'descripcion':'Reservas internacionales','unidadExpresion':'millones de USD'}, {'idVariable':78,'descripcion':'Depósitos en moneda extranjera','unidadExpresion':'millones de USD'}]
         with patch.object(c,'crianza',return_value=[]),patch.object(c,'catalog',return_value=entries),patch.object(c,'monetary',return_value={'id':'reserves','points':[{'date':'2026-01-01','value':100}]}):
