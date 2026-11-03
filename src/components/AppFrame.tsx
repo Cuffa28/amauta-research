@@ -15,6 +15,7 @@ import {
 } from "@/lib/portal-supabase";
 
 const TOOLS = [
+  { href: "/macro", title: "Macro Lab", sub: "Datos oficiales · mesa de research", icon: "🌐", short: "Macro Lab" },
   { href: "/cedears", title: "Monitor CEDEARs", sub: "Cotizaciones y fundamentals en vivo", icon: "📈", short: "CEDEARs", live: true },
   { href: "/fondos", title: "Monitor FCIs", sub: "Fondos Comunes · CAFCI", icon: "📊", short: "FCIs" },
   { href: "/chat", title: "Chat + Noticias", sub: "Asistente IA + noticias de Argentina", icon: "💬", short: "Chat" },
