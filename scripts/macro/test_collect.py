@@ -8,7 +8,7 @@ def jwt(exp):
     return 'testheader.'+payload+'.testsignature'
 class CollectorTests(unittest.TestCase):
     def setUp(self):
-        for name in ['inflation','country_risk']:
+        for name in ['inflation','country_risk','rem_expectations']:
             p=patch.object(c,name,side_effect=c.SourceError('Fuente de prueba indisponible'));p.start();self.addCleanup(p.stop)
     def test_normalizes_copied_authorization_header(self):
         token=jwt(time.time()+3600)
@@ -32,6 +32,15 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(c.points([{'d':'202601','v':None},{'d':'202602','v':10}],'d','v'),[{'date':'2026-02-01','value':10}])
         with self.assertRaises(c.SourceError):c.points([{'d':'202601','v':1},{'d':'202601','v':2}],'d','v')
 class PublicSourceTests(unittest.TestCase):
+    def test_real_wage_deflates_and_rebases_only_common_months(self):
+        nominal={'id':'salarios','name':'Salarios','sourceUrl':'https://api.indec.gob.ar/v1/indice_salarios','points':[{'date':'2026-01-01','value':100},{'date':'2026-02-01','value':121},{'date':'2026-03-01','value':130}]}
+        prices={'points':[{'date':'2026-01-01','value':200},{'date':'2026-02-01','value':220}]}
+        result=c.real_wage(nominal,prices)
+        self.assertEqual(len(result['points']),2);self.assertAlmostEqual(result['points'][0]['value'],100);self.assertAlmostEqual(result['points'][1]['value'],110);self.assertTrue(result['derived'])
+    def test_rem_keeps_report_and_target_horizon_separate(self):
+        row={'informe':'2026-09','indicador':'IPC','periodo':'2027','muestra':'todos','unidad':'%','mediana':20}
+        with patch.object(c,'fetch',return_value=[row]):result=c.rem_expectations()
+        self.assertEqual(result['rows'][0]['informe'],'2026-09');self.assertEqual(result['rows'][0]['periodo'],'2027')
     def test_risk_dates_sorted_and_secondary_source_identified(self):
         with patch.object(c,'fetch',return_value=[{'fecha':'2026-11-02','valor':805},{'fecha':'2026-10-30','valor':810}]):s=c.country_risk()
         self.assertFalse(s['official']);self.assertEqual(s['points'][-1]['value'],805);self.assertIn('Ámbito',s['provider'])
