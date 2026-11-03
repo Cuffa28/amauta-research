@@ -26,7 +26,7 @@ def token_value(raw):
     except SourceError:raise
     except Exception:raise SourceError('No se pudo interpretar el formato del token INDEC.') from None
     return token
-def fetch(url,token=None):
+def fetch(url,token=None,timeout=25,attempts=3):
     # La credencial INDEC queda vinculada exclusivamente a su origen HTTPS.
     if token and (urlsplit(url).scheme!='https' or urlsplit(url).netloc!='api.indec.gob.ar'):
         raise SourceError('La credencial INDEC no puede enviarse a este destino.')
@@ -36,20 +36,20 @@ def fetch(url,token=None):
         def redirect_request(self,*args,**kwargs):
             raise SourceError('La consulta autenticada no admite redirecciones.')
     opener=build_opener(NoCredentialRedirect()).open if token else urlopen
-    for attempt in range(3):
+    for attempt in range(attempts):
         try:
-            with opener(Request(url,headers=headers),timeout=25) as response:
+            with opener(Request(url,headers=headers),timeout=timeout) as response:
                 content=response.read(12_000_001)
                 if len(content)>12_000_000:raise SourceError('Respuesta demasiado grande. No se importó parcialmente.')
                 return json.loads(content)
         except HTTPError as e:
             if e.code==401:raise SourceError('INDEC rechazó la autenticación (401). Revisar que el secreto contenga el JWT vigente completo, no una clave de Alphacast ni el encabezado duplicado.') from None
             if e.code==403:raise SourceError('La fuente rechazó el acceso (403). Revisar permisos o restricciones del proveedor.') from None
-            if e.code in (429,500,502,503,504) and attempt<2:time.sleep(2**attempt);continue
+            if e.code in (429,500,502,503,504) and attempt<attempts-1:time.sleep(2**attempt);continue
             raise SourceError(f'El proveedor devolvió HTTP {e.code}.') from None
         except (URLError,TimeoutError,OSError):
-            if attempt<2:time.sleep(2**attempt);continue
-            raise SourceError('La fuente no respondió después de tres intentos.') from None
+            if attempt<attempts-1:time.sleep(2**attempt);continue
+            raise SourceError('La fuente no respondió después de '+str(attempts)+' intento(s).') from None
         except json.JSONDecodeError:raise SourceError('La fuente no devolvió JSON válido.') from None
 def iso(v):
     text=str(v)
@@ -186,10 +186,10 @@ def rem_expectations():
     return {'sourceUrl':url,'provider':'BCRA REM vía ArgentinaDatos','retrievedAt':stamp(),'rows':rows,'note':'Expectativas de participantes encuestados; no son proyecciones propias del BCRA. El informe y el horizonte objetivo son fechas distintas. Percentiles entre participantes no son intervalos de confianza.'}
 def monitor_bundle():
     # Peticiones sin token ni cookies. fetch rechaza credenciales en este dominio.
-    base='https://monitorargy.com/api/v1/';result={'provider':'Monitor Argy','sourceUrl':'https://monitorargy.com','retrievedAt':stamp(),'attribution':'Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.','errors':[]}
+    base='https://monitorargy.com/api/v1/';started=time.monotonic();result={'provider':'Monitor Argy','sourceUrl':'https://monitorargy.com','retrievedAt':stamp(),'attribution':'Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.','errors':[]}
     for name,key in [('series','catalog'),('calendario','calendar'),('coyuntura','outlook')]:
         try:
-            payload=fetch(base+name)
+            payload=fetch(base+name,timeout=8,attempts=1)
             required={'catalog':'series','calendar':'eventos','outlook':'secciones'}[key]
             if not isinstance(payload,dict) or not isinstance(payload.get(required),list):raise SourceError('Cambió el esquema de Monitor Argy: '+name)
             result[key]=payload
@@ -199,9 +199,11 @@ def monitor_bundle():
     ids={s['id'] for s in result['catalog']['series']};result['histories']={}
     featured=['emae_desest','ipc_mensual','empleo_privado_desest','pobreza_nowcast','tc_mayorista','saldo_comercial','tasa_tamar','base_monetaria','resultado_primario','supermercados_desest','isac_desest','petroleo']
     for sid in featured:
+        if time.monotonic()-started>75:
+            result['errors'].append({'source':'histories','message':'Se alcanzó el presupuesto de tiempo del proveedor complementario; se conservan las historias previas.'});break
         if sid not in ids:continue
         try:
-            packet=fetch(base+'series/'+sid+'?desde=2020-01')
+            packet=fetch(base+'series/'+sid+'?desde=2020-01',timeout=8,attempts=1)
             if packet.get('id')!=sid or not isinstance(packet.get('puntos'),list):raise SourceError('Identidad o puntos de Monitor Argy no válidos.')
             result['histories'][sid]=packet
         except SourceError as e:result['errors'].append({'source':sid,'message':str(e)})
@@ -209,7 +211,7 @@ def monitor_bundle():
     return result
 
 def collect(previous=None):
-    previous=previous or {};series={s['id']:s for s in previous.get('series',[])};failures=[];success=[]
+    started=stamp();previous=previous or {};series={s['id']:s for s in previous.get('series',[])};failures=[];success=[]
     try:
         new=crianza()
         for s in new:series[s['id']]=s
@@ -258,6 +260,9 @@ def collect(previous=None):
         except SourceError as e:
             if previous.get('monitor'):packet['monitor']=previous['monitor']
             packet['monitorError']=str(e)
+    packet['collectionStartedAt']=started
+    packet['generatedAt']=stamp()
+    packet['retainedSeries']=[s['id'] for s in packet['series'] if s.get('retrievedAt','')<started and not s.get('derived')]
     return packet
 def main():
     OUT.mkdir(parents=True,exist_ok=True);target=OUT/'latest.json';previous={}
