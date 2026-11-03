@@ -5,8 +5,8 @@ on:
     branches: ['main']
     paths: ['scripts/macro/**', '.github/workflows/macro-data.yml']
   schedule:
-    # Días hábiles, 09:17 y 19:17 de Argentina. INDEC/BCRA no son feeds intradiarios garantizados.
-    - cron: '17 12,22 * * 1-5'
+    # Días hábiles, 09:17, 13:17, 16:17 y 19:17 ART; sujeto a demora de Actions.
+    - cron: '17 12,16,19,22 * * 1-5'
 permissions:
   contents: write
 concurrency:
