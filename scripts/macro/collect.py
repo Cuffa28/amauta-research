@@ -116,6 +116,15 @@ def country_risk():
     observations=points(rows,'fecha','valor')
     if any(p['value']<0 or p['value']>100000 for p in observations):raise SourceError('Riesgo país fuera de rango; se conserva la versión anterior.')
     return {'id':'risk','name':'Riesgo país · referencia publicada','topic':'Mercado','provider':'ArgentinaDatos · Ámbito','unit':'pb','frequency':'D','official':False,'sourceUrl':RISK,'retrievedAt':stamp(),'note':'Referencia de riesgo país distribuida por ArgentinaDatos, que identifica a Ámbito como fuente. Servicio no oficial; no es una conexión directa al EMBI de J.P. Morgan. No se mezcla con la estimación propia de BondTerminal. Fecha de observación diaria; puede tener rezago. Datos: https://argentinadatos.com/docs/operations/get-finanzas-indices-riesgo-pais','points':observations}
+
+def indec_dimensions():
+    token=token_value(os.environ.get('INDEC_API_TOKEN'));result={}
+    for endpoint in ['ipc_nacional','indice_salarios','ipi_manufacturero','estimador-mensual-de-actividad-economica-nivel-general','estimador-mensual-de-actividad-economica-sectores','valorizacion_canastas_cba_cbt']:
+        rows=fetch('https://api.indec.gob.ar/v1/'+endpoint+'?'+urlencode({'order':'periodo.desc','limit':200}),token)
+        if not isinstance(rows,list):raise SourceError('Dimensiones INDEC no disponibles.')
+        unique={json.dumps({k:v for k,v in r.items() if k not in ['periodo','anio','mes','valor','observaciones']},sort_keys=True,ensure_ascii=False) for r in rows}
+        result[endpoint]=[json.loads(r) for r in sorted(unique)]
+    return result
 def collect(previous=None):
     previous=previous or {};series={s['id']:s for s in previous.get('series',[])};failures=[];success=[]
     try:
@@ -142,7 +151,10 @@ def collect(previous=None):
     try:
         series['risk']=country_risk();success.append('ArgentinaDatos · riesgo país')
     except SourceError as e:failures.append({'source':'ArgentinaDatos','message':str(e),'at':stamp()})
-    return {'schemaVersion':1,'generatedAt':stamp(),'series':list(series.values()),'failures':failures,'updatedSources':success,'lsegValuesIncluded':False}
+    packet={'schemaVersion':1,'generatedAt':stamp(),'series':list(series.values()),'failures':failures,'updatedSources':success,'lsegValuesIncluded':False}
+    try:packet['indecDimensions']=indec_dimensions()
+    except SourceError:pass
+    return packet
 def main():
     OUT.mkdir(parents=True,exist_ok=True);target=OUT/'latest.json';previous={}
     if target.exists():
