@@ -32,6 +32,16 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(c.points([{'d':'202601','v':None},{'d':'202602','v':10}],'d','v'),[{'date':'2026-02-01','value':10}])
         with self.assertRaises(c.SourceError):c.points([{'d':'202601','v':1},{'d':'202601','v':2}],'d','v')
 class PublicSourceTests(unittest.TestCase):
+    def test_indec_credential_is_refused_for_a_different_host(self):
+        with patch.object(c,'urlopen') as network:
+            with self.assertRaises(c.SourceError):c.fetch('https://monitorargy.com/api/v1/series',token='dummy-for-test')
+        network.assert_not_called()
+    def test_public_request_never_contains_authorization_or_cookie(self):
+        import io
+        with patch.object(c,'urlopen',return_value=io.BytesIO(b'{"series":[]}')) as network:
+            c.fetch('https://monitorargy.com/api/v1/series')
+        headers={k.lower():v for k,v in network.call_args.args[0].headers.items()}
+        self.assertNotIn('authorization',headers);self.assertNotIn('cookie',headers)
     def test_real_wage_deflates_and_rebases_only_common_months(self):
         nominal={'id':'salarios','name':'Salarios','sourceUrl':'https://api.indec.gob.ar/v1/indice_salarios','points':[{'date':'2026-01-01','value':100},{'date':'2026-02-01','value':121},{'date':'2026-03-01','value':130}]}
         prices={'points':[{'date':'2026-01-01','value':200},{'date':'2026-02-01','value':220}]}
