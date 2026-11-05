@@ -12,8 +12,8 @@
 
 ## Pendientes antes de producción
 
-1. Verificar el proyecto Supabase real utilizado por las variables del portal. El proyecto indicado por documentación histórica tiene una tabla team_members vacía en la inspección del 5/11; no modificar Auth sin reconciliar este dato con el despliegue.
-2. Revisar y aplicar `research-daily.sql` al proyecto correcto. Conectar un publicador autenticado de servidor con validación de contenido, idempotencia por rueda y conservación inmutable de versiones. No exponer service_role en el navegador.
+1. Verificar el proyecto Supabase real utilizado por las variables del portal. Verificación del 5/11: el proyecto amauta-research jfjqydgqzlwnyngcmzwu tiene nueve miembros activos, confirmados por consulta directa. El cero del listado inicial era una estimación de estadísticas, no un conteo real. No se modificaron miembros ni permisos de Auth.
+2. El esquema `research-daily.sql` fue aplicado al proyecto amauta-research mediante la migración create_research_daily_editions. Se cargó una edición inicial parcial sobre la rueda del 4/11. RLS habilitado; anon sin lectura y authenticated sin escritura, comprobados por consulta. Conectar un publicador autenticado de servidor con validación de contenido, idempotencia por rueda y conservación inmutable de versiones. No exponer service_role en el navegador.
 3. Conectar Gmail para lectura autónoma y procesar PDF completos. El plugin de este chat no constituye una conexión del servidor.
 4. Subir gráficos y PDF a almacenamiento privado; servir únicamente URLs firmadas tras verificar membresía. La interfaz no renderiza imágenes arbitrarias de Markdown para evitar fugas a terceros. Integrar el visor de gráficos privados cuando exista este mecanismo.
 5. Ensayar apertura, fallos parciales, edición histórica y aviso de publicación antes de sustituir las tareas actuales de ChatGPT.
