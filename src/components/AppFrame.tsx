@@ -15,6 +15,7 @@ import {
 } from "@/lib/portal-supabase";
 
 const TOOLS = [
+  { href: "/research", title: "Research diario", sub: "La última rueda · informes y archivo", icon: "🗞️", short: "Research" },
   { href: "/macro", title: "Macro Lab", sub: "Datos oficiales · mesa de research", icon: "🌐", short: "Macro Lab" },
   { href: "/cedears", title: "Monitor CEDEARs", sub: "Cotizaciones y fundamentals en vivo", icon: "📈", short: "CEDEARs", live: true },
   { href: "/fondos", title: "Monitor FCIs", sub: "Fondos Comunes · CAFCI", icon: "📊", short: "FCIs" },
@@ -48,7 +49,7 @@ type Status = "loading" | "login" | "authed";
 export default function AppFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [status, setStatus] = useState<Status>("loading");
-  const [, setMember] = useState<Member | null>(null);
+  const [member, setMember] = useState<Member | null>(null);
   const [email, setEmail] = useState("");
   const [pendingEmail, setPendingEmail] = useState("");
   const [code, setCode] = useState("");
@@ -281,7 +282,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
 
         <nav className="sidebar-nav">
           <div className="nav-group-label">Herramientas</div>
-          {TOOLS.map((t) => (
+          {TOOLS.filter(t => t.href !== "/research" || member?.email.toLowerCase() === "facundo@amautainversiones.com").map((t) => (
             <Link
               key={t.href}
               href={t.href}
