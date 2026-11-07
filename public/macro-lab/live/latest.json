@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-06T19:22:05.085447+00:00",
+  "generatedAt": "2026-11-07T01:54:11.956977+00:00",
   "series": [
     {
       "id": "crianza0",
@@ -10,7 +10,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-06T19:21:43.937580+00:00",
+      "retrievedAt": "2026-11-07T01:53:47.749557+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -347,7 +347,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-06T19:21:43.937888+00:00",
+      "retrievedAt": "2026-11-07T01:53:47.749785+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -684,7 +684,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-06T19:21:43.938044+00:00",
+      "retrievedAt": "2026-11-07T01:53:47.749875+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -1021,7 +1021,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-06T19:21:43.938195+00:00",
+      "retrievedAt": "2026-11-07T01:53:47.749964+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -1358,7 +1358,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/1",
-      "retrievedAt": "2026-11-06T19:21:45.195690+00:00",
+      "retrievedAt": "2026-11-07T01:53:48.709528+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Reservas internacionales brutas; no netas ni de libre disponibilidad.",
       "points": [
         {
@@ -4283,7 +4283,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/78",
-      "retrievedAt": "2026-11-06T19:21:45.508143+00:00",
+      "retrievedAt": "2026-11-07T01:53:49.067454+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Factor de variación de reservas por compra de divisas; conservar fecha de observación y metodología. No equivale a la variación total de reservas ni necesariamente al momento de concertación de la intervención.",
       "points": [
         {
@@ -7204,7 +7204,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/27",
-      "retrievedAt": "2026-11-06T19:21:45.819407+00:00",
+      "retrievedAt": "2026-11-07T01:53:49.351706+00:00",
       "note": "IPC publicado por BCRA, variable 27. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -8359,7 +8359,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/28",
-      "retrievedAt": "2026-11-06T19:21:46.084924+00:00",
+      "retrievedAt": "2026-11-07T01:53:49.623414+00:00",
       "note": "IPC publicado por BCRA, variable 28. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -9515,7 +9515,7 @@
       "frequency": "D",
       "official": false,
       "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais",
-      "retrievedAt": "2026-11-06T19:21:46.512230+00:00",
+      "retrievedAt": "2026-11-07T01:53:50.157318+00:00",
       "note": "Referencia de riesgo país distribuida por ArgentinaDatos, que identifica a Ámbito como fuente. Servicio no oficial; no es una conexión directa al EMBI de J.P. Morgan. No se mezcla con la estimación propia de BondTerminal. Fecha de observación diaria; puede tener rezago. Datos: https://argentinadatos.com/docs/operations/get-finanzas-indices-riesgo-pais",
       "points": [
         {
@@ -40485,7 +40485,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipc_nacional?descripcion=ilike.%2Ageneral%2A&region=ilike.%2Anacional%2A&tipo_de_indicador=eq.Indice&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:47.540336+00:00",
+      "retrievedAt": "2026-11-07T01:53:51.977757+00:00",
       "dimensions": {},
       "note": "INDEC · IPC nacional · nivel general. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -40968,7 +40968,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:49.019603+00:00",
+      "retrievedAt": "2026-11-07T01:53:53.703127+00:00",
       "dimensions": {
         "codigo": "0"
       },
@@ -41449,7 +41449,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:49.020349+00:00",
+      "retrievedAt": "2026-11-07T01:53:53.703584+00:00",
       "dimensions": {
         "codigo": "100"
       },
@@ -41930,7 +41930,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:49.021017+00:00",
+      "retrievedAt": "2026-11-07T01:53:53.703966+00:00",
       "dimensions": {
         "codigo": "110"
       },
@@ -42411,7 +42411,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:49.021698+00:00",
+      "retrievedAt": "2026-11-07T01:53:53.704341+00:00",
       "dimensions": {
         "codigo": "120"
       },
@@ -42892,7 +42892,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:49.022373+00:00",
+      "retrievedAt": "2026-11-07T01:53:53.704732+00:00",
       "dimensions": {
         "codigo": "200"
       },
@@ -43373,7 +43373,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+desestacionalizada",
-      "retrievedAt": "2026-11-06T19:21:50.374414+00:00",
+      "retrievedAt": "2026-11-07T01:53:56.131973+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie desestacionalizada"
       },
@@ -44478,7 +44478,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+original",
-      "retrievedAt": "2026-11-06T19:21:50.375549+00:00",
+      "retrievedAt": "2026-11-07T01:53:56.132616+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie original"
       },
@@ -45583,7 +45583,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipi_manufacturero?descripcion=eq.IPI+Manufacturero+-+Nivel+general&tipo_de_indicador=eq.%C3%8Dndice&serie=eq.Serie+desestacionalizada&periodo=gte.201601",
-      "retrievedAt": "2026-11-06T19:21:51.414049+00:00",
+      "retrievedAt": "2026-11-07T01:53:57.515402+00:00",
       "dimensions": {},
       "note": "INDEC · Industria · desestacionalizada. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -46114,7 +46114,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.A",
-      "retrievedAt": "2026-11-06T19:21:54.083346+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.456283+00:00",
       "dimensions": {
         "codigo": "A"
       },
@@ -46595,7 +46595,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.B",
-      "retrievedAt": "2026-11-06T19:21:54.085122+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.457346+00:00",
       "dimensions": {
         "codigo": "B"
       },
@@ -47076,7 +47076,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.C",
-      "retrievedAt": "2026-11-06T19:21:54.086863+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.458345+00:00",
       "dimensions": {
         "codigo": "C"
       },
@@ -47557,7 +47557,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.D",
-      "retrievedAt": "2026-11-06T19:21:54.088590+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.459331+00:00",
       "dimensions": {
         "codigo": "D"
       },
@@ -48038,7 +48038,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.E",
-      "retrievedAt": "2026-11-06T19:21:54.090317+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.460319+00:00",
       "dimensions": {
         "codigo": "E"
       },
@@ -48519,7 +48519,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.F",
-      "retrievedAt": "2026-11-06T19:21:54.092025+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.461305+00:00",
       "dimensions": {
         "codigo": "F"
       },
@@ -49000,7 +49000,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.G",
-      "retrievedAt": "2026-11-06T19:21:54.096417+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.464709+00:00",
       "dimensions": {
         "codigo": "G"
       },
@@ -49481,7 +49481,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.H",
-      "retrievedAt": "2026-11-06T19:21:54.098143+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.465710+00:00",
       "dimensions": {
         "codigo": "H"
       },
@@ -49962,7 +49962,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.I",
-      "retrievedAt": "2026-11-06T19:21:54.099859+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.466707+00:00",
       "dimensions": {
         "codigo": "I"
       },
@@ -50443,7 +50443,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.J",
-      "retrievedAt": "2026-11-06T19:21:54.101595+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.467699+00:00",
       "dimensions": {
         "codigo": "J"
       },
@@ -50924,7 +50924,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.K",
-      "retrievedAt": "2026-11-06T19:21:54.103312+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.468691+00:00",
       "dimensions": {
         "codigo": "K"
       },
@@ -51405,7 +51405,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.L",
-      "retrievedAt": "2026-11-06T19:21:54.105014+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.469672+00:00",
       "dimensions": {
         "codigo": "L"
       },
@@ -51886,7 +51886,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.M",
-      "retrievedAt": "2026-11-06T19:21:54.106737+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.470667+00:00",
       "dimensions": {
         "codigo": "M"
       },
@@ -52367,7 +52367,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.N",
-      "retrievedAt": "2026-11-06T19:21:54.108477+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.471666+00:00",
       "dimensions": {
         "codigo": "N"
       },
@@ -52848,7 +52848,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.O",
-      "retrievedAt": "2026-11-06T19:21:54.110199+00:00",
+      "retrievedAt": "2026-11-07T01:54:00.472663+00:00",
       "dimensions": {
         "codigo": "O"
       },
@@ -53329,7 +53329,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA&tipo_de_indicador=eq.CBA&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.610797+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.217276+00:00",
       "dimensions": {
         "codigo": "CBA",
         "tipo_de_indicador": "CBA"
@@ -53815,7 +53815,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT&tipo_de_indicador=eq.CBT&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.611493+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.217663+00:00",
       "dimensions": {
         "codigo": "CBT",
         "tipo_de_indicador": "CBT"
@@ -54301,7 +54301,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.612125+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.217991+00:00",
       "dimensions": {
         "codigo": "CBA H2",
         "tipo_de_indicador": "Hogar 2"
@@ -54787,7 +54787,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.613557+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.218991+00:00",
       "dimensions": {
         "codigo": "CBT H2",
         "tipo_de_indicador": "Hogar 2"
@@ -55274,7 +55274,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.614040+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.219210+00:00",
       "inputs": [
         "salarios",
         "ipc"
@@ -55758,7 +55758,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.614103+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.219249+00:00",
       "inputs": [
         "salarios_reg",
         "ipc"
@@ -56242,7 +56242,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.614170+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.219286+00:00",
       "inputs": [
         "salarios_priv",
         "ipc"
@@ -56726,7 +56726,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.614247+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.219323+00:00",
       "inputs": [
         "salarios_pub",
         "ipc"
@@ -57210,7 +57210,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-06T19:21:55.614305+00:00",
+      "retrievedAt": "2026-11-07T01:54:02.219352+00:00",
       "inputs": [
         "salarios_no_reg",
         "ipc"
@@ -57700,7 +57700,7 @@
   "expectations": {
     "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/rem/ultimo",
     "provider": "BCRA REM vía ArgentinaDatos",
-    "retrievedAt": "2026-11-06T19:21:55.773465+00:00",
+    "retrievedAt": "2026-11-07T01:54:02.673260+00:00",
     "rows": [
       {
         "informe": "2026-10",
@@ -61140,11 +61140,11 @@
   "monitor": {
     "provider": "Monitor Argy",
     "sourceUrl": "https://monitorargy.com",
-    "retrievedAt": "2026-11-06T19:21:55.773494+00:00",
+    "retrievedAt": "2026-11-07T01:54:02.673284+00:00",
     "attribution": "Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.",
     "errors": [],
     "catalog": {
-      "generado": "2026-11-06T19:07:27.789943+00:00",
+      "generado": "2026-11-06T21:06:39.101550+00:00",
       "paneles": [
         {
           "id": "precios",
@@ -63588,11 +63588,11 @@
             "web": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-3-42"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-08-01",
-          "ultimoValor": 140.737939,
-          "variacionUltimo": 0.597793,
+          "ultimaFecha": "2026-09-01",
+          "ultimoValor": 152.963675,
+          "variacionUltimo": 11.129345,
           "frescura": "vigente",
-          "observaciones": 176
+          "observaciones": 177
         },
         {
           "id": "isac_desest_mensual",
@@ -63607,11 +63607,11 @@
             "web": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-3-42"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-08-01",
-          "ultimoValor": 0.426568,
-          "variacionUltimo": 4.780393,
+          "ultimaFecha": "2026-09-01",
+          "ultimoValor": 7.846722,
+          "variacionUltimo": 6.813091,
           "frescura": "vigente",
-          "observaciones": 175
+          "observaciones": 176
         },
         {
           "id": "supermercados",
@@ -70276,11 +70276,11 @@
             "web": "https://www.indec.gob.ar/Nivel4/Tema/3/7/172"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-08-01",
-          "ultimoValor": 8582.6,
-          "variacionUltimo": -849.084,
+          "ultimaFecha": "2026-09-01",
+          "ultimoValor": 9798,
+          "variacionUltimo": 1215.4,
           "frescura": "vigente",
-          "observaciones": 39
+          "observaciones": 40
         },
         {
           "id": "litio_mensual",
@@ -70295,11 +70295,11 @@
             "web": "https://www.indec.gob.ar/Nivel4/Tema/3/7/172"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-08-01",
-          "ultimoValor": -9.002464,
-          "variacionUltimo": 12.315382,
+          "ultimaFecha": "2026-09-01",
+          "ultimoValor": 14.16121,
+          "variacionUltimo": 23.163674,
           "frescura": "vigente",
-          "observaciones": 38
+          "observaciones": 39
         },
         {
           "id": "litio_interanual",
@@ -70314,11 +70314,11 @@
             "web": "https://www.indec.gob.ar/Nivel4/Tema/3/7/172"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-08-01",
-          "ultimoValor": 8.752811,
-          "variacionUltimo": -7.152536,
+          "ultimaFecha": "2026-09-01",
+          "ultimoValor": 6.472942,
+          "variacionUltimo": -2.279869,
           "frescura": "vigente",
-          "observaciones": 27
+          "observaciones": 28
         },
         {
           "id": "oro_plata",
@@ -77220,8 +77220,8 @@
       ]
     },
     "calendar": {
-      "generado": "2026-11-06T14:11:40.324482+00:00",
-      "indecConsultado": "2026-11-06T04:33:05.798113+00:00",
+      "generado": "2026-11-06T21:06:39.101550+00:00",
+      "indecConsultado": "2026-11-06T21:06:07.897033+00:00",
       "series": {
         "ipc_nivel_general": {
           "metodo": "oficial",
@@ -81501,7 +81501,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81511,7 +81511,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81522,7 +81522,7 @@
           ],
           "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_manufacturero_11_2630BE216D2B.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81533,7 +81533,7 @@
           ],
           "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_manufacturero_11_2630BE216D2B.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81544,7 +81544,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81555,7 +81555,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81566,7 +81566,7 @@
           ],
           "titulo": "Indicadores de coyuntura de la actividad de la construcción. Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/isac_11_26F4E69BED3F.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81577,7 +81577,7 @@
           ],
           "titulo": "Indicadores de coyuntura de la actividad de la construcción. Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/isac_11_26F4E69BED3F.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81589,7 +81589,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81602,7 +81602,7 @@
           ],
           "titulo": "Índice de producción industrial manufacturero (IPI manufacturero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_manufacturero_11_2630BE216D2B.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81615,7 +81615,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81628,7 +81628,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -81640,7 +81640,7 @@
           ],
           "titulo": "Índice de producción industrial minero (IPI minero). Septiembre de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/ipi_minero_11_261447EF4B70.pdf"
         },
         {
           "fecha": "2026-11-06",
@@ -125652,7 +125652,7 @@
       ]
     },
     "outlook": {
-      "generado": "2026-11-06T19:07:27.789943+00:00",
+      "generado": "2026-11-06T19:40:03.450885+00:00",
       "meses": [
         "2025-11-01",
         "2025-12-01",
@@ -126113,18 +126113,19 @@
               "desest": "oficial",
               "invertir": false,
               "frescura": "vigente",
-              "ultimaFecha": "2026-08-01",
+              "ultimaFecha": "2026-09-01",
               "valores": {
-                "2025-11-01": -4.009555,
-                "2025-12-01": 3.325345,
-                "2026-01-01": -0.20032,
-                "2026-02-01": -1.367142,
-                "2026-03-01": 5.29201,
-                "2026-04-01": -4.051217,
-                "2026-05-01": 5.811514,
-                "2026-06-01": -4.224408,
-                "2026-07-01": -4.353825,
-                "2026-08-01": 0.426568
+                "2025-11-01": -4.220849,
+                "2025-12-01": 3.740833,
+                "2026-01-01": 0.2064,
+                "2026-02-01": -1.09331,
+                "2026-03-01": 3.725886,
+                "2026-04-01": -3.203004,
+                "2026-05-01": 5.986631,
+                "2026-06-01": -4.898935,
+                "2026-07-01": -3.783083,
+                "2026-08-01": 1.033631,
+                "2026-09-01": 7.846722
               }
             },
             {
@@ -126774,7 +126775,7 @@
         "observaciones": 272,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-21T19:11:09.396150+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127133,7 +127134,7 @@
           "de": "ipc_nivel_general"
         },
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-14T03:02:36.706470+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127493,7 +127494,7 @@
         "observaciones": 175,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-15T19:49:47.955620+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127845,7 +127846,7 @@
         "observaciones": 22,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-27T21:05:27.337497+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127969,7 +127970,7 @@
         "observaciones": 1938,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-11-06T04:09:07.173756+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
@@ -134655,7 +134656,7 @@
         "observaciones": 441,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-19T19:08:54.735744+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -135015,7 +135016,7 @@
         "observaciones": 506,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-11-05T20:50:24.108493+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
@@ -137077,7 +137078,7 @@
         "observaciones": 1936,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-11-06T04:10:16.491922+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
@@ -143755,7 +143756,7 @@
         "observaciones": 129,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-16T19:58:04.545974+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -144115,7 +144116,7 @@
         "observaciones": 116,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-10-22T19:06:56.217580+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -144464,15 +144465,15 @@
           ]
         },
         "desestacionalizacion": "oficial",
-        "ultimaFecha": "2026-08-01",
-        "ultimoValor": 140.737939,
-        "variacionUltimo": 0.597793,
+        "ultimaFecha": "2026-09-01",
+        "ultimoValor": 152.963675,
+        "variacionUltimo": 11.129345,
         "frescura": "vigente",
-        "observaciones": 176,
+        "observaciones": 177,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
-        "vintage": "2026-10-14T02:22:49.389002+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
+        "vintage": "2026-11-06T19:34:28.242041+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
           "1m"
@@ -144480,323 +144481,327 @@
         "puntos": [
           {
             "fecha": "2020-01-01",
-            "valor": 151.905089
+            "valor": 152.466568
           },
           {
             "fecha": "2020-02-01",
-            "valor": 153.576154
+            "valor": 154.23299
           },
           {
             "fecha": "2020-03-01",
-            "valor": 94.622752
+            "valor": 94.384542
           },
           {
             "fecha": "2020-04-01",
-            "valor": 47.168052
+            "valor": 47.236091
           },
           {
             "fecha": "2020-05-01",
-            "valor": 104.368434
+            "valor": 104.688452
           },
           {
             "fecha": "2020-06-01",
-            "valor": 145.6787
+            "valor": 145.267349
           },
           {
             "fecha": "2020-07-01",
-            "valor": 155.180681
+            "valor": 154.92007
           },
           {
             "fecha": "2020-08-01",
-            "valor": 157.231837
+            "valor": 157.040868
           },
           {
             "fecha": "2020-09-01",
-            "valor": 162.483569
+            "valor": 162.149505
           },
           {
             "fecha": "2020-10-01",
-            "valor": 168.515929
+            "valor": 168.514613
           },
           {
             "fecha": "2020-11-01",
-            "valor": 181.788223
+            "valor": 181.428867
           },
           {
             "fecha": "2020-12-01",
-            "valor": 190.450806
+            "valor": 190.88588
           },
           {
             "fecha": "2021-01-01",
-            "valor": 196.179012
+            "valor": 197.552577
           },
           {
             "fecha": "2021-02-01",
-            "valor": 185.791946
+            "valor": 186.867974
           },
           {
             "fecha": "2021-03-01",
-            "valor": 188.671559
+            "valor": 187.917182
           },
           {
             "fecha": "2021-04-01",
-            "valor": 180.94249
+            "valor": 180.632261
           },
           {
             "fecha": "2021-05-01",
-            "valor": 176.731159
+            "valor": 177.309187
           },
           {
             "fecha": "2021-06-01",
-            "valor": 186.036463
+            "valor": 185.05499
           },
           {
             "fecha": "2021-07-01",
-            "valor": 189.217863
+            "valor": 188.985513
           },
           {
             "fecha": "2021-08-01",
-            "valor": 186.937101
+            "valor": 186.62334
           },
           {
             "fecha": "2021-09-01",
-            "valor": 186.040513
+            "valor": 185.918798
           },
           {
             "fecha": "2021-10-01",
-            "valor": 187.725911
+            "valor": 187.695385
           },
           {
             "fecha": "2021-11-01",
-            "valor": 190.564536
+            "valor": 190.265853
           },
           {
             "fecha": "2021-12-01",
-            "valor": 199.150439
+            "valor": 199.355505
           },
           {
             "fecha": "2022-01-01",
-            "valor": 188.677314
+            "valor": 190.173218
           },
           {
             "fecha": "2022-02-01",
-            "valor": 197.8486
+            "valor": 199.185605
           },
           {
             "fecha": "2022-03-01",
-            "valor": 192.934001
+            "valor": 192.123996
           },
           {
             "fecha": "2022-04-01",
-            "valor": 200.896099
+            "valor": 200.627115
           },
           {
             "fecha": "2022-05-01",
-            "valor": 202.094227
+            "valor": 202.465444
           },
           {
             "fecha": "2022-06-01",
-            "valor": 199.818661
+            "valor": 198.974539
           },
           {
             "fecha": "2022-07-01",
-            "valor": 202.64651
+            "valor": 202.232971
           },
           {
             "fecha": "2022-08-01",
-            "valor": 196.179013
+            "valor": 196.060594
           },
           {
             "fecha": "2022-09-01",
-            "valor": 192.22775
+            "valor": 191.849847
           },
           {
             "fecha": "2022-10-01",
-            "valor": 189.148094
+            "valor": 189.247281
           },
           {
             "fecha": "2022-11-01",
-            "valor": 187.928909
+            "valor": 187.552757
           },
           {
             "fecha": "2022-12-01",
-            "valor": 183.154513
+            "valor": 183.468886
           },
           {
             "fecha": "2023-01-01",
-            "valor": 185.983086
+            "valor": 187.094982
           },
           {
             "fecha": "2023-02-01",
-            "valor": 184.044622
+            "valor": 185.089065
           },
           {
             "fecha": "2023-03-01",
-            "valor": 195.685764
+            "valor": 194.675831
           },
           {
             "fecha": "2023-04-01",
-            "valor": 198.486532
+            "valor": 198.242216
           },
           {
             "fecha": "2023-05-01",
-            "valor": 192.037059
+            "valor": 192.392166
           },
           {
             "fecha": "2023-06-01",
-            "valor": 190.943235
+            "valor": 189.962864
           },
           {
             "fecha": "2023-07-01",
-            "valor": 192.9878
+            "valor": 192.737696
           },
           {
             "fecha": "2023-08-01",
-            "valor": 189.692765
+            "valor": 190.026196
           },
           {
             "fecha": "2023-09-01",
-            "valor": 188.709173
+            "valor": 188.040445
           },
           {
             "fecha": "2023-10-01",
-            "valor": 188.259789
+            "valor": 188.137639
           },
           {
             "fecha": "2023-11-01",
-            "valor": 186.114669
+            "valor": 185.969259
           },
           {
             "fecha": "2023-12-01",
-            "valor": 166.561257
+            "valor": 166.983307
           },
           {
             "fecha": "2024-01-01",
-            "valor": 143.370172
+            "valor": 144.171029
           },
           {
             "fecha": "2024-02-01",
-            "valor": 136.788949
+            "valor": 137.994119
           },
           {
             "fecha": "2024-03-01",
-            "valor": 118.683285
+            "valor": 118.006722
           },
           {
             "fecha": "2024-04-01",
-            "valor": 118.328032
+            "valor": 118.276856
           },
           {
             "fecha": "2024-05-01",
-            "valor": 128.201256
+            "valor": 128.537974
           },
           {
             "fecha": "2024-06-01",
-            "valor": 132.263948
+            "valor": 131.595759
           },
           {
             "fecha": "2024-07-01",
-            "valor": 144.036373
+            "valor": 143.864014
           },
           {
             "fecha": "2024-08-01",
-            "valor": 140.486814
+            "valor": 141.005406
           },
           {
             "fecha": "2024-09-01",
-            "valor": 141.608458
+            "valor": 140.932859
           },
           {
             "fecha": "2024-10-01",
-            "valor": 134.634581
+            "valor": 134.527715
           },
           {
             "fecha": "2024-11-01",
-            "valor": 141.652636
+            "valor": 141.357377
           },
           {
             "fecha": "2024-12-01",
-            "valor": 145.253727
+            "valor": 145.49192
           },
           {
             "fecha": "2025-01-01",
-            "valor": 140.955946
+            "valor": 141.706281
           },
           {
             "fecha": "2025-02-01",
-            "valor": 145.459117
+            "valor": 146.443801
           },
           {
             "fecha": "2025-03-01",
-            "valor": 139.063467
+            "valor": 138.28589
           },
           {
             "fecha": "2025-04-01",
-            "valor": 148.171428
+            "valor": 147.981828
           },
           {
             "fecha": "2025-05-01",
-            "valor": 143.612957
+            "valor": 144.08247
           },
           {
             "fecha": "2025-06-01",
-            "valor": 145.674378
+            "valor": 145.200473
           },
           {
             "fecha": "2025-07-01",
-            "valor": 147.050846
+            "valor": 147.167349
           },
           {
             "fecha": "2025-08-01",
-            "valor": 144.981114
+            "valor": 145.825153
           },
           {
             "fecha": "2025-09-01",
-            "valor": 146.709003
+            "valor": 145.640895
           },
           {
             "fecha": "2025-10-01",
-            "valor": 146.584032
+            "valor": 146.398495
           },
           {
             "fecha": "2025-11-01",
-            "valor": 140.706664
+            "valor": 140.219236
           },
           {
             "fecha": "2025-12-01",
-            "valor": 145.385646
+            "valor": 145.464603
           },
           {
             "fecha": "2026-01-01",
-            "valor": 145.094409
+            "valor": 145.764843
           },
           {
             "fecha": "2026-02-01",
-            "valor": 143.110762
+            "valor": 144.171182
           },
           {
             "fecha": "2026-03-01",
-            "valor": 150.684199
+            "valor": 149.542835
           },
           {
             "fecha": "2026-04-01",
-            "valor": 144.579655
+            "valor": 144.752973
           },
           {
             "fecha": "2026-05-01",
-            "valor": 152.981922
+            "valor": 153.4188
           },
           {
             "fecha": "2026-06-01",
-            "valor": 146.519342
+            "valor": 145.902913
           },
           {
             "fecha": "2026-07-01",
-            "valor": 140.140146
+            "valor": 140.383284
           },
           {
             "fecha": "2026-08-01",
-            "valor": 140.737939
+            "valor": 141.83433
+          },
+          {
+            "fecha": "2026-09-01",
+            "valor": 152.963675
           }
         ]
       },
@@ -144827,7 +144832,7 @@
         "observaciones": 117,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-06T19:07:27.789943+00:00",
+        "generado": "2026-11-06T21:06:39.101550+00:00",
         "vintage": "2026-11-06T19:06:49.120812+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -145162,6 +145167,6 @@
       }
     }
   },
-  "collectionStartedAt": "2026-11-06T19:21:42.751382+00:00",
+  "collectionStartedAt": "2026-11-07T01:53:45.883075+00:00",
   "retainedSeries": []
 }
