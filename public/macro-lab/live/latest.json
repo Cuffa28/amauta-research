@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T19:34:15.052632+00:00",
+  "generatedAt": "2026-11-12T02:56:54.588735+00:00",
   "series": [
     {
       "id": "crianza0",
@@ -10,7 +10,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-11T19:33:48.448678+00:00",
+      "retrievedAt": "2026-11-12T02:56:30.639145+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -347,7 +347,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-11T19:33:48.448973+00:00",
+      "retrievedAt": "2026-11-12T02:56:30.639422+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -684,7 +684,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-11T19:33:48.449126+00:00",
+      "retrievedAt": "2026-11-12T02:56:30.639547+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -1021,7 +1021,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-11T19:33:48.449277+00:00",
+      "retrievedAt": "2026-11-12T02:56:30.639669+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -1358,7 +1358,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/1",
-      "retrievedAt": "2026-11-11T19:33:51.133966+00:00",
+      "retrievedAt": "2026-11-12T02:56:32.432949+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Reservas internacionales brutas; no netas ni de libre disponibilidad.",
       "points": [
         {
@@ -4272,6 +4272,10 @@
         {
           "date": "2026-11-03",
           "value": 50298.0
+        },
+        {
+          "date": "2026-11-04",
+          "value": 50437.0
         }
       ]
     },
@@ -4283,7 +4287,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/78",
-      "retrievedAt": "2026-11-11T19:33:51.453434+00:00",
+      "retrievedAt": "2026-11-12T02:56:32.728314+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Factor de variación de reservas por compra de divisas; conservar fecha de observación y metodología. No equivale a la variación total de reservas ni necesariamente al momento de concertación de la intervención.",
       "points": [
         {
@@ -7193,6 +7197,10 @@
         {
           "date": "2026-11-02",
           "value": 0.0
+        },
+        {
+          "date": "2026-11-03",
+          "value": 0.0
         }
       ]
     },
@@ -7204,7 +7212,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/27",
-      "retrievedAt": "2026-11-11T19:33:51.719866+00:00",
+      "retrievedAt": "2026-11-12T02:56:33.060515+00:00",
       "note": "IPC publicado por BCRA, variable 27. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -8359,7 +8367,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/28",
-      "retrievedAt": "2026-11-11T19:33:52.452444+00:00",
+      "retrievedAt": "2026-11-12T02:56:33.381553+00:00",
       "note": "IPC publicado por BCRA, variable 28. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -9515,7 +9523,7 @@
       "frequency": "D",
       "official": false,
       "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais",
-      "retrievedAt": "2026-11-11T19:33:52.829240+00:00",
+      "retrievedAt": "2026-11-12T02:56:33.732843+00:00",
       "note": "Referencia de riesgo país distribuida por ArgentinaDatos, que identifica a Ámbito como fuente. Servicio no oficial; no es una conexión directa al EMBI de J.P. Morgan. No se mezcla con la estimación propia de BondTerminal. Fecha de observación diaria; puede tener rezago. Datos: https://argentinadatos.com/docs/operations/get-finanzas-indices-riesgo-pais",
       "points": [
         {
@@ -40497,7 +40505,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipc_nacional?descripcion=ilike.%2Ageneral%2A&region=ilike.%2Anacional%2A&tipo_de_indicador=eq.Indice&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:33:53.914812+00:00",
+      "retrievedAt": "2026-11-12T02:56:35.282944+00:00",
       "dimensions": {},
       "note": "INDEC · IPC nacional · nivel general. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -40980,7 +40988,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:33:55.250935+00:00",
+      "retrievedAt": "2026-11-12T02:56:37.071772+00:00",
       "dimensions": {
         "codigo": "0"
       },
@@ -41461,7 +41469,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:33:55.251667+00:00",
+      "retrievedAt": "2026-11-12T02:56:37.072416+00:00",
       "dimensions": {
         "codigo": "100"
       },
@@ -41942,7 +41950,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:33:55.252333+00:00",
+      "retrievedAt": "2026-11-12T02:56:37.072982+00:00",
       "dimensions": {
         "codigo": "110"
       },
@@ -42423,7 +42431,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:33:55.253028+00:00",
+      "retrievedAt": "2026-11-12T02:56:37.073534+00:00",
       "dimensions": {
         "codigo": "120"
       },
@@ -42904,7 +42912,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:33:55.253710+00:00",
+      "retrievedAt": "2026-11-12T02:56:37.074089+00:00",
       "dimensions": {
         "codigo": "200"
       },
@@ -43385,7 +43393,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+desestacionalizada",
-      "retrievedAt": "2026-11-11T19:33:56.630130+00:00",
+      "retrievedAt": "2026-11-12T02:56:38.729442+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie desestacionalizada"
       },
@@ -44490,7 +44498,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+original",
-      "retrievedAt": "2026-11-11T19:33:56.631255+00:00",
+      "retrievedAt": "2026-11-12T02:56:38.730420+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie original"
       },
@@ -45595,7 +45603,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipi_manufacturero?descripcion=eq.IPI+Manufacturero+-+Nivel+general&tipo_de_indicador=eq.%C3%8Dndice&serie=eq.Serie+desestacionalizada&periodo=gte.201601",
-      "retrievedAt": "2026-11-11T19:33:59.543004+00:00",
+      "retrievedAt": "2026-11-12T02:56:40.086921+00:00",
       "dimensions": {},
       "note": "INDEC · Industria · desestacionalizada. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -46126,7 +46134,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.A",
-      "retrievedAt": "2026-11-11T19:34:02.369952+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.914048+00:00",
       "dimensions": {
         "codigo": "A"
       },
@@ -46607,7 +46615,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.B",
-      "retrievedAt": "2026-11-11T19:34:02.371763+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.915594+00:00",
       "dimensions": {
         "codigo": "B"
       },
@@ -47088,7 +47096,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.C",
-      "retrievedAt": "2026-11-11T19:34:02.373534+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.917105+00:00",
       "dimensions": {
         "codigo": "C"
       },
@@ -47569,7 +47577,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.D",
-      "retrievedAt": "2026-11-11T19:34:02.375296+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.918589+00:00",
       "dimensions": {
         "codigo": "D"
       },
@@ -48050,7 +48058,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.E",
-      "retrievedAt": "2026-11-11T19:34:02.377144+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.920160+00:00",
       "dimensions": {
         "codigo": "E"
       },
@@ -48531,7 +48539,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.F",
-      "retrievedAt": "2026-11-11T19:34:02.378997+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.921671+00:00",
       "dimensions": {
         "codigo": "F"
       },
@@ -49012,7 +49020,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.G",
-      "retrievedAt": "2026-11-11T19:34:02.385554+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.925896+00:00",
       "dimensions": {
         "codigo": "G"
       },
@@ -49493,7 +49501,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.H",
-      "retrievedAt": "2026-11-11T19:34:02.387519+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.927412+00:00",
       "dimensions": {
         "codigo": "H"
       },
@@ -49974,7 +49982,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.I",
-      "retrievedAt": "2026-11-11T19:34:02.389530+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.928866+00:00",
       "dimensions": {
         "codigo": "I"
       },
@@ -50455,7 +50463,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.J",
-      "retrievedAt": "2026-11-11T19:34:02.391317+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.930323+00:00",
       "dimensions": {
         "codigo": "J"
       },
@@ -50936,7 +50944,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.K",
-      "retrievedAt": "2026-11-11T19:34:02.393079+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.931780+00:00",
       "dimensions": {
         "codigo": "K"
       },
@@ -51417,7 +51425,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.L",
-      "retrievedAt": "2026-11-11T19:34:02.394837+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.933223+00:00",
       "dimensions": {
         "codigo": "L"
       },
@@ -51898,7 +51906,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.M",
-      "retrievedAt": "2026-11-11T19:34:02.396569+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.934668+00:00",
       "dimensions": {
         "codigo": "M"
       },
@@ -52379,7 +52387,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.N",
-      "retrievedAt": "2026-11-11T19:34:02.398355+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.936141+00:00",
       "dimensions": {
         "codigo": "N"
       },
@@ -52860,7 +52868,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.O",
-      "retrievedAt": "2026-11-11T19:34:02.400119+00:00",
+      "retrievedAt": "2026-11-12T02:56:42.937577+00:00",
       "dimensions": {
         "codigo": "O"
       },
@@ -53341,7 +53349,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA&tipo_de_indicador=eq.CBA&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.735361+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.777504+00:00",
       "dimensions": {
         "codigo": "CBA",
         "tipo_de_indicador": "CBA"
@@ -53827,7 +53835,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT&tipo_de_indicador=eq.CBT&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.736057+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.778063+00:00",
       "dimensions": {
         "codigo": "CBT",
         "tipo_de_indicador": "CBT"
@@ -54313,7 +54321,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.736693+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.778554+00:00",
       "dimensions": {
         "codigo": "CBA H2",
         "tipo_de_indicador": "Hogar 2"
@@ -54799,7 +54807,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.738135+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.779859+00:00",
       "dimensions": {
         "codigo": "CBT H2",
         "tipo_de_indicador": "Hogar 2"
@@ -55286,7 +55294,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.738570+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.780212+00:00",
       "inputs": [
         "salarios",
         "ipc"
@@ -55770,7 +55778,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.738648+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.780272+00:00",
       "inputs": [
         "salarios_reg",
         "ipc"
@@ -56254,7 +56262,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.738706+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.780324+00:00",
       "inputs": [
         "salarios_priv",
         "ipc"
@@ -56738,7 +56746,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.738761+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.780374+00:00",
       "inputs": [
         "salarios_pub",
         "ipc"
@@ -57222,7 +57230,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-11T19:34:03.738814+00:00",
+      "retrievedAt": "2026-11-12T02:56:44.780423+00:00",
       "inputs": [
         "salarios_no_reg",
         "ipc"
@@ -57712,7 +57720,7 @@
   "expectations": {
     "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/rem/ultimo",
     "provider": "BCRA REM vía ArgentinaDatos",
-    "retrievedAt": "2026-11-11T19:34:03.987821+00:00",
+    "retrievedAt": "2026-11-12T02:56:45.256443+00:00",
     "rows": [
       {
         "informe": "2026-10",
@@ -61152,11 +61160,11 @@
   "monitor": {
     "provider": "Monitor Argy",
     "sourceUrl": "https://monitorargy.com",
-    "retrievedAt": "2026-11-11T19:34:03.987853+00:00",
+    "retrievedAt": "2026-11-12T02:56:45.256476+00:00",
     "attribution": "Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.",
     "errors": [],
     "catalog": {
-      "generado": "2026-11-11T19:07:44.662462+00:00",
+      "generado": "2026-11-12T00:13:21.752070+00:00",
       "paneles": [
         {
           "id": "precios",
@@ -61377,10 +61385,10 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-03",
-          "ultimoValor": 50298,
-          "variacionUltimo": -141,
-          "frescura": "vencido",
+          "ultimaFecha": "2026-11-04",
+          "ultimoValor": 50437,
+          "variacionUltimo": 139,
+          "frescura": "demorado",
           "observaciones": 1933
         },
         {
@@ -61396,9 +61404,9 @@
             "web": "https://www.bcra.gob.ar/tipo-cambio-referencia-comunicacion-a-3500-tcnpm/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 1545.3974,
-          "variacionUltimo": -3.0967,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 1547.9128,
+          "variacionUltimo": 2.5154,
           "frescura": "vigente",
           "observaciones": 1935
         },
@@ -61415,11 +61423,11 @@
             "web": "https://www.bcra.gob.ar/tipo-cambio-referencia-comunicacion-a-3500-tcnpm/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 0.523544,
-          "variacionUltimo": -0.201431,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 0.687164,
+          "variacionUltimo": 0.163619,
           "frescura": "vigente",
-          "observaciones": 1923
+          "observaciones": 1924
         },
         {
           "id": "tc_mayorista_interanual",
@@ -61434,9 +61442,9 @@
             "web": "https://www.bcra.gob.ar/tipo-cambio-referencia-comunicacion-a-3500-tcnpm/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 6.763206,
-          "variacionUltimo": 1.649908,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 9.277289,
+          "variacionUltimo": 2.514084,
           "frescura": "vigente",
           "observaciones": 1693
         },
@@ -61453,9 +61461,9 @@
             "web": "https://www.bcra.gob.ar/tipo-de-cambio-minorista/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 1571.84,
-          "variacionUltimo": 0.44,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 1572.92,
+          "variacionUltimo": 1.08,
           "frescura": "vigente",
           "observaciones": 1935
         },
@@ -61472,11 +61480,11 @@
             "web": "https://www.bcra.gob.ar/tipo-de-cambio-minorista/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 0.627385,
-          "variacionUltimo": 0.028168,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 0.696525,
+          "variacionUltimo": 0.06914,
           "frescura": "vigente",
-          "observaciones": 1923
+          "observaciones": 1924
         },
         {
           "id": "tc_minorista_interanual",
@@ -61491,9 +61499,9 @@
             "web": "https://www.bcra.gob.ar/tipo-de-cambio-minorista/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 6.458604,
-          "variacionUltimo": 0.906967,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 8.865403,
+          "variacionUltimo": 2.406799,
           "frescura": "vigente",
           "observaciones": 1693
         },
@@ -61738,9 +61746,9 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 0.944909,
-          "variacionUltimo": -0.443918,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 0.457855,
+          "variacionUltimo": -0.487054,
           "frescura": "vigente",
           "observaciones": 1935
         },
@@ -61757,9 +61765,9 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 8.735785,
-          "variacionUltimo": 0.966566,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 7.557738,
+          "variacionUltimo": -1.178047,
           "frescura": "vigente",
           "observaciones": 1935
         },
@@ -61776,9 +61784,9 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 2.795566,
-          "variacionUltimo": 0.689914,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 2.583298,
+          "variacionUltimo": -0.212268,
           "frescura": "vigente",
           "observaciones": 1935
         },
@@ -61814,11 +61822,11 @@
             "web": "https://www.bcra.gob.ar/indices-de-tipo-de-cambio-multilateral/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 81.673748,
-          "variacionUltimo": -0.192303,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 80.706858,
+          "variacionUltimo": -0.721327,
           "frescura": "vigente",
-          "observaciones": 7787
+          "observaciones": 7791
         },
         {
           "id": "itcrm_en_el_mes",
@@ -61833,11 +61841,11 @@
             "web": "https://www.bcra.gob.ar/indices-de-tipo-de-cambio-multilateral/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 0.344708,
-          "variacionUltimo": -0.236264,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": -0.862292,
+          "variacionUltimo": -0.886055,
           "frescura": "vigente",
-          "observaciones": 7764
+          "observaciones": 7768
         },
         {
           "id": "itcrm_interanual",
@@ -61852,11 +61860,11 @@
             "web": "https://www.bcra.gob.ar/indices-de-tipo-de-cambio-multilateral/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": -16.711118,
-          "variacionUltimo": -0.180723,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": -15.685412,
+          "variacionUltimo": -0.475819,
           "frescura": "vigente",
-          "observaciones": 7526
+          "observaciones": 7530
         },
         {
           "id": "itcrm_var_anio",
@@ -61871,11 +61879,11 @@
             "web": "https://www.bcra.gob.ar/indices-de-tipo-de-cambio-multilateral/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": -13.397529,
-          "variacionUltimo": -0.203908,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": -14.422768,
+          "variacionUltimo": -0.764857,
           "frescura": "vigente",
-          "observaciones": 7526
+          "observaciones": 7530
         },
         {
           "id": "itcrm_presidencias",
@@ -61890,11 +61898,11 @@
             "web": "https://www.bcra.gob.ar/indices-de-tipo-de-cambio-multilateral/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-05",
-          "ultimoValor": 91.464725,
+          "ultimaFecha": "2026-11-11",
+          "ultimoValor": 91.413737,
           "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 7787
+          "observaciones": 7791
         },
         {
           "id": "tasa_tamar",
@@ -61909,11 +61917,11 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 23.5625,
-          "variacionUltimo": -0.4375,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 24.125,
+          "variacionUltimo": 0.5625,
           "frescura": "vigente",
-          "observaciones": 506
+          "observaciones": 507
         },
         {
           "id": "tasa_badlar",
@@ -61928,9 +61936,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 21.5,
-          "variacionUltimo": -1.25,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 22.5,
+          "variacionUltimo": 1,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -61947,9 +61955,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 21.18,
-          "variacionUltimo": -0.94,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 21.62,
+          "variacionUltimo": 0.44,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -61966,9 +61974,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 62.11,
-          "variacionUltimo": 0.09,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 62.38,
+          "variacionUltimo": 0.33,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -61985,11 +61993,11 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 2.769598,
-          "variacionUltimo": -1.492018,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 3.305134,
+          "variacionUltimo": 0.535536,
           "frescura": "vigente",
-          "observaciones": 506
+          "observaciones": 507
         },
         {
           "id": "tasa_tamar_real_ex_post",
@@ -62004,11 +62012,11 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 2.769598,
-          "variacionUltimo": -1.492018,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 3.305134,
+          "variacionUltimo": 0.535536,
           "frescura": "vigente",
-          "observaciones": 506
+          "observaciones": 507
         },
         {
           "id": "tasa_badlar_real_ex_ante",
@@ -62023,9 +62031,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 0.709443,
-          "variacionUltimo": -2.281279,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 1.671048,
+          "variacionUltimo": 0.961605,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -62042,9 +62050,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 0.709443,
-          "variacionUltimo": -2.281279,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 1.671048,
+          "variacionUltimo": 0.961605,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -62061,9 +62069,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 0.393225,
-          "variacionUltimo": -1.962369,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 0.796063,
+          "variacionUltimo": 0.402838,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -62080,9 +62088,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 0.393225,
-          "variacionUltimo": -1.962369,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 0.796063,
+          "variacionUltimo": 0.402838,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -62137,9 +62145,9 @@
             "web": "https://www.bcra.gob.ar/tasas-de-interes/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 25.66,
-          "variacionUltimo": 0.13,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 27.85,
+          "variacionUltimo": 2.19,
           "frescura": "vigente",
           "observaciones": 1934
         },
@@ -69072,9 +69080,9 @@
             "web": "https://www.bcra.gob.ar/prestamos-y-otros-activos-de-las-entidades-financieras/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 10858233,
-          "variacionUltimo": 235492,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 10860512,
+          "variacionUltimo": -2420,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -69091,9 +69099,9 @@
             "web": "https://www.bcra.gob.ar/prestamos-y-otros-activos-de-las-entidades-financieras/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 27401438,
-          "variacionUltimo": 61853,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 27525211,
+          "variacionUltimo": 150009,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -69110,9 +69118,9 @@
             "web": "https://www.bcra.gob.ar/prestamos-y-otros-activos-de-las-entidades-financieras/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 38259671,
-          "variacionUltimo": 297345,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 38385723,
+          "variacionUltimo": 147589,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -69130,8 +69138,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 37937638.666667,
-          "variacionUltimo": 1090371.075758,
+          "ultimoValor": 37938635.333333,
+          "variacionUltimo": 1093929.424242,
           "frescura": "vigente",
           "observaciones": 96
         },
@@ -69149,8 +69157,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-09-01",
-          "ultimoValor": 294444.810357,
-          "variacionUltimo": -2552.915672,
+          "ultimoValor": 294424.340077,
+          "variacionUltimo": -2573.385953,
           "frescura": "vigente",
           "observaciones": 95
         },
@@ -69168,8 +69176,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-09-01",
-          "ultimoValor": 3.847262,
-          "variacionUltimo": 2.724156,
+          "ultimoValor": 3.840042,
+          "variacionUltimo": 2.716936,
           "frescura": "vigente",
           "observaciones": 83
         },
@@ -69187,8 +69195,8 @@
           },
           "desestacionalizacion": "propia",
           "ultimaFecha": "2026-09-01",
-          "ultimoValor": 291088.968928,
-          "variacionUltimo": 1140.478498,
+          "ultimoValor": 291068.883586,
+          "variacionUltimo": 1123.829426,
           "frescura": "vigente",
           "observaciones": 95
         },
@@ -69206,8 +69214,8 @@
           },
           "desestacionalizacion": "propia",
           "ultimaFecha": "2026-09-01",
-          "ultimoValor": 0.393338,
-          "variacionUltimo": -1.309095,
+          "ultimoValor": 0.387601,
+          "variacionUltimo": -1.314431,
           "frescura": "vigente",
           "observaciones": 94
         },
@@ -69224,9 +69232,9 @@
             "web": "https://www.bcra.gob.ar/prestamos-y-otros-activos-de-las-entidades-financieras/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 9614642,
-          "variacionUltimo": 23639,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 9637635,
+          "variacionUltimo": 22493,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -73575,11 +73583,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 246935.4941,
-          "variacionUltimo": 844.3446,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 247010.4742,
+          "variacionUltimo": 74.9801,
           "frescura": "vigente",
-          "observaciones": 5845
+          "observaciones": 5846
         },
         {
           "id": "bcra_leliq",
@@ -73594,11 +73602,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
+          "ultimaFecha": "2026-11-05",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 2139
+          "observaciones": 2140
         },
         {
           "id": "bcra_pases_pasivos",
@@ -73613,11 +73621,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
+          "ultimaFecha": "2026-11-05",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 5495
+          "observaciones": 5496
         },
         {
           "id": "bcra_nocom",
@@ -73632,11 +73640,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
+          "ultimaFecha": "2026-11-05",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 1955
+          "observaciones": 1956
         },
         {
           "id": "bcra_letras_usd",
@@ -73651,11 +73659,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
+          "ultimaFecha": "2026-11-05",
           "ultimoValor": 4889.69,
           "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 5845
+          "observaciones": 5846
         },
         {
           "id": "tc_mayorista_historico",
@@ -73670,11 +73678,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 1544.6507,
-          "variacionUltimo": 7.302,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 1549.7194,
+          "variacionUltimo": 5.0687,
           "frescura": "vigente",
-          "observaciones": 5844
+          "observaciones": 5845
         },
         {
           "id": "pasivos_remunerados_bcra",
@@ -73689,11 +73697,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 246935.4941,
-          "variacionUltimo": 844.3446,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 247010.4742,
+          "variacionUltimo": 74.9801,
           "frescura": "vigente",
-          "observaciones": 5845
+          "observaciones": 5846
         },
         {
           "id": "pasivos_remunerados_bcra_pesos_usd",
@@ -73708,11 +73716,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 156.936895,
-          "variacionUltimo": -1.709529,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 158.797231,
+          "variacionUltimo": 1.860336,
           "frescura": "vigente",
-          "observaciones": 5843
+          "observaciones": 5844
         },
         {
           "id": "pasivos_remunerados_bcra_usd",
@@ -73727,11 +73735,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 5046.626895,
-          "variacionUltimo": -1.709529,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 5048.487231,
+          "variacionUltimo": 1.860336,
           "frescura": "vigente",
-          "observaciones": 5843
+          "observaciones": 5844
         },
         {
           "id": "pasivos_remunerados_bcra_usd_mensual",
@@ -75836,9 +75844,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-03",
-          "ultimoValor": 46998823,
-          "variacionUltimo": -242735,
+          "ultimaFecha": "2026-11-04",
+          "ultimoValor": 46845363,
+          "variacionUltimo": -153460,
           "frescura": "vigente",
           "observaciones": 1933
         },
@@ -75855,9 +75863,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-03",
-          "ultimoValor": 26971999,
-          "variacionUltimo": -53310,
+          "ultimaFecha": "2026-11-04",
+          "ultimoValor": 27002086,
+          "variacionUltimo": 35355,
           "frescura": "vigente",
           "observaciones": 1933
         },
@@ -75874,9 +75882,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-03",
-          "ultimoValor": 2599185,
-          "variacionUltimo": 268904,
+          "ultimaFecha": "2026-11-04",
+          "ultimoValor": 2844874,
+          "variacionUltimo": 240421,
           "frescura": "vigente",
           "observaciones": 1933
         },
@@ -75893,9 +75901,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-03",
-          "ultimoValor": 17427639,
-          "variacionUltimo": -458329,
+          "ultimaFecha": "2026-11-04",
+          "ultimoValor": 16998403,
+          "variacionUltimo": -429236,
           "frescura": "vigente",
           "observaciones": 1933
         },
@@ -75912,9 +75920,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
-          "variacionUltimo": -147570.7,
+          "variacionUltimo": 0,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -75931,9 +75939,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": -199855.331,
-          "variacionUltimo": -199855.331,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 0,
+          "variacionUltimo": 199855.331,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -75950,7 +75958,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -75969,7 +75977,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -75988,9 +75996,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 215084.0554,
-          "variacionUltimo": 266540.1769,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -439.0408,
+          "variacionUltimo": -215523.0962,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76007,7 +76015,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -76026,7 +76034,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -76045,7 +76053,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -76064,7 +76072,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -76083,7 +76091,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -76102,7 +76110,7 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
           "variacionUltimo": 0,
           "frescura": "vigente",
@@ -76121,9 +76129,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": -95290.7244,
-          "variacionUltimo": -1115523.1459,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -242295.9592,
+          "variacionUltimo": -147005.2348,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76140,9 +76148,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": -80062,
-          "variacionUltimo": -1196409,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -242735,
+          "variacionUltimo": -162673,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76159,11 +76167,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 68889620.497,
-          "variacionUltimo": -347065.402,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 68314700.407,
+          "variacionUltimo": -572741.1,
           "frescura": "vigente",
-          "observaciones": 1419
+          "observaciones": 1420
         },
         {
           "id": "depositos_cc_privados",
@@ -76178,9 +76186,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 22039337,
-          "variacionUltimo": -80306,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 21787204,
+          "variacionUltimo": -257187,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76197,9 +76205,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 32777120,
-          "variacionUltimo": -736483,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 32780848,
+          "variacionUltimo": 10961,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76216,9 +76224,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 128810505,
-          "variacionUltimo": -1126065,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 128847153,
+          "variacionUltimo": 37304,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76235,9 +76243,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 95375207,
-          "variacionUltimo": -1065647,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 94562473,
+          "variacionUltimo": -810724,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76254,11 +76262,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 41864311.497,
-          "variacionUltimo": -513205.402,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 41347969.407,
+          "variacionUltimo": -514163.1,
           "frescura": "vigente",
-          "observaciones": 1419
+          "observaciones": 1420
         },
         {
           "id": "m2_privado",
@@ -76273,9 +76281,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 81841766,
-          "variacionUltimo": -650649,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 81534783,
+          "variacionUltimo": -304804,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76292,11 +76300,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 12952145.503,
-          "variacionUltimo": -303583.598,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 13220082.593,
+          "variacionUltimo": 267937.1,
           "frescura": "vigente",
-          "observaciones": 1419
+          "observaciones": 1420
         },
         {
           "id": "depositos_vista_publicos",
@@ -76311,9 +76319,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 13533441,
-          "variacionUltimo": -414998,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 13027690,
+          "variacionUltimo": -505920,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76330,9 +76338,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 155835814,
-          "variacionUltimo": -959925,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 155813884,
+          "variacionUltimo": -21274,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76349,9 +76357,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 73994048,
-          "variacionUltimo": -309276,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 74279101,
+          "variacionUltimo": 283530,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76407,8 +76415,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 65172691.447355,
-          "variacionUltimo": 291560.589222,
+          "ultimoValor": 65172433.491065,
+          "variacionUltimo": 291309.832931,
           "frescura": "vigente",
           "observaciones": 69
         },
@@ -76426,8 +76434,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 0.449377,
-          "variacionUltimo": 1.147884,
+          "ultimoValor": 0.44899,
+          "variacionUltimo": 1.147509,
           "frescura": "vigente",
           "observaciones": 68
         },
@@ -76445,8 +76453,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 78571211.451613,
-          "variacionUltimo": 223877.284946,
+          "ultimoValor": 78571009.774194,
+          "variacionUltimo": 223682.807527,
           "frescura": "vigente",
           "observaciones": 95
         },
@@ -76464,8 +76472,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 0.28575,
-          "variacionUltimo": 0.424126,
+          "ultimoValor": 0.285502,
+          "variacionUltimo": 0.423887,
           "frescura": "vigente",
           "observaciones": 94
         },
@@ -76483,8 +76491,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 152152951.516129,
-          "variacionUltimo": 2229854.949462,
+          "ultimoValor": 152152740.935484,
+          "variacionUltimo": 2229651.568817,
           "frescura": "vigente",
           "observaciones": 95
         },
@@ -76502,8 +76510,8 @@
           },
           "desestacionalizacion": "no",
           "ultimaFecha": "2026-10-01",
-          "ultimoValor": 1.487333,
-          "variacionUltimo": -0.111691,
+          "ultimoValor": 1.487197,
+          "variacionUltimo": -0.111822,
           "frescura": "vigente",
           "observaciones": 94
         },
@@ -76520,11 +76528,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_monetario_diario.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-04",
-          "ultimoValor": 1359825.8495,
-          "variacionUltimo": -91625.4824,
+          "ultimaFecha": "2026-11-05",
+          "ultimoValor": 271075.209,
+          "variacionUltimo": -1088750.6405,
           "frescura": "vigente",
-          "observaciones": 319
+          "observaciones": 320
         },
         {
           "id": "tesoro_depositos_bcra",
@@ -76539,11 +76547,11 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-03",
-          "ultimoValor": 8802615,
-          "variacionUltimo": 34,
+          "ultimaFecha": "2026-11-04",
+          "ultimoValor": 8802476,
+          "variacionUltimo": -139,
           "frescura": "vigente",
-          "observaciones": 689
+          "observaciones": 690
         },
         {
           "id": "reservas_compras_divisas",
@@ -76558,9 +76566,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
-          "variacionUltimo": -96,
+          "variacionUltimo": 0,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76577,9 +76585,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
+          "ultimaFecha": "2026-11-03",
           "ultimoValor": 0,
-          "variacionUltimo": 2.8735,
+          "variacionUltimo": 0,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76596,9 +76604,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 0,
-          "variacionUltimo": 28.4769,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -12.5379,
+          "variacionUltimo": -12.5379,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76615,9 +76623,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 1844.2306,
-          "variacionUltimo": 3342.5242,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -9.2565,
+          "variacionUltimo": -1853.4871,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76634,9 +76642,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 29.3104,
-          "variacionUltimo": 194.1752,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -119.0913,
+          "variacionUltimo": -148.4017,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76653,9 +76661,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 1873.541,
-          "variacionUltimo": 3472.0498,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -140.8857,
+          "variacionUltimo": -2014.4267,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76672,9 +76680,9 @@
             "web": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables.asp"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": -51.831783,
-          "variacionUltimo": -777.982591,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": -156.631581,
+          "variacionUltimo": -104.799798,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76691,9 +76699,9 @@
             "web": "https://www.bcra.gob.ar/reservas-internacionales-y-base-monetaria/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-02",
-          "ultimoValor": 81.142183,
-          "variacionUltimo": 907.508191,
+          "ultimaFecha": "2026-11-03",
+          "ultimoValor": 25.002381,
+          "variacionUltimo": -56.139802,
           "frescura": "vigente",
           "observaciones": 1932
         },
@@ -76710,11 +76718,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 2.594542,
-          "variacionUltimo": 1.045908,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": 1.058701,
+          "variacionUltimo": -1.535841,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "m2_privado_transaccional_real_se_mensual",
@@ -76729,11 +76737,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 0.541854,
-          "variacionUltimo": 0.492174,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -0.447318,
+          "variacionUltimo": -0.989172,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "m2_privado_real_se_mensual",
@@ -76748,11 +76756,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 0.922823,
-          "variacionUltimo": 1.86998,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -0.470719,
+          "variacionUltimo": -1.393541,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "m2_total_real_se_mensual",
@@ -76767,11 +76775,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 1.05301,
-          "variacionUltimo": -1.130148,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -0.176508,
+          "variacionUltimo": -1.229517,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "m3_privado_real_se_mensual",
@@ -76786,11 +76794,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 0.689234,
-          "variacionUltimo": -0.338048,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": 0.813815,
+          "variacionUltimo": 0.124581,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "depositos_vista_no_remunerados_real_se_mensual",
@@ -76805,11 +76813,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": -0.177197,
-          "variacionUltimo": -0.621873,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -1.278534,
+          "variacionUltimo": -1.101336,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "bm_cuenta_corriente_bcra_real_se_mensual",
@@ -76824,11 +76832,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": -2.329324,
-          "variacionUltimo": -4.866155,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -0.838501,
+          "variacionUltimo": 1.490823,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "bm_efectivo_entidades_real_se_mensual",
@@ -76843,11 +76851,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": -3.351426,
-          "variacionUltimo": 1.4633,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -0.477732,
+          "variacionUltimo": 2.873695,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "depositos_vista_remunerados_empresas_real_se_mensual",
@@ -76862,11 +76870,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 0.858396,
-          "variacionUltimo": 4.809293,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": -2.121589,
+          "variacionUltimo": -2.979985,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "plazo_fijo_y_otros_privados_real_se_mensual",
@@ -76881,11 +76889,11 @@
             "web": "https://www.bcra.gob.ar/listado-informe-monetario-mensual/"
           },
           "desestacionalizacion": "oficial",
-          "ultimaFecha": "2026-09-01",
-          "ultimoValor": 1.677235,
-          "variacionUltimo": 1.33944,
+          "ultimaFecha": "2026-10-01",
+          "ultimoValor": 1.115753,
+          "variacionUltimo": -0.561482,
           "frescura": "vigente",
-          "observaciones": 12
+          "observaciones": 13
         },
         {
           "id": "bcra_bal_reservas",
@@ -77232,8 +77240,8 @@
       ]
     },
     "calendar": {
-      "generado": "2026-11-11T00:11:44.448895+00:00",
-      "indecConsultado": "2026-11-10T21:07:29.623151+00:00",
+      "generado": "2026-11-12T00:04:13.679113+00:00",
+      "indecConsultado": "2026-11-12T00:03:42.961900+00:00",
       "series": {
         "ipc_nivel_general": {
           "metodo": "oficial",
@@ -81663,7 +81671,7 @@
           ],
           "titulo": "Indicador sintético de servicios públicos (ISSP). Agosto de 2026",
           "metodo": "oficial",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/issp_11_26413980E871.pdf"
         },
         {
           "fecha": "2026-11-11",
@@ -81674,767 +81682,7 @@
           ],
           "titulo": "Indicador sintético de servicios públicos (ISSP). Agosto de 2026",
           "metodo": "oficial",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "base_monetaria",
-            "base_monetaria_prom",
-            "base_monetaria_prom_var_mensual"
-          ],
-          "titulo": "Base monetaria",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_activo_total"
-          ],
-          "titulo": "Balance del BCRA: activo total",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_adelantos"
-          ],
-          "titulo": "Balance del BCRA: adelantos transitorios al Tesoro",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_aportes_organismos"
-          ],
-          "titulo": "Balance del BCRA: aportes a organismos internacionales",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_base_monetaria"
-          ],
-          "titulo": "Balance del BCRA: base monetaria",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_depositos_gobierno"
-          ],
-          "titulo": "Balance del BCRA: depósitos del gobierno",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_encajes_usd"
-          ],
-          "titulo": "Balance del BCRA: encajes en dólares",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_letras_intransferibles"
-          ],
-          "titulo": "Balance del BCRA: Letras Intransferibles del Tesoro",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_otros_activos"
-          ],
-          "titulo": "Balance del BCRA: otros activos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_otros_pasivos"
-          ],
-          "titulo": "Balance del BCRA: otros pasivos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_pases_activos"
-          ],
-          "titulo": "Balance del BCRA: pases activos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_pases_pasivos"
-          ],
-          "titulo": "Balance del BCRA: pases pasivos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_patrimonio_neto"
-          ],
-          "titulo": "Balance del BCRA: patrimonio neto",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_reservas"
-          ],
-          "titulo": "Balance del BCRA: reservas internacionales",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_tipo_cambio"
-          ],
-          "titulo": "Balance del BCRA: tipo de cambio del balance",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_titulos_bcra"
-          ],
-          "titulo": "Balance del BCRA: Títulos del BCRA",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_bal_titulos_publicos_total",
-            "bcra_bal_titulos_publicos"
-          ],
-          "titulo": "Balance del BCRA: títulos públicos (con las Letras Intransferibles)",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_lebac_pesos",
-            "pasivos_remunerados_bcra",
-            "pasivos_remunerados_bcra_pesos_usd",
-            "pasivos_remunerados_bcra_usd",
-            "pasivos_remunerados_bcra_usd_mensual",
-            "pasivos_bcra_ars",
-            "pasivos_bcra_pbi",
-            "pasivos_bcra_pbi_dif_mensual",
-            "pasivos_bcra_pbi_dif_interanual"
-          ],
-          "titulo": "LEBAC, NOBAC y letras del BCRA en pesos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_leliq"
-          ],
-          "titulo": "LELIQ y NOTALIQ",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_letras_usd",
-            "bcra_letras_usd_fin_de_mes",
-            "bcra_letras_usd_anual",
-            "bcra_letras_usd_brecha_ars_anual"
-          ],
-          "titulo": "LEBAC en dólares, LEDIV y BOPREAL",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_nocom"
-          ],
-          "titulo": "NOCOM",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_pases_pasivos"
-          ],
-          "titulo": "Pases pasivos del BCRA",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bcra_repo_saldo"
-          ],
-          "titulo": "Operaciones de corto plazo del BCRA (REPO)",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_circulante_publico",
-            "m2_privado",
-            "depositos_vista_remunerados_empresas",
-            "m3_privado",
-            "plazo_fijo_y_otros_privados",
-            "m2_privado_prom",
-            "m2_privado_prom_var_mensual",
-            "m3_privado_prom",
-            "m3_privado_prom_var_mensual"
-          ],
-          "titulo": "Circulante en poder del público",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_cuenta_corriente_bcra"
-          ],
-          "titulo": "Cuenta corriente de los bancos en el BCRA",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_efectivo_entidades"
-          ],
-          "titulo": "Efectivo en entidades financieras",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_adelantos"
-          ],
-          "titulo": "Base monetaria, factor: adelantos transitorios al Tesoro",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_compras_privado"
-          ],
-          "titulo": "Base monetaria, factor: compras de divisas al sector privado",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_compras_tesoro"
-          ],
-          "titulo": "Base monetaria, factor: compras de divisas al Tesoro",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_intereses"
-          ],
-          "titulo": "Base monetaria, factor: intereses, primas y remuneración de cuentas corrientes",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_lebac"
-          ],
-          "titulo": "Base monetaria, factor: LEBAC y NOBAC",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_lefi"
-          ],
-          "titulo": "Base monetaria, factor: LEFI",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_leliq"
-          ],
-          "titulo": "Base monetaria, factor: LELIQ y NOTALIQ",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_otros"
-          ],
-          "titulo": "Base monetaria, factor: otros factores",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_pases"
-          ],
-          "titulo": "Base monetaria, factor: pases",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_redescuentos"
-          ],
-          "titulo": "Base monetaria, factor: redescuentos y adelantos a bancos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_resto_tesoro"
-          ],
-          "titulo": "Base monetaria, factor: resto de operaciones con el Tesoro",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_total",
-            "base_monetaria_var_usd"
-          ],
-          "titulo": "Variación diaria de la base monetaria",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "bm_factor_utilidades"
-          ],
-          "titulo": "Base monetaria, factor: transferencia de utilidades al Tesoro",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "depositos_ca_privados"
-          ],
-          "titulo": "Depósitos en caja de ahorros del sector privado",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "depositos_cc_privados"
-          ],
-          "titulo": "Depósitos en cuenta corriente del sector privado",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "depositos_privados_pesos"
-          ],
-          "titulo": "Depósitos en pesos del sector privado",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "itcrm",
-            "itcrm_en_el_mes",
-            "itcrm_interanual",
-            "itcrm_var_anio",
-            "itcrm_presidencias"
-          ],
-          "titulo": "Tipo de cambio real multilateral",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "m2_privado_transaccional",
-            "depositos_vista_no_remunerados",
-            "m2_privado_transaccional_prom",
-            "m2_privado_transaccional_prom_var_mensual"
-          ],
-          "titulo": "M2 privado transaccional",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "m2_total",
-            "depositos_vista_publicos"
-          ],
-          "titulo": "M2",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "prestamos_adelantos",
-            "prestamos_comerciales",
-            "prestamos_comerciales_m",
-            "prestamos_comerciales_real",
-            "prestamos_comerciales_real_interanual",
-            "prestamos_comerciales_real_desest",
-            "prestamos_comerciales_real_desest_mensual"
-          ],
-          "titulo": "Préstamos en adelantos en cuenta",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "prestamos_documentos"
-          ],
-          "titulo": "Préstamos en documentos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "prestamos_hipotecarios",
-            "prestamos_hipotecarios_m",
-            "prestamos_hipotecarios_real",
-            "prestamos_hipotecarios_real_mensual",
-            "prestamos_hipotecarios_real_interanual"
-          ],
-          "titulo": "Préstamos hipotecarios en pesos",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas"
-          ],
-          "titulo": "Reservas internacionales",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas_compras_divisas"
-          ],
-          "titulo": "Compras de dólares del BCRA",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas_fac_efectivo_minimo"
-          ],
-          "titulo": "Reservas, factor: efectivo mínimo",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas_fac_organismos"
-          ],
-          "titulo": "Reservas, factor: organismos internacionales",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas_fac_otros"
-          ],
-          "titulo": "Reservas, factor: otros",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas_fac_sector_publico"
-          ],
-          "titulo": "Reservas, factor: otras operaciones del sector público",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "reservas_var_diaria",
-            "credito_interno_aporte_reservas"
-          ],
-          "titulo": "Variación diaria de las reservas",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "riesgo_pais"
-          ],
-          "titulo": "Riesgo país",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tasa_adelantos"
-          ],
-          "titulo": "Tasa de adelantos en cuenta corriente",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tasa_badlar",
-            "tasa_badlar_real_ex_ante",
-            "tasa_badlar_real_ex_post"
-          ],
-          "titulo": "Tasa BADLAR (bancos privados)",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tasa_personales"
-          ],
-          "titulo": "Tasa de préstamos personales",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tasa_plazo_fijo",
-            "tasa_plazo_fijo_real_ex_ante",
-            "tasa_plazo_fijo_real_ex_post"
-          ],
-          "titulo": "Tasa de plazo fijo a 30 días",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tasa_tamar",
-            "tasa_tamar_real_ex_ante",
-            "tasa_tamar_real_ex_post"
-          ],
-          "titulo": "Tasa TAMAR (bancos privados)",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_blue",
-            "tc_blue_en_el_mes",
-            "tc_blue_interanual",
-            "brecha_blue"
-          ],
-          "titulo": "Dólar blue",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_bna",
-            "tc_bna_en_el_mes",
-            "tc_bna_interanual"
-          ],
-          "titulo": "Dólar BNA",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_ccl",
-            "tc_ccl_en_el_mes",
-            "tc_ccl_interanual",
-            "brecha_ccl",
-            "brecha_ccl_mep",
-            "tc_financiero",
-            "tc_financiero_fin_de_mes",
-            "tc_financiero_anual",
-            "brecha_cambiaria_anual"
-          ],
-          "titulo": "Dólar contado con liquidación",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_mayorista",
-            "tc_mayorista_en_el_mes",
-            "tc_mayorista_interanual"
-          ],
-          "titulo": "Tipo de cambio mayorista",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_mayorista_historico",
-            "tc_mayorista_fin_de_mes",
-            "tc_mayorista_anual"
-          ],
-          "titulo": "Tipo de cambio mayorista (desde 2003)",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_mep",
-            "tc_mep_en_el_mes",
-            "tc_mep_interanual",
-            "brecha_mep"
-          ],
-          "titulo": "Dólar MEP",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tc_minorista",
-            "tc_minorista_en_el_mes",
-            "tc_minorista_interanual"
-          ],
-          "titulo": "Tipo de cambio minorista",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-11",
-          "hora": null,
-          "series": [
-            "tesoro_depositos_bcra"
-          ],
-          "titulo": "Depósitos del Tesoro en el BCRA",
-          "metodo": "estimada",
-          "url": null
+          "url": "https://www.indec.gob.ar/uploads/informesdeprensa/issp_11_26413980E871.pdf"
         },
         {
           "fecha": "2026-11-12",
@@ -85616,16 +84864,6 @@
           "fecha": "2026-11-18",
           "hora": null,
           "series": [
-            "base_monetaria_real_se_mensual"
-          ],
-          "titulo": "Base monetaria real desest. var. mensual",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
             "bcra_lebac_pesos",
             "pasivos_remunerados_bcra",
             "pasivos_remunerados_bcra_pesos_usd",
@@ -85725,29 +84963,9 @@
           "fecha": "2026-11-18",
           "hora": null,
           "series": [
-            "bm_cuenta_corriente_bcra_real_se_mensual"
-          ],
-          "titulo": "Cuenta corriente de los bancos en el BCRA real desest. var. mensual",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
             "bm_efectivo_entidades"
           ],
           "titulo": "Efectivo en entidades financieras",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
-            "bm_efectivo_entidades_real_se_mensual"
-          ],
-          "titulo": "Efectivo en entidades financieras real desest. var. mensual",
           "metodo": "estimada",
           "url": null
         },
@@ -85916,26 +85134,6 @@
           "fecha": "2026-11-18",
           "hora": null,
           "series": [
-            "depositos_vista_no_remunerados_real_se_mensual"
-          ],
-          "titulo": "Depósitos a la vista no remunerados real desest. var. mensual",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
-            "depositos_vista_remunerados_empresas_real_se_mensual"
-          ],
-          "titulo": "Vista remunerada de empresas real desest. var. mensual",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
             "itcrm",
             "itcrm_en_el_mes",
             "itcrm_interanual",
@@ -85943,16 +85141,6 @@
             "itcrm_presidencias"
           ],
           "titulo": "Tipo de cambio real multilateral",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
-            "m2_privado_real_se_mensual"
-          ],
-          "titulo": "M2 privado real desest. var. mensual",
           "metodo": "estimada",
           "url": null
         },
@@ -85973,40 +85161,10 @@
           "fecha": "2026-11-18",
           "hora": null,
           "series": [
-            "m2_privado_transaccional_real_se_mensual"
-          ],
-          "titulo": "M2 privado transaccional real desest. var. mensual",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
             "m2_total",
             "depositos_vista_publicos"
           ],
           "titulo": "M2",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
-            "m2_total_real_se_mensual"
-          ],
-          "titulo": "M2 real desest. var. mensual",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
-            "m3_privado_real_se_mensual"
-          ],
-          "titulo": "M3 privado real desest. var. mensual",
           "metodo": "estimada",
           "url": null
         },
@@ -86029,16 +85187,6 @@
             "metalurgia_adimra_desest_mensual"
           ],
           "titulo": "Índice de producción metalúrgica desestacionalizado",
-          "metodo": "estimada",
-          "url": null
-        },
-        {
-          "fecha": "2026-11-18",
-          "hora": null,
-          "series": [
-            "plazo_fijo_y_otros_privados_real_se_mensual"
-          ],
-          "titulo": "Plazo fijo y otros depósitos privados real desest. var. mensual",
           "metodo": "estimada",
           "url": null
         },
@@ -125161,11 +124309,610 @@
           "titulo": "Depósitos del Tesoro en el BCRA",
           "metodo": "estimada",
           "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "base_monetaria",
+            "base_monetaria_prom",
+            "base_monetaria_prom_var_mensual"
+          ],
+          "titulo": "Base monetaria",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bcra_lebac_pesos",
+            "pasivos_remunerados_bcra",
+            "pasivos_remunerados_bcra_pesos_usd",
+            "pasivos_remunerados_bcra_usd",
+            "pasivos_remunerados_bcra_usd_mensual",
+            "pasivos_bcra_ars",
+            "pasivos_bcra_pbi",
+            "pasivos_bcra_pbi_dif_mensual",
+            "pasivos_bcra_pbi_dif_interanual"
+          ],
+          "titulo": "LEBAC, NOBAC y letras del BCRA en pesos",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bcra_leliq"
+          ],
+          "titulo": "LELIQ y NOTALIQ",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bcra_letras_usd",
+            "bcra_letras_usd_fin_de_mes",
+            "bcra_letras_usd_anual",
+            "bcra_letras_usd_brecha_ars_anual"
+          ],
+          "titulo": "LEBAC en dólares, LEDIV y BOPREAL",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bcra_nocom"
+          ],
+          "titulo": "NOCOM",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bcra_pases_pasivos"
+          ],
+          "titulo": "Pases pasivos del BCRA",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bcra_repo_saldo"
+          ],
+          "titulo": "Operaciones de corto plazo del BCRA (REPO)",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_circulante_publico",
+            "m2_privado",
+            "depositos_vista_remunerados_empresas",
+            "m3_privado",
+            "plazo_fijo_y_otros_privados",
+            "m2_privado_prom",
+            "m2_privado_prom_var_mensual",
+            "m3_privado_prom",
+            "m3_privado_prom_var_mensual"
+          ],
+          "titulo": "Circulante en poder del público",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_cuenta_corriente_bcra"
+          ],
+          "titulo": "Cuenta corriente de los bancos en el BCRA",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_efectivo_entidades"
+          ],
+          "titulo": "Efectivo en entidades financieras",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_adelantos"
+          ],
+          "titulo": "Base monetaria, factor: adelantos transitorios al Tesoro",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_compras_privado"
+          ],
+          "titulo": "Base monetaria, factor: compras de divisas al sector privado",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_compras_tesoro"
+          ],
+          "titulo": "Base monetaria, factor: compras de divisas al Tesoro",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_intereses"
+          ],
+          "titulo": "Base monetaria, factor: intereses, primas y remuneración de cuentas corrientes",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_lebac"
+          ],
+          "titulo": "Base monetaria, factor: LEBAC y NOBAC",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_lefi"
+          ],
+          "titulo": "Base monetaria, factor: LEFI",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_leliq"
+          ],
+          "titulo": "Base monetaria, factor: LELIQ y NOTALIQ",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_otros"
+          ],
+          "titulo": "Base monetaria, factor: otros factores",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_pases"
+          ],
+          "titulo": "Base monetaria, factor: pases",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_redescuentos"
+          ],
+          "titulo": "Base monetaria, factor: redescuentos y adelantos a bancos",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_resto_tesoro"
+          ],
+          "titulo": "Base monetaria, factor: resto de operaciones con el Tesoro",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_total",
+            "base_monetaria_var_usd"
+          ],
+          "titulo": "Variación diaria de la base monetaria",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "bm_factor_utilidades"
+          ],
+          "titulo": "Base monetaria, factor: transferencia de utilidades al Tesoro",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "depositos_ca_privados"
+          ],
+          "titulo": "Depósitos en caja de ahorros del sector privado",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "depositos_cc_privados"
+          ],
+          "titulo": "Depósitos en cuenta corriente del sector privado",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "depositos_privados_pesos"
+          ],
+          "titulo": "Depósitos en pesos del sector privado",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "itcrm",
+            "itcrm_en_el_mes",
+            "itcrm_interanual",
+            "itcrm_var_anio",
+            "itcrm_presidencias"
+          ],
+          "titulo": "Tipo de cambio real multilateral",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "m2_privado_transaccional",
+            "depositos_vista_no_remunerados",
+            "m2_privado_transaccional_prom",
+            "m2_privado_transaccional_prom_var_mensual"
+          ],
+          "titulo": "M2 privado transaccional",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "m2_total",
+            "depositos_vista_publicos"
+          ],
+          "titulo": "M2",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "prestamos_adelantos",
+            "prestamos_comerciales",
+            "prestamos_comerciales_m",
+            "prestamos_comerciales_real",
+            "prestamos_comerciales_real_interanual",
+            "prestamos_comerciales_real_desest",
+            "prestamos_comerciales_real_desest_mensual"
+          ],
+          "titulo": "Préstamos en adelantos en cuenta",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "prestamos_documentos"
+          ],
+          "titulo": "Préstamos en documentos",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "prestamos_hipotecarios",
+            "prestamos_hipotecarios_m",
+            "prestamos_hipotecarios_real",
+            "prestamos_hipotecarios_real_mensual",
+            "prestamos_hipotecarios_real_interanual"
+          ],
+          "titulo": "Préstamos hipotecarios en pesos",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas"
+          ],
+          "titulo": "Reservas internacionales",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas_compras_divisas"
+          ],
+          "titulo": "Compras de dólares del BCRA",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas_fac_efectivo_minimo"
+          ],
+          "titulo": "Reservas, factor: efectivo mínimo",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas_fac_organismos"
+          ],
+          "titulo": "Reservas, factor: organismos internacionales",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas_fac_otros"
+          ],
+          "titulo": "Reservas, factor: otros",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas_fac_sector_publico"
+          ],
+          "titulo": "Reservas, factor: otras operaciones del sector público",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "reservas_var_diaria",
+            "credito_interno_aporte_reservas"
+          ],
+          "titulo": "Variación diaria de las reservas",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "riesgo_pais"
+          ],
+          "titulo": "Riesgo país",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tasa_adelantos"
+          ],
+          "titulo": "Tasa de adelantos en cuenta corriente",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tasa_badlar",
+            "tasa_badlar_real_ex_ante",
+            "tasa_badlar_real_ex_post"
+          ],
+          "titulo": "Tasa BADLAR (bancos privados)",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tasa_personales"
+          ],
+          "titulo": "Tasa de préstamos personales",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tasa_plazo_fijo",
+            "tasa_plazo_fijo_real_ex_ante",
+            "tasa_plazo_fijo_real_ex_post"
+          ],
+          "titulo": "Tasa de plazo fijo a 30 días",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tasa_tamar",
+            "tasa_tamar_real_ex_ante",
+            "tasa_tamar_real_ex_post"
+          ],
+          "titulo": "Tasa TAMAR (bancos privados)",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_blue",
+            "tc_blue_en_el_mes",
+            "tc_blue_interanual",
+            "brecha_blue"
+          ],
+          "titulo": "Dólar blue",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_bna",
+            "tc_bna_en_el_mes",
+            "tc_bna_interanual"
+          ],
+          "titulo": "Dólar BNA",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_ccl",
+            "tc_ccl_en_el_mes",
+            "tc_ccl_interanual",
+            "brecha_ccl",
+            "brecha_ccl_mep",
+            "tc_financiero",
+            "tc_financiero_fin_de_mes",
+            "tc_financiero_anual",
+            "brecha_cambiaria_anual"
+          ],
+          "titulo": "Dólar contado con liquidación",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_mayorista",
+            "tc_mayorista_en_el_mes",
+            "tc_mayorista_interanual"
+          ],
+          "titulo": "Tipo de cambio mayorista",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_mayorista_historico",
+            "tc_mayorista_fin_de_mes",
+            "tc_mayorista_anual"
+          ],
+          "titulo": "Tipo de cambio mayorista (desde 2003)",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_mep",
+            "tc_mep_en_el_mes",
+            "tc_mep_interanual",
+            "brecha_mep"
+          ],
+          "titulo": "Dólar MEP",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tc_minorista",
+            "tc_minorista_en_el_mes",
+            "tc_minorista_interanual"
+          ],
+          "titulo": "Tipo de cambio minorista",
+          "metodo": "estimada",
+          "url": null
+        },
+        {
+          "fecha": "2027-02-10",
+          "hora": null,
+          "series": [
+            "tesoro_depositos_bcra"
+          ],
+          "titulo": "Depósitos del Tesoro en el BCRA",
+          "metodo": "estimada",
+          "url": null
         }
       ]
     },
     "outlook": {
-      "generado": "2026-11-11T00:11:44.448895+00:00",
+      "generado": "2026-11-12T00:13:21.752070+00:00",
       "meses": [
         "2025-11-01",
         "2025-12-01",
@@ -125942,17 +125689,17 @@
               "frescura": "vigente",
               "ultimaFecha": "2026-09-01",
               "valores": {
-                "2025-11-01": 0.456856,
-                "2025-12-01": 1.663785,
-                "2026-01-01": 0.653872,
-                "2026-02-01": 0.085928,
-                "2026-03-01": -1.345787,
-                "2026-04-01": -0.639985,
-                "2026-05-01": 0.570123,
-                "2026-06-01": -0.772246,
-                "2026-07-01": -0.145656,
-                "2026-08-01": 1.702433,
-                "2026-09-01": 0.393338
+                "2025-11-01": 0.455511,
+                "2025-12-01": 1.66392,
+                "2026-01-01": 0.65359,
+                "2026-02-01": 0.085403,
+                "2026-03-01": -1.346043,
+                "2026-04-01": -0.640083,
+                "2026-05-01": 0.569943,
+                "2026-06-01": -0.772981,
+                "2026-07-01": -0.145183,
+                "2026-08-01": 1.702032,
+                "2026-09-01": 0.387601
               }
             }
           ]
@@ -126288,7 +126035,7 @@
         "observaciones": 272,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-21T19:11:09.396150+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -126647,7 +126394,7 @@
           "de": "ipc_nivel_general"
         },
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-14T03:02:36.706470+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127007,7 +126754,7 @@
         "observaciones": 175,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-15T19:49:47.955620+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127359,7 +127106,7 @@
         "observaciones": 22,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-27T21:05:27.337497+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -127476,15 +127223,15 @@
           ]
         },
         "desestacionalizacion": "no",
-        "ultimaFecha": "2026-11-05",
-        "ultimoValor": 1545.3974,
-        "variacionUltimo": -3.0967,
+        "ultimaFecha": "2026-11-11",
+        "ultimoValor": 1547.9128,
+        "variacionUltimo": 2.5154,
         "frescura": "vigente",
         "observaciones": 1935,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
-        "vintage": "2026-11-11T00:10:22.783648+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
+        "vintage": "2026-11-12T00:07:41.760536+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
           "1d",
@@ -134139,6 +133886,10 @@
           {
             "fecha": "2026-11-05",
             "valor": 1545.3974
+          },
+          {
+            "fecha": "2026-11-11",
+            "valor": 1547.9128
           }
         ]
       },
@@ -134169,7 +133920,7 @@
         "observaciones": 441,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-19T19:08:54.735744+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -134522,15 +134273,15 @@
           ]
         },
         "desestacionalizacion": "no",
-        "ultimaFecha": "2026-11-04",
-        "ultimoValor": 23.5625,
-        "variacionUltimo": -0.4375,
+        "ultimaFecha": "2026-11-05",
+        "ultimoValor": 24.125,
+        "variacionUltimo": 0.5625,
         "frescura": "vigente",
-        "observaciones": 506,
+        "observaciones": 507,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
-        "vintage": "2026-11-05T20:50:24.108493+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
+        "vintage": "2026-11-11T21:30:32.264747+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
           "1d",
@@ -136561,6 +136312,10 @@
           {
             "fecha": "2026-11-04",
             "valor": 23.5625
+          },
+          {
+            "fecha": "2026-11-05",
+            "valor": 24.125
           }
         ]
       },
@@ -136584,15 +136339,15 @@
           ]
         },
         "desestacionalizacion": "no",
-        "ultimaFecha": "2026-11-03",
-        "ultimoValor": 46998823,
-        "variacionUltimo": -242735,
+        "ultimaFecha": "2026-11-04",
+        "ultimoValor": 46845363,
+        "variacionUltimo": -153460,
         "frescura": "vigente",
         "observaciones": 1933,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
-        "vintage": "2026-11-11T00:10:53.282035+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
+        "vintage": "2026-11-12T00:08:29.228058+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
           "1d",
@@ -143239,6 +142994,10 @@
           {
             "fecha": "2026-11-03",
             "valor": 46998823
+          },
+          {
+            "fecha": "2026-11-04",
+            "valor": 46845363
           }
         ]
       },
@@ -143269,7 +143028,7 @@
         "observaciones": 129,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-16T19:58:04.545974+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -143629,7 +143388,7 @@
         "observaciones": 116,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-10-22T19:06:56.217580+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -143985,7 +143744,7 @@
         "observaciones": 177,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-11-06T19:34:28.242041+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -144345,7 +144104,7 @@
         "observaciones": 117,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-11T19:07:44.662462+00:00",
+        "generado": "2026-11-12T00:13:21.752070+00:00",
         "vintage": "2026-11-06T19:06:49.120812+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -144680,6 +144439,6 @@
       }
     }
   },
-  "collectionStartedAt": "2026-11-11T19:33:45.324763+00:00",
+  "collectionStartedAt": "2026-11-12T02:56:28.866811+00:00",
   "retainedSeries": []
 }
