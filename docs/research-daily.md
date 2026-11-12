@@ -4,7 +4,7 @@
 
 19:30 America/Buenos_Aires: recopilar documentos y preparar borrador de la rueda actual. No publicar una segunda edición.
 
-08:00 de cada día hábil: completar con materiales recibidos de noche, verificar calendario de mercado y publicar una edición sobre la última rueda hábil. Un informe publicado es una fotografía histórica, no datos en vivo. Antes de reemplazar una edición, conservar su contenido y archivos originales.
+08:45 de cada día hábil: completar con materiales recibidos de noche, verificar calendario de mercado y publicar una edición sobre la última rueda hábil. Un informe publicado es una fotografía histórica, no datos en vivo. Antes de reemplazar una edición, conservar su contenido y archivos originales.
 
 ## Integración implementada
 
@@ -25,3 +25,16 @@ Guardar por fuente proveedor, URL, hash del documento, fecha observada, publicac
 El snapshot macro existente incluye `generatedAt`, `failures`, `retainedSeries`, y cada serie contiene `retrievedAt` y puntos fechados. Consultar todas estas propiedades: una descarga exitosa no convierte una observación antigua en actual. No comparar automáticamente series con frecuencia, cobertura, unidad o base distinta.
 
 La copia inspeccionada el 5/11/2026 fue generada el 5/11 a las 02:24 UTC, pero sus últimas reservas eran del 2/11 y sus compras de divisas del 30/10. Este es un ejemplo de rezago real que debe mostrarse, no ocultarse. Feriados y fines de semana requieren calendario de mercado verificado.
+
+
+## Vista visual y PDF (12/11/2026)
+
+La web oficial tiene tres vistas: Qué pasó ayer, Qué mirar hoy e Informe completo. El PDF es una síntesis visual; el cuerpo completo, sus fuentes y las figuras originales siguen conservados en la tabla. El acceso de web, API, gráficos y PDF sigue limitado a facundo@amautainversiones.com. Las imágenes privadas solo se obtienen en la consulta de una edición; nunca se incluyen en el listado ni en GitHub.
+
+`briefing` es un objeto JSONB privado opcional con `{version:1, cutoff:ISO timestamp, intro:string, metrics:[{label,value,context}], yesterday:[{label,title,text,attribution}], today:[{date?:ISO date,label,title,text,attribution}]}`. Prepararlo al publicar cada nueva edición a partir de las fuentes leídas. No extraer números mediante expresiones regulares ni completar expectativas ausentes: preservar condiciones, discrepancias, fechas y atribuciones. Como referencia editorial, hasta tres métricas, dos a cuatro tarjetas de cierre y dos a cuatro de agenda. No introducir hechos nuevos que no estén respaldados por el cuerpo y sus fuentes. Si falta el objeto, se muestran párrafos reales del informe y su agenda, sin inventar indicadores. Cualquier cambio a una edición publicada requiere archivar transaccionalmente `to_jsonb` de la fila completa, incluidas sus imágenes y briefing.
+
+`prebuild` ejecuta `scripts/build-research-macro.mjs`. Genera un índice compacto a partir de snapshots públicos versionados de Macro Lab. Verifica generatedAt, failures, retainedSeries, retrievedAt, puntos finitos, fechas únicas y períodos consecutivos para variaciones. Se excluyen snapshots sin controles verificables. Reservas y compras se conservan en sus unidades originales; el IPC mensual se calcula desde niveles INDEC con fórmula explícita, separado de observaciones oficiales. No se usa REM como dato observado.
+
+La API selecciona el último snapshot con generatedAt anterior o igual a published_at de la edición, nunca latest actual. Las versiones históricas de Macro Lab deben permanecer inmutables. Las observaciones y consultas conservan sus fechas; series retenidas y fallos se identifican. No se interpola ni se reconstruyen puntos ambiguos. Los puntos se grafican por fecha calendario y las escalas y unidades quedan visibles. Una nueva descarga no modifica una edición histórica ni la convierte en información en vivo. Si no existe snapshot anterior verificado, se informa su ausencia.
+
+Validación: `npm run test:research`, `npm run build` y revisión visual de web (desktop/móvil), apertura de figuras, cambio de edición y PDF completo. En entornos Windows con node_modules enlazado fuera del checkout, usar `next build --webpack` para la comprobación local; producción compila sin ese enlace.
