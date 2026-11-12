@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getBriefing, numberLabel, plotPoints, researchSections, shortDate, validCharts, type MacroSeries, type ResearchChart, type ResearchEdition } from "@/lib/research-briefing";
+import { dateTimeART, getBriefing, numberLabel, plotPoints, researchSections, shortDate, validCharts, type MacroSeries, type ResearchChart, type ResearchEdition } from "@/lib/research-briefing";
 import styles from "./research.module.css";
 
 function MacroChart({ series }: { series: MacroSeries }) {
@@ -21,7 +21,7 @@ function MacroChart({ series }: { series: MacroSeries }) {
       <text x="16" y="150" fill="#70686c" fontSize="11">{numberLabel(Math.min(...values))}</text>
       <text x="16" y="168" fill="#70686c" fontSize="11">{shortDate(points[0].date)}</text><text x="484" y="168" textAnchor="end" fill="#70686c" fontSize="11">{shortDate(last.date)}</text>
     </svg>}
-    <details><summary>Ver datos y metodología</summary><p>{series.note}</p><p>Consulta de la serie: {new Date(series.retrievedAt).toLocaleString("es-AR", { timeZone: "America/Argentina/Buenos_Aires" })} ART.</p><a href={series.sourceUrl} target="_blank" rel="noopener noreferrer">Fuente original ↗</a><div className={styles.dataScroll}><table><caption>{series.name} · {series.unit}</caption><thead><tr><th>Fecha observada</th><th>Valor</th></tr></thead><tbody>{points.map(p => <tr key={p.date}><td>{shortDate(p.date)}</td><td>{numberLabel(p.value)}</td></tr>)}</tbody></table></div></details>
+    <details><summary>Ver datos y metodología</summary><p>{series.note}</p><p>Consulta de la serie: {dateTimeART(series.retrievedAt)} ART.</p><a href={series.sourceUrl} target="_blank" rel="noopener noreferrer">Fuente original ↗</a><div className={styles.dataScroll}><table><caption>{series.name} · {series.unit}</caption><thead><tr><th>Fecha observada</th><th>Valor</th></tr></thead><tbody>{points.map(p => <tr key={p.date}><td>{shortDate(p.date)}</td><td>{numberLabel(p.value)}</td></tr>)}</tbody></table></div></details>
   </section>;
 }
 
@@ -52,7 +52,7 @@ export default function ResearchVisual({ edition }: { edition: ResearchEdition }
       {researchSections(edition.body).map((s, i) => <details key={i} open={i === 0}><summary>{s.title}</summary><ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>, img: () => null }}>{s.blocks.join("\n\n")}</ReactMarkdown></details>)}
     </section>
     <section className={styles.macroSection}><div className={styles.sectionHeader}><h2>Macro Lab · contexto del informe</h2><a href="/macro">Explorar Macro Lab ↗</a></div>
-      {edition.macro?.series.length ? <><p className={styles.caption}>Snapshot disponible al publicar: {new Date(edition.macro.generatedAt).toLocaleString("es-AR", { timeZone: "America/Argentina/Buenos_Aires" })} ART. Cada serie conserva su fecha observada; no son precios en vivo.</p><div className={styles.macroGrid}>{edition.macro.series.map(s => <MacroChart key={s.id} series={s} />)}</div>{edition.macro.failures.length > 0 && <p className={styles.caption}>El snapshot registra descargas fallidas. Las series retenidas se identifican junto a cada dato.</p>}</> : <p className={styles.caption}>No hay un snapshot macro verificado anterior a la publicación de esta edición.</p>}
+      {edition.macro?.series.length ? <><p className={styles.caption}>Snapshot disponible al publicar: {dateTimeART(edition.macro.generatedAt)} ART. Cada serie conserva su fecha observada; no son precios en vivo.</p><div className={styles.macroGrid}>{edition.macro.series.map(s => <MacroChart key={s.id} series={s} />)}</div>{edition.macro.failures.length > 0 && <p className={styles.caption}>El snapshot registra descargas fallidas. Las series retenidas se identifican junto a cada dato.</p>}</> : <p className={styles.caption}>No hay un snapshot macro verificado anterior a la publicación de esta edición.</p>}
     </section>
     <dialog ref={dialog} className={styles.dialog} onClose={() => setExpanded(null)} aria-label={expanded?.title || "Gráfico ampliado"}><button className={styles.closeDialog} onClick={() => dialog.current?.close()} autoFocus>Cerrar gráfico ×</button>{expanded && <><h2>{expanded.title}</h2><img src={expanded.image} alt={expanded.title} /><p>{expanded.caption}</p><a href={expanded.source} target="_blank" rel="noopener noreferrer">Documento original ↗</a></>}</dialog>
   </>;

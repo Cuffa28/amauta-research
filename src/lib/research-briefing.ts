@@ -36,3 +36,5 @@ export function plotPoints(points: MacroSeries["points"], width = 500, height = 
   const first = Date.parse(points[0].date), span = Date.parse(points[points.length - 1].date) - first;
   return points.map((p, i) => ({ x: pad + (span ? (Date.parse(p.date) - first) / span : i / (points.length - 1)) * (width - 2 * pad), y: height - pad - ((p.value - min) / (max - min || 1)) * (height - 2 * pad) }));
 }
+
+export function dateTimeART(value: string) { return new Date(value).toLocaleString("es-AR", { timeZone: "America/Argentina/Buenos_Aires", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }); }

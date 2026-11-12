@@ -9,7 +9,7 @@ function load(file) {
   new Function('require', 'module', 'exports', output)(name => name.endsWith('.json') ? JSON.parse(fs.readFileSync('src/lib/' + name.replace('./', ''), 'utf8')) : require(name), module, module.exports);
   return module.exports;
 }
-const { getBriefing, plotPoints, validCharts } = load('src/lib/research-briefing.ts');
+const { dateTimeART, getBriefing, plotPoints, validCharts } = load('src/lib/research-briefing.ts');
 const { macroAtPublication } = load('src/lib/research-macro.ts');
 const snapshots = JSON.parse(fs.readFileSync('src/lib/research-macro-snapshots.json', 'utf8'));
 test('Historical editions never receive a future snapshot, including revised observations', () => {
@@ -42,4 +42,10 @@ test('Legacy rendering preserves source paragraphs and conditional agenda withou
 test('Charts reject external URLs and oversized embedded images', () => {
   assert.deepEqual(validCharts([{image:'https://example.com/private.png',width:1,height:1}]),[]);
   assert.deepEqual(validCharts([{image:'data:image/png;base64,'+'A'.repeat(2000000),width:1,height:1}]),[]);
+});
+
+test('Snapshot labels use Argentina date and 24 hour time across UTC midnight', () => {
+  const label=dateTimeART('2026-11-12T02:56:54Z');
+  assert.ok(label.includes('11/11/2026'));
+  assert.ok(label.includes('23:56'));
 });
