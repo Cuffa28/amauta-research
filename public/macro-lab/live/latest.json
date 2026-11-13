@@ -89470,7 +89470,7 @@
           "fecha": "2026-11-25",
           "hora": "10:30",
           "series": [],
-          "titulo": "PCE (oct) · EE.UU.",
+          "titulo": "PCE (oct) · Ingresos y gastos personales — EE.UU.",
           "metodo": "oficial",
           "url": "https://www.bea.gov/news/schedule",
           "tipo": "eeuu",
@@ -94385,6 +94385,17 @@
         },
         {
           "fecha": "2026-12-04",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "Empleo EE.UU. (nov) · Nóminas no agrícolas",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2026-12-04",
           "hora": "16:00",
           "series": [
             "accesos_internet",
@@ -94415,17 +94426,6 @@
           "titulo": "Índice de producción industrial pesquero (IPI pesquero). Octubre de 2026",
           "metodo": "oficial",
           "url": null
-        },
-        {
-          "fecha": "2026-12-05",
-          "hora": "10:30",
-          "series": [],
-          "titulo": "Empleo EE.UU. (nov) · Nóminas no agrícolas",
-          "metodo": "oficial",
-          "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
-          "tipo": "eeuu",
-          "organismo": "BLS",
-          "origen": "amauta"
         },
         {
           "fecha": "2026-12-07",
@@ -95303,6 +95303,17 @@
           "url": null
         },
         {
+          "fecha": "2026-12-09",
+          "hora": "16:00",
+          "series": [],
+          "titulo": "FOMC · Decisión de tasa de la Fed (con proyecciones)",
+          "metodo": "oficial",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "tipo": "fomc",
+          "organismo": "Fed",
+          "origen": "amauta"
+        },
+        {
           "fecha": "2026-12-10",
           "hora": null,
           "series": [
@@ -96061,6 +96072,17 @@
           "titulo": "Depósitos del Tesoro en el BCRA",
           "metodo": "estimada",
           "url": null
+        },
+        {
+          "fecha": "2026-12-10",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "CPI EE.UU. (nov) · Inflación",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
         },
         {
           "fecha": "2026-12-10",
@@ -103386,6 +103408,17 @@
         },
         {
           "fecha": "2026-12-23",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "PCE (nov) · Ingresos y gastos personales — EE.UU.",
+          "metodo": "oficial",
+          "url": "https://www.bea.gov/news/schedule",
+          "tipo": "eeuu",
+          "organismo": "BEA",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2026-12-23",
           "hora": "16:00",
           "series": [
             "gini_ingreso"
@@ -110471,6 +110504,17 @@
         },
         {
           "fecha": "2027-01-08",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "Empleo EE.UU. (dic) · Nóminas no agrícolas",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2027-01-08",
           "hora": "16:00",
           "series": [
             "ipi",
@@ -112505,6 +112549,17 @@
           "titulo": "Depósitos del Tesoro en el BCRA",
           "metodo": "estimada",
           "url": null
+        },
+        {
+          "fecha": "2027-01-13",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "CPI EE.UU. (dic) · Inflación",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
         },
         {
           "fecha": "2027-01-14",
@@ -120365,6 +120420,17 @@
           "url": null
         },
         {
+          "fecha": "2027-01-27",
+          "hora": "16:00",
+          "series": [],
+          "titulo": "FOMC · Decisión de tasa de la Fed",
+          "metodo": "oficial",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "tipo": "fomc",
+          "organismo": "Fed",
+          "origen": "amauta"
+        },
+        {
           "fecha": "2027-01-28",
           "hora": null,
           "series": [
@@ -125210,6 +125276,17 @@
           "url": null
         },
         {
+          "fecha": "2027-02-05",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "Empleo EE.UU. (ene) · Nóminas no agrícolas",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
+        },
+        {
           "fecha": "2027-02-08",
           "hora": null,
           "series": [],
@@ -125833,6 +125910,50 @@
           "url": null
         },
         {
+          "fecha": "2027-02-11",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "CPI EE.UU. (ene) · Inflación",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2027-03-05",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "Empleo EE.UU. (feb) · Nóminas no agrícolas",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2027-03-10",
+          "hora": "10:30",
+          "series": [],
+          "titulo": "CPI EE.UU. (feb) · Inflación",
+          "metodo": "oficial",
+          "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+          "tipo": "eeuu",
+          "organismo": "BLS",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2027-03-17",
+          "hora": "15:00",
+          "series": [],
+          "titulo": "FOMC · Decisión de tasa de la Fed",
+          "metodo": "oficial",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "tipo": "fomc",
+          "organismo": "Fed",
+          "origen": "amauta"
+        },
+        {
           "fecha": "2027-03-24",
           "hora": null,
           "series": [],
@@ -125880,6 +126001,17 @@
           "origen": "amauta"
         },
         {
+          "fecha": "2027-04-28",
+          "hora": "15:00",
+          "series": [],
+          "titulo": "FOMC · Decisión de tasa de la Fed",
+          "metodo": "oficial",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "tipo": "fomc",
+          "organismo": "Fed",
+          "origen": "amauta"
+        },
+        {
           "fecha": "2027-04-30",
           "hora": null,
           "series": [],
@@ -125923,6 +126055,17 @@
           "url": "https://www.argentina.gob.ar/economia/finanzas/deuda-publica",
           "tipo": "vencimiento",
           "organismo": "Tesoro",
+          "origen": "amauta"
+        },
+        {
+          "fecha": "2027-06-09",
+          "hora": "15:00",
+          "series": [],
+          "titulo": "FOMC · Decisión de tasa de la Fed",
+          "metodo": "oficial",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "tipo": "fomc",
+          "organismo": "Fed",
           "origen": "amauta"
         },
         {
@@ -126254,11 +126397,12 @@
         }
       ],
       "amautaExtra": {
-        "generado": "2026-11-13T13:27:37.400727+00:00",
-        "conteo": 111,
+        "generado": "2026-11-13T13:36:18.610144+00:00",
+        "conteo": 124,
         "tipos": [
           "eeuu",
           "feriado",
+          "fomc",
           "licitacion",
           "liquidacion",
           "vencimiento"
