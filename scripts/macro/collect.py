@@ -260,6 +260,17 @@ def collect(previous=None):
         except SourceError as e:
             if previous.get('monitor'):packet['monitor']=previous['monitor']
             packet['monitorError']=str(e)
+    # Eventos extra del calendario (licitaciones del Tesoro, feriados): se suman
+    # siempre, aun sin token/monitor, desde fuentes propias/curadas. Nunca debe
+    # tumbar al colector: cualquier error se registra y se continúa.
+    try:
+        sys.path.insert(0,str(Path(__file__).resolve().parent))
+        from calendar_extra import merge_into_calendar
+        cal=packet.setdefault('monitor',{}).setdefault('calendar',{'eventos':[]})
+        merge_into_calendar(cal,fetch=lambda u:fetch(u))
+        success.append('Amauta · calendario (licitaciones y feriados)')
+    except Exception as e:
+        failures.append({'source':'Amauta · calendario extra','message':str(e),'at':stamp()})
     packet['collectionStartedAt']=started
     packet['generatedAt']=stamp()
     packet['retainedSeries']=[s['id'] for s in packet['series'] if s.get('retrievedAt','')<started and not s.get('derived')]

@@ -1,0 +1,101 @@
+{
+  "_fuente": "Secretaría de Finanzas · Cronograma de Licitaciones 2026",
+  "_url": "https://www.argentina.gob.ar/economia/finanzas/licitaciones-de-letras-y-bonos-del-tesoro/cronograma-2026",
+  "_pdf": "https://www.argentina.gob.ar/sites/default/files/calendario_prensa_0.pdf",
+  "_nota": "Fechas de licitación y liquidación extraídas del PDF oficial (celdas verde=licitación, naranja=liquidación). Instrumentos y horario se confirman en cada llamado. Revisar ante cambios del cronograma.",
+  "_generado": "2026-11-13T13:09:43.544759+00:00",
+  "licitaciones": [
+    {
+      "fecha_licitacion": "2026-01-14",
+      "fecha_liquidacion": "2026-01-16"
+    },
+    {
+      "fecha_licitacion": "2026-01-28",
+      "fecha_liquidacion": "2026-01-30"
+    },
+    {
+      "fecha_licitacion": "2026-02-11",
+      "fecha_liquidacion": "2026-02-13"
+    },
+    {
+      "fecha_licitacion": "2026-02-25",
+      "fecha_liquidacion": "2026-02-27"
+    },
+    {
+      "fecha_licitacion": "2026-03-12",
+      "fecha_liquidacion": "2026-03-16"
+    },
+    {
+      "fecha_licitacion": "2026-03-27",
+      "fecha_liquidacion": "2026-03-31"
+    },
+    {
+      "fecha_licitacion": "2026-04-15",
+      "fecha_liquidacion": "2026-04-17"
+    },
+    {
+      "fecha_licitacion": "2026-04-28",
+      "fecha_liquidacion": "2026-04-30"
+    },
+    {
+      "fecha_licitacion": "2026-05-13",
+      "fecha_liquidacion": "2026-05-15"
+    },
+    {
+      "fecha_licitacion": "2026-05-27",
+      "fecha_liquidacion": "2026-05-29"
+    },
+    {
+      "fecha_licitacion": "2026-06-10",
+      "fecha_liquidacion": "2026-06-12"
+    },
+    {
+      "fecha_licitacion": "2026-06-26",
+      "fecha_liquidacion": "2026-06-30"
+    },
+    {
+      "fecha_licitacion": "2026-07-15",
+      "fecha_liquidacion": "2026-07-17"
+    },
+    {
+      "fecha_licitacion": "2026-07-29",
+      "fecha_liquidacion": "2026-07-31"
+    },
+    {
+      "fecha_licitacion": "2026-08-12",
+      "fecha_liquidacion": "2026-08-14"
+    },
+    {
+      "fecha_licitacion": "2026-08-27",
+      "fecha_liquidacion": "2026-08-31"
+    },
+    {
+      "fecha_licitacion": "2026-09-11",
+      "fecha_liquidacion": "2026-09-15"
+    },
+    {
+      "fecha_licitacion": "2026-09-28",
+      "fecha_liquidacion": "2026-09-30"
+    },
+    {
+      "fecha_licitacion": "2026-10-14",
+      "fecha_liquidacion": "2026-10-16"
+    },
+    {
+      "fecha_licitacion": "2026-10-28",
+      "fecha_liquidacion": "2026-10-30"
+    },
+    {
+      "fecha_licitacion": "2026-11-11",
+      "fecha_liquidacion": "2026-11-13"
+    },
+    {
+      "fecha_licitacion": "2026-11-26",
+      "fecha_liquidacion": "2026-11-30"
+    },
+    {
+      "fecha_licitacion": "2026-12-11",
+      "fecha_liquidacion": "2026-12-15"
+    }
+  ]
+}
