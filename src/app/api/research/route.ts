@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { ResearchEdition } from "@/lib/research-briefing";
 import { macroAtPublication } from "@/lib/research-macro";
+import { canReadResearch } from "@/lib/research-access";
 
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Authorization" };
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
     const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false }, global: { headers: { Authorization: `Bearer ${token}` } } });
     const { data: auth, error: authError } = await db.auth.getUser(token);
     if (authError || !auth.user?.email) return NextResponse.json({ error: "La sesión venció. Ingresá nuevamente." }, { status: 401, headers });
-    if (auth.user.email.toLowerCase() !== "facundo@amautainversiones.com") return NextResponse.json({ error: "Esta sección es de acceso personal." }, { status: 403, headers });
+    if (!canReadResearch(auth.user.email)) return NextResponse.json({ error: "Tu cuenta no tiene acceso a Research." }, { status: 403, headers });
     const { data: member, error: memberError } = await db.from("team_members").select("email").eq("email", auth.user.email.toLowerCase()).eq("active", true).maybeSingle();
     if (memberError || !member) return NextResponse.json({ error: "Tu usuario no tiene acceso al research del equipo." }, { status: 403, headers });
     const editionId = request.nextUrl.searchParams.get("id");

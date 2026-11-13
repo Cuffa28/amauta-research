@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { canReadResearch } from "@/lib/research-access";
 import {
   sendOtp,
   verifyOtp,
@@ -282,7 +283,7 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
 
         <nav className="sidebar-nav">
           <div className="nav-group-label">Herramientas</div>
-          {TOOLS.filter(t => t.href !== "/research" || member?.email.toLowerCase() === "facundo@amautainversiones.com").map((t) => (
+          {TOOLS.filter(t => t.href !== "/research" || canReadResearch(member?.email)).map((t) => (
             <Link
               key={t.href}
               href={t.href}

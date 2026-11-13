@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ResearchVisual from "./ResearchVisual";
 import type { ResearchEdition } from "@/lib/research-briefing";
 import { ensureSession } from "@/lib/portal-supabase";
+import { canReadResearch } from "@/lib/research-access";
 import styles from "./research.module.css";
 
 type Edition = ResearchEdition & { id: string; published_at: string };
@@ -29,7 +30,7 @@ export default function DailyResearch() {
       try {
         const session = await ensureSession();
         if (!session) throw new Error("Iniciá sesión para consultar los informes del equipo.");
-        if (session.email?.toLowerCase() !== "facundo@amautainversiones.com") { setDenied(true); return; }
+        if (!canReadResearch(session.email)) { setDenied(true); return; }
         const response = await fetch("/api/research", { headers: { Authorization: `Bearer ${session.access_token}` }, cache: "no-store", signal: controller.signal });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || "No se pudo consultar el archivo.");

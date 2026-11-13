@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "prebuild": "node scripts/build-research-macro.mjs",
-    "test:research": "node --test tests/research-briefing.test.cjs"
+    "test:research": "node --test tests/research-briefing.test.cjs tests/research-access.test.cjs"
   },
   "dependencies": {
     "next": "16.2.4",
