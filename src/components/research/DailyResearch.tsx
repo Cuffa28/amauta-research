@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ResearchVisual from "./ResearchVisual";
+import ResearchHistory from "./ResearchHistory";
 import type { ResearchEdition } from "@/lib/research-briefing";
 import { ensureSession } from "@/lib/portal-supabase";
 import { canReadResearch } from "@/lib/research-access";
@@ -16,13 +17,19 @@ function date(value: string) {
 export default function DailyResearch() {
   const [editions, setEditions] = useState<Edition[]>([]);
   const [selected, setSelected] = useState("");
-  const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
+  const [refreshTick, setRefreshTick] = useState(0);
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState("");
   const [denied, setDenied] = useState(false);
+  useEffect(() => {
+    const refresh = () => { if (!document.hidden) setRefreshTick(v => v + 1); };
+    const timer = window.setInterval(refresh, 60_000);
+    document.addEventListener("visibilitychange", refresh);
+    return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", refresh); };
+  }, []);
   useEffect(() => {
     const controller = new AbortController();
     (async () => {
@@ -42,7 +49,7 @@ export default function DailyResearch() {
       } finally { if (!controller.signal.aborted) setLoading(false); }
     })();
     return () => controller.abort();
-  }, [retry]);
+  }, [retry, refreshTick]);
   const [detail, setDetail] = useState<Edition | null>(null);
   const [detailError, setDetailError] = useState("");
   const [detailLoading, setDetailLoading] = useState(false);
@@ -65,7 +72,6 @@ export default function DailyResearch() {
     return () => controller.abort();
   }, [selected, retry]);
   const edition = detail?.id === selected ? detail : editions.find(e => e.id === selected);
-  const filtered = editions.filter(e => `${e.title} ${e.summary} ${e.market_date}`.toLocaleLowerCase("es").includes(query.toLocaleLowerCase("es")));
   async function downloadPdf() {
     if (!edition || downloading) return;
     setDownloading(true); setDownloadError("");
@@ -86,12 +92,7 @@ export default function DailyResearch() {
       <div><img className={styles.logo} src="/assets/amauta-logo-horizontal.png" alt="Amauta Inversiones Financieras" /><span className={styles.eyebrow}>RESEARCH & STRATEGY</span><h1>Tu apertura de mercado.</h1><p>El cierre anterior, lo que viene y los gráficos que lo explican.</p></div>
       <div className={styles.schedule}><strong>08:45</strong><span>Publicación prevista · Argentina</span><small>Sobre la última rueda hábil</small></div>
     </header>
-    <div className={styles.layout}>
-      <aside className={styles.archive}><h2>Archivo de ediciones</h2><label htmlFor="research-search">Buscar por fecha o tema</label><input id="research-search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Dólar, bonos, 2026-11…" />
-        {filtered.map(e => <button key={e.id} onClick={() => setSelected(e.id)} aria-pressed={e.id === selected} className={e.id === selected ? styles.active : ""}><small>Rueda del {date(e.market_date)}</small><strong>{e.title}</strong></button>)}
-        {!loading && !error && !filtered.length && <p>{editions.length ? "No hay ediciones que coincidan." : "El archivo todavía no tiene ediciones publicadas."}</p>}
-        <a href="/macro">Explorar datos macro →</a>
-      </aside>
+    <div className={styles.latestLayout}>
       <main className={styles.paper}>
         {loading && <p role="status">Consultando el archivo…</p>}
         {error && <div role="alert" className={styles.notice}><h2>No pudimos actualizar el archivo</h2><p>{error}</p><button onClick={() => setRetry(v => v + 1)}>Reintentar</button></div>}
@@ -100,6 +101,7 @@ export default function DailyResearch() {
           {detailLoading && <p role="status">Cargando gráficos y contexto macro…</p>}
           {detailError && <p role="alert">{detailError} <button onClick={() => setRetry(v => v + 1)}>Reintentar</button></p>}
           {!detailLoading && !detailError && detail?.id === selected && <ResearchVisual key={selected} edition={detail} />}
+          <ResearchHistory key={edition.id} />
           <footer className={styles.signature}><img src="/assets/amauta-logo-horizontal.png" alt="Amauta" /><div><strong>Facundo Argañaraz</strong><span>Research &amp; Strategy</span><span>Amauta Inversiones Financieras</span><small>Preservamos su legado familiar</small></div></footer>
         </article>}
       </main>
