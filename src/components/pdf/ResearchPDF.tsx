@@ -2,7 +2,7 @@ import React from "react";
 import { Document, Page, Text, View, Image, StyleSheet, Svg, Polyline, Line, Circle, Link } from "@react-pdf/renderer";
 import path from "node:path";
 import { readFileSync } from "node:fs";
-import { dateTimeART, getBriefing, numberLabel, plotPoints, shortDate, validCharts, type ResearchEdition, type ResearchChart, type MacroSeries } from "../../lib/research-briefing";
+import { dateTimeART, editionDate, getBriefing, numberLabel, plotPoints, shortDate, validCharts, type ResearchEdition, type ResearchChart, type MacroSeries } from "../../lib/research-briefing";
 export type { ResearchEdition } from "../../lib/research-briefing";
 const s = StyleSheet.create({
  page:{padding:32,paddingBottom:43,fontFamily:"Helvetica",fontSize:9,lineHeight:1.4,color:"#231F20",backgroundColor:"#FFFFFF"},
@@ -23,7 +23,7 @@ const s = StyleSheet.create({
 });
 function Header({edition,label}:{edition:ResearchEdition;label:string}) {return <View style={s.band}><Image src={{data:readFileSync(path.join(process.cwd(),"public/assets/amauta-logo-horizontal.png")),format:"png"}} style={s.logo}/><View><Text style={s.label}>RESEARCH & STRATEGY</Text><Text style={s.sub}>Rueda {shortDate(edition.market_date)} · {label}</Text></View></View>}
 function Footer(){return <Text style={{marginTop:8,fontSize:7,color:"#70686C"}}>Amauta Inversiones Financieras · Facundo Argañaraz · Research & Strategy</Text>;}
-function Figure({chart}:{chart:ResearchChart}){return <View style={s.figure} wrap={false}><Image src={{data:Buffer.from(chart.image.split(",")[1],"base64"),format:"png"}} style={[s.chart,{height:Math.min(215,460*chart.height/chart.width)}]}/><Text style={s.caption}>{chart.caption}</Text><Link src={chart.source} style={s.caption}>Documento original · {chart.date} · p. {chart.page}</Link></View>}
+function Figure({chart}:{chart:ResearchChart}){return <View style={s.figure} wrap={false}><Text style={s.label}>{chart.section}</Text><Image src={{data:Buffer.from(chart.image.split(",")[1],"base64"),format:"png"}} style={[s.chart,{height:Math.min(215,460*chart.height/chart.width)}]}/><Text style={s.caption}>{chart.caption}</Text><Link src={chart.source} style={s.caption}>Documento original · {chart.date} · p. {chart.page}</Link></View>}
 function MacroFigure({series}:{series:MacroSeries}){
  const last=series.points[series.points.length-1];if(!last)return null;
  const coords=plotPoints(series.points,460,65,10),values=series.points.map(p=>p.value);
@@ -36,14 +36,15 @@ export function ResearchPDF({edition}:{edition:ResearchEdition}) {
  const brief=getBriefing(edition),charts=validCharts(edition.charts),split=Math.ceil(charts.length/2);
  const cutoff=brief.cutoff?new Date(brief.cutoff).toLocaleString("es-AR",{timeZone:"America/Argentina/Buenos_Aires",hourCycle:"h23",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):null;
  return <Document title={`Amauta Research ${edition.market_date}`} author="Facundo Argañaraz · Research & Strategy">
- <Page size="A4" style={s.page}><Header edition={edition} label="EL CIERRE ANTERIOR"/><Text style={s.title}>Qué pasó ayer</Text><Text style={s.sub}>{edition.title}{cutoff?` · Corte ${cutoff} ART`:""}</Text><Text style={s.lead}>{brief.intro}</Text>
+ <Page size="A4" style={s.page}><Header edition={edition} label="EL CIERRE ANTERIOR"/><Text style={s.title}>Qué pasó · {shortDate(edition.market_date)}</Text><Text style={s.sub}>{edition.title}{cutoff?` · Corte ${cutoff} ART`:""}</Text><Text style={s.lead}>{brief.intro}</Text>
  {brief.metrics.length>0&&<View style={s.row}>{brief.metrics.slice(0,3).map(m=><View key={m.label} style={s.metric} wrap={false}><Text style={s.metricLabel}>{m.label}</Text><Text style={s.value}>{m.value}</Text><Text style={s.context}>{m.context}</Text></View>)}</View>}
  <View style={brief.yesterday.length<=2?s.row:{}}>{brief.yesterday.map((c,i)=><View key={i} style={brief.yesterday.length<=2?[s.card,{width:"49%"}]:s.card} wrap={false}><Text style={s.label}>{c.label||"CIERRE ANTERIOR"}</Text><Text style={s.heading}>{c.title}</Text><Text style={s.text}>{c.text}</Text>{c.attribution&&<Text style={s.attribution}>{c.attribution}</Text>}</View>)}</View>
  {charts.slice(0,split).map(c=><Figure key={c.id} chart={c}/>)}{Footer()}</Page>
- <Page size="A4" style={s.page}><Header edition={edition} label="AGENDA DE LA EDICIÓN"/><Text style={s.title}>Qué mirar hoy</Text><Text style={s.sub}>Agenda, datos publicados y expectativas, identificados según su fecha y estado.</Text>
+ <Page size="A4" style={s.page}><Header edition={edition} label="AGENDA DE LA EDICIÓN"/><Text style={s.title}>Qué mirar · {shortDate(editionDate(edition))}</Text><Text style={s.sub}>Agenda, datos publicados y expectativas, identificados según su fecha y estado.</Text>
+ {charts.slice(split).map(c=><Figure key={c.id} chart={c}/>)}
  {brief.today.map((c,i)=><View key={i} style={s.card} wrap={false}><Text style={s.label}>{c.date?`${shortDate(c.date)} · `:""}{c.label||"AGENDA"}</Text><Text style={s.heading}>{c.title}</Text><Text style={s.text}>{c.text}</Text>{c.attribution&&<Text style={s.attribution}>{c.attribution}</Text>}</View>)}
  {!brief.today.length&&<Text>No se registró una agenda separada en esta edición. Consultá el análisis completo en la web.</Text>}
- {charts.slice(split).map(c=><Figure key={c.id} chart={c}/>)}<Link src="https://amauta-research.vercel.app/research" style={s.caption}>Análisis completo y archivo de ediciones en Research privado </Link>{Footer()}</Page>
+ <Link src="https://amauta-research.vercel.app/research" style={s.caption}>Análisis completo y archivo de ediciones en Research privado </Link>{Footer()}</Page>
  {edition.macro?.series.length ? <Page size="A4" style={s.page}><Header edition={edition} label="MACRO LAB"/><Text style={s.title}>El contexto en gráficos</Text><Text style={s.sub}>Snapshot disponible al publicar: {dateTimeART(edition.macro.generatedAt)} ART. Cada serie conserva su fecha observada. No son cotizaciones en vivo.</Text>
  {edition.macro.series.map(series=><MacroFigure key={series.id} series={series}/>)}{edition.macro.failures.length>0&&<Text style={s.caption}>El snapshot registra descargas fallidas; las series retenidas están identificadas.</Text>}
  <View style={s.signature} wrap={false}><Text style={s.name}>Facundo Argañaraz</Text><Text>Research & Strategy · Amauta Inversiones Financieras</Text><Text>Preservamos su legado familiar</Text></View>{Footer()}</Page>:null}

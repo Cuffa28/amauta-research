@@ -30,6 +30,19 @@ export function validCharts(charts: ResearchChart[] = []) {
 }
 export function numberLabel(value: number) { return new Intl.NumberFormat("es-AR", { maximumFractionDigits: 4 }).format(value); }
 export function shortDate(value: string) { return value.slice(0, 10).split("-").reverse().join("/"); }
+// Publication is a timestamp; the covered wheel is already an Argentina calendar date.
+export function editionDate(edition: Pick<ResearchEdition, "published_at" | "market_date">) {
+  const timestamp = Date.parse(edition.published_at || "");
+  if (!Number.isFinite(timestamp)) return edition.market_date;
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Argentina/Buenos_Aires", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(timestamp);
+  const part = (type: string) => parts.find(p => p.type === type)?.value;
+  return `${part("year")}-${part("month")}-${part("day")}`;
+}
+export function macroWindow(points: MacroSeries["points"], days: number | null) {
+  if (!days || !points.length) return points;
+  const cutoff = Date.parse(points[points.length - 1].date) - days * 86400000;
+  return points.filter(p => Date.parse(p.date) >= cutoff);
+}
 export function plotPoints(points: MacroSeries["points"], width = 500, height = 140, pad = 16) {
   if (points.length < 2) return [];
   const values = points.map(p => p.value), min = Math.min(...values), max = Math.max(...values);

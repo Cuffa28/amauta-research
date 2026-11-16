@@ -9,7 +9,7 @@ function load(file) {
   new Function('require', 'module', 'exports', output)(name => name.endsWith('.json') ? JSON.parse(fs.readFileSync('src/lib/' + name.replace('./', ''), 'utf8')) : require(name), module, module.exports);
   return module.exports;
 }
-const { dateTimeART, getBriefing, plotPoints, validCharts } = load('src/lib/research-briefing.ts');
+const { dateTimeART, editionDate, macroWindow, getBriefing, plotPoints, validCharts } = load('src/lib/research-briefing.ts');
 const { macroAtPublication } = load('src/lib/research-macro.ts');
 const snapshots = JSON.parse(fs.readFileSync('src/lib/research-macro-snapshots.json', 'utf8'));
 test('Historical editions never receive a future snapshot, including revised observations', () => {
@@ -48,4 +48,17 @@ test('Snapshot labels use Argentina date and 24 hour time across UTC midnight', 
   const label=dateTimeART('2026-11-12T02:56:54Z');
   assert.ok(label.includes('11/11/2026'));
   assert.ok(label.includes('23:56'));
+});
+
+test('Monday publication keeps Friday wheel separate from edition date, including UTC midnight', () => {
+  assert.equal(editionDate({market_date:'2026-11-13',published_at:'2026-11-16T11:45:00Z'}),'2026-11-16');
+  assert.equal(editionDate({market_date:'2026-11-13',published_at:'2026-11-17T01:00:00Z'}),'2026-11-16');
+  assert.equal(editionDate({market_date:'2026-11-13'}),'2026-11-13');
+});
+test('Macro range uses latest observation, preserves values and does not invent a second point', () => {
+  const points=[{date:'2025-01-01',value:10},{date:'2026-07-01',value:12},{date:'2026-11-01',value:8}];
+  assert.deepEqual(macroWindow(points,90),[points[2]]);
+  assert.deepEqual(macroWindow(points,365),points.slice(1));
+  assert.equal(macroWindow(points,null),points);
+  assert.deepEqual(macroWindow([],90),[]);
 });

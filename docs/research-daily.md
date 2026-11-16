@@ -38,3 +38,11 @@ La web oficial tiene tres vistas: Qué pasó ayer, Qué mirar hoy e Informe comp
 La API selecciona el último snapshot con generatedAt anterior o igual a published_at de la edición, nunca latest actual. Las versiones históricas de Macro Lab deben permanecer inmutables. Las observaciones y consultas conservan sus fechas; series retenidas y fallos se identifican. No se interpola ni se reconstruyen puntos ambiguos. Los puntos se grafican por fecha calendario y las escalas y unidades quedan visibles. Una nueva descarga no modifica una edición histórica ni la convierte en información en vivo. Si no existe snapshot anterior verificado, se informa su ausencia.
 
 Validación: `npm run test:research`, `npm run build` y revisión visual de web (desktop/móvil), apertura de figuras, cambio de edición y PDF completo. En entornos Windows con node_modules enlazado fuera del checkout, usar `next build --webpack` para la comprobación local; producción compila sin ese enlace.
+
+## Apertura y consulta histórica (16/11/2026)
+
+La vista inicial En una mirada muestra cierre y agenda juntos, con la rueda cubierta y la fecha argentina de publicación explícitas. La agenda completa conserva sus fechas, condiciones y atribuciones. No se llama ayer a la rueda del viernes en una edición del lunes, ni hoy a una edición histórica sin fecha. El PDF usa las mismas etiquetas y conserva el tema de cada figura junto a ella; las figuras del cierre preceden las tarjetas de agenda.
+
+Los gráficos Macro Lab permiten elegir 3 meses, 1 año o todo el historial incluido en el snapshot de la edición. El período se mide desde la última observación, no desde la hora de consulta. Una sola observación no genera una línea interpolada. Los datos y metodología visibles corresponden al período elegido. No se consulta un snapshot más reciente al interactuar.
+
+El resumen semanal breve para WhatsApp se entrega exclusivamente los viernes. Los informes diarios mantienen su frecuencia y pueden usar Weekly/Kickoff como fuentes fechadas. No se publica material privado en el repositorio.
