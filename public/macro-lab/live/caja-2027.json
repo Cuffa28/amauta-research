@@ -1,0 +1,254 @@
+{
+  "fecha_revision": "2026-11-17",
+  "unidad_base": "millones de USD equivalentes al tipo de cambio de 2026-06-30",
+  "fuente_vencimientos": {
+    "url": "https://www.argentina.gob.ar/sites/default/files/deuda_publica_30-06-2026_0.xlsx",
+    "corte": "2026-06-30",
+    "capital_hoja": "A.3.4",
+    "capital_fila": 103,
+    "intereses_hoja": "A.3.5",
+    "intereses_fila": 104,
+    "columnas_mensuales": "C:N",
+    "advertencia": "Clasificación oficial por denominación; revisar moneda efectiva de pago. No incluye obligaciones propias del BCRA. No actualizar el corte al de consulta.",
+    "sha256": "e481f24585ef40b8ce7c2b515e66235c8b8ebcb4001a769091cb531a6373922e"
+  },
+  "mensual_2027": [
+    {
+      "mes": "2027-01",
+      "capital_usd_equivalente_millones": 3050.304205372238,
+      "intereses_usd_equivalente_millones": 2138.6923214854933,
+      "servicio_usd_equivalente_millones": 5188.996526857732,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-02",
+      "capital_usd_equivalente_millones": 1321.4758572009464,
+      "intereses_usd_equivalente_millones": 885.0191035034595,
+      "servicio_usd_equivalente_millones": 2206.494960704406,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-03",
+      "capital_usd_equivalente_millones": 1335.953384579135,
+      "intereses_usd_equivalente_millones": 313.3455358667527,
+      "servicio_usd_equivalente_millones": 1649.2989204458877,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-04",
+      "capital_usd_equivalente_millones": 536.2540109148747,
+      "intereses_usd_equivalente_millones": 261.73530708038066,
+      "servicio_usd_equivalente_millones": 797.9893179952553,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-05",
+      "capital_usd_equivalente_millones": 260.82527033313403,
+      "intereses_usd_equivalente_millones": 999.1942919034167,
+      "servicio_usd_equivalente_millones": 1260.0195622365507,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-06",
+      "capital_usd_equivalente_millones": 977.010934948174,
+      "intereses_usd_equivalente_millones": 175.68319166120156,
+      "servicio_usd_equivalente_millones": 1152.6941266093756,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-07",
+      "capital_usd_equivalente_millones": 4241.768621880844,
+      "intereses_usd_equivalente_millones": 2115.497862467872,
+      "servicio_usd_equivalente_millones": 6357.266484348716,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-08",
+      "capital_usd_equivalente_millones": 97.98580241494598,
+      "intereses_usd_equivalente_millones": 857.4577480029967,
+      "servicio_usd_equivalente_millones": 955.4435504179427,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-09",
+      "capital_usd_equivalente_millones": 1801.0710657307561,
+      "intereses_usd_equivalente_millones": 301.76936642948556,
+      "servicio_usd_equivalente_millones": 2102.8404321602416,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-10",
+      "capital_usd_equivalente_millones": 2564.923666874874,
+      "intereses_usd_equivalente_millones": 257.4281873030367,
+      "servicio_usd_equivalente_millones": 2822.351854177911,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-11",
+      "capital_usd_equivalente_millones": 249.43567653313403,
+      "intereses_usd_equivalente_millones": 978.4006453464467,
+      "servicio_usd_equivalente_millones": 1227.8363218795807,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    },
+    {
+      "mes": "2027-12",
+      "capital_usd_equivalente_millones": 2031.1207643681735,
+      "intereses_usd_equivalente_millones": 159.13836310411568,
+      "servicio_usd_equivalente_millones": 2190.259127472289,
+      "financiamiento_nuevo_confirmado_usd_millones": null,
+      "brecha_caja_usd_millones": null,
+      "estado": "BASE_ESTATICA_2026-06-30_NO_ES_FLUJO_DE_CAJA_VIGENTE"
+    }
+  ],
+  "fuentes_programa_julio_2026_miles_millones_usd": [
+    {
+      "concepto": "Saldo del programa financiero 2026",
+      "monto": 3.7,
+      "tratamiento": "Proyección de caja inicial; verificar saldo efectivo al 31/12/2026."
+    },
+    {
+      "concepto": "Compras de USD al BCRA",
+      "monto": 4.9,
+      "tratamiento": "Supuesto del programa; no es financiamiento externo nuevo del sector público consolidado."
+    },
+    {
+      "concepto": "Renovación dentro del sector público",
+      "monto": 1.8,
+      "tratamiento": "Renovación prevista; no es ingreso de divisas nuevas."
+    },
+    {
+      "concepto": "Desembolsos FMI",
+      "monto": 1.7,
+      "tratamiento": "Programados; requieren revisiones y aprobaciones. Sin asignación mensual firme verificada."
+    },
+    {
+      "concepto": "Otros organismos internacionales",
+      "monto": 4.2,
+      "tratamiento": "Previsión agregada; faltan contratos, condiciones y cronograma por operación."
+    },
+    {
+      "concepto": "Emisiones locales",
+      "monto": 5.0,
+      "tratamiento": "Colocaciones futuras; falta adjudicación, liquidación, monto neto y moneda de pago."
+    },
+    {
+      "concepto": "Otras fuentes",
+      "monto": 2.0,
+      "tratamiento": "Categoría no individualizada; pendiente de documentación."
+    },
+    {
+      "concepto": "Privatizaciones",
+      "monto": 1.5,
+      "tratamiento": "Proyección; verificar adjudicación, cierre y cobro en moneda utilizable."
+    }
+  ],
+  "programa_total_publicado_miles_millones_usd": 24.9,
+  "programa_suma_componentes_publicados_miles_millones_usd": 24.8,
+  "financiamiento_confirmado": {
+    "bcra_repo": {
+      "monto_refinanciado_usd_millones": 6000,
+      "nuevo_vencimiento": "2028-09",
+      "fecha_comunicado": "2026-07-03",
+      "ingreso_nuevo_2027": false
+    },
+    "banco_mundial_garantia": {
+      "prestamo_comercial_a_movilizar_hasta_usd_millones": 2000,
+      "fecha_aprobacion_garantia": "2026-06-16",
+      "cobro_nuevo_2027_verificado": false
+    },
+    "nota": "No se verificó un calendario completo de fondos nuevos firmes y de libre disponibilidad para 2027. Null significa pendiente, no cero."
+  },
+  "fuentes": {
+    "Deuda trimestral y archivos originales": "https://www.argentina.gob.ar/economia/finanzas/datos-trimestrales-de-la-deuda",
+    "Excel oficial: deuda al 30/06/2026": "https://www.argentina.gob.ar/sites/default/files/deuda_publica_30-06-2026_0.xlsx",
+    "Programa financiero de julio de 2026": "https://www.argentina.gob.ar/sites/default/files/2026/07/presentacion_lc_programafinanciero.pdf",
+    "Pagos al FMI: corte 30/09/2026, año 2027": "https://www.imf.org/external/np/fin/tad/extforth.aspx?date1key=2026-09-30&memberKey1=30&schedule=exp&year=2027",
+    "BCRA: renovación de REPO hasta 2028": "https://www.bcra.gob.ar/noticias/bcra-repo-renovacion-total-hasta-2028/",
+    "Banco Mundial: garantías aprobadas en junio de 2026": "https://www.worldbank.org/en/news/press-release/2026/06/16/world-bank-group-supports-argentina-s-economic-reforms-with-innovative-package-to-mobilize-2-billion-in-commercial-finan",
+    "BCRA: reservas, liquidez y calendario de publicaciones": "https://www.bcra.gob.ar/normas-especiales-para-la-divulgacion-de-datos-fmi/",
+    "Catálogo de Monitor Argy": "https://monitorargy.com/datos",
+    "Amauta Macro Lab": "https://amauta-research.vercel.app/macro",
+    "INDEC: IPC octubre 2026": "https://www.indec.gob.ar/uploads/informesdeprensa/ipc_11_269335F5BA6B.pdf",
+    "OPC: seguimiento normativo de deuda": "https://opc.gob.ar/monitores/novedades-normativas-de-deuda-publica/"
+  },
+  "coverageComplete": false,
+  "fundingLedger": [
+    {
+      "id": "bcra-repo-2026",
+      "name": "REPO: refinanciación de USD 6.000 millones",
+      "issuer": "BCRA",
+      "status": "refinancing",
+      "currency": "USD",
+      "month": null,
+      "netAmount": null,
+      "freeAvailability": false,
+      "evidenceDate": "2026-07-03",
+      "sourceUrl": "https://www.bcra.gob.ar/noticias/bcra-repo-renovacion-total-hasta-2028/",
+      "description": "Cancelación y nueva operación por igual monto; capital hasta septiembre de 2028. Tasa SOFR + 4%.",
+      "treatment": "Hecho confirmado, sin ingreso nuevo 2027. No sumar al Tesoro. Relevar intereses y demás pasivos BCRA por separado."
+    },
+    {
+      "id": "wb-guarantees-2026",
+      "name": "Garantías BIRF/MIGA para movilizar hasta USD 2.000 millones",
+      "issuer": "Tesoro",
+      "status": "conditional",
+      "currency": "USD",
+      "month": null,
+      "netAmount": null,
+      "freeAvailability": null,
+      "evidenceDate": "2026-06-16",
+      "sourceUrl": "https://www.worldbank.org/en/news/press-release/2026/06/16/world-bank-group-supports-argentina-s-economic-reforms-with-innovative-package-to-mobilize-2-billion-in-commercial-finan",
+      "description": "Garantías aprobadas. Préstamo comercial previsto a seis años, con tres de gracia.",
+      "treatment": "No se verificó desembolso mensual 2027. No sumar garantía y préstamo como dos ingresos."
+    }
+  ],
+  "missing": [
+    {
+      "item": "Actualizar el perfil del Tesoro",
+      "reason": "Reconciliar el corte de junio con nuevas emisiones, canjes y amortizaciones; separar moneda de pago, tenedor e intereses. Los BONAR DUAL/DLK no equivalen a demanda de USD.",
+      "url": "https://www.argentina.gob.ar/economia/finanzas/datos-trimestrales-de-la-deuda"
+    },
+    {
+      "item": "Caja inicial utilizable del Tesoro",
+      "reason": "Verificar saldo efectivo al 31/12/2026, restricciones y depósitos. El buffer de 3.700 millones del programa es una proyección.",
+      "url": "https://www.argentina.gob.ar/economia/finanzas/datos-mensuales"
+    },
+    {
+      "item": "Calendario de financiamiento neto por operación",
+      "reason": "Agregar contrato, monto neto, moneda, liquidación, condiciones y libre disponibilidad. Emisiones locales y privatizaciones se computan con evidencia de adjudicación y cobro.",
+      "url": "https://www.argentina.gob.ar/economia/finanzas/licitaciones"
+    },
+    {
+      "item": "FMI y otros organismos",
+      "reason": "Separar calendario de pagos de revisiones y desembolsos. Los DEG requieren tipo de cambio explícito; evitar contar dos veces pagos ya incluidos en el perfil.",
+      "url": "https://www.imf.org/external/np/fin/tad/extforth.aspx?date1key=2026-09-30&memberKey1=30&schedule=exp&year=2027"
+    },
+    {
+      "item": "Liquidez y pasivos propios del BCRA",
+      "reason": "Incorporar reservas utilizables, activos afectados, intereses de REPO, swaps y otros pagos. No tratar reservas brutas como caja libre del Tesoro.",
+      "url": "https://www.bcra.gob.ar/normas-especiales-para-la-divulgacion-de-datos-fmi/"
+    }
+  ]
+}

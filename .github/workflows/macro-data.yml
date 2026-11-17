@@ -5,8 +5,8 @@ on:
     branches: ['main']
     paths: ['scripts/macro/**', '.github/workflows/macro-data.yml']
   schedule:
-    # Días hábiles, 09:17, 13:17, 16:17 y 19:17 ART; sujeto a demora de Actions.
-    - cron: '17 12,16,19,22 * * 1-5'
+    # Cada hora, 08:17 a 20:17 ART en días hábiles; sujeto a demora de Actions.
+    - cron: '17 11-23 * * 1-5'
 permissions:
   contents: write
 concurrency:
@@ -23,6 +23,11 @@ jobs:
           python-version: '3.12'
       - name: Verificar autenticación, identidad de series y conservación ante fallas
         run: python -B scripts/macro/test_collect.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verificar caja y separación de financiamiento
+        run: node scripts/macro/test_caja.cjs
       - name: Consultar fuentes públicas y conservar última versión válida
         env:
           INDEC_API_TOKEN: ${{ secrets.INDEC_API_TOKEN }}
