@@ -8,7 +8,7 @@ def jwt(exp):
     return 'testheader.'+payload+'.testsignature'
 class CollectorTests(unittest.TestCase):
     def setUp(self):
-        for name in ['inflation','country_risk','rem_expectations']:
+        for name in ['inflation','country_risk','rem_expectations','monitor_bundle']:
             p=patch.object(c,name,side_effect=c.SourceError('Fuente de prueba indisponible'));p.start();self.addCleanup(p.stop)
     def test_normalizes_copied_authorization_header(self):
         token=jwt(time.time()+3600)
@@ -36,6 +36,25 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(c.points([{'d':'202601','v':None},{'d':'202602','v':10}],'d','v'),[{'date':'2026-02-01','value':10}])
         with self.assertRaises(c.SourceError):c.points([{'d':'202601','v':1},{'d':'202601','v':2}],'d','v')
 class PublicSourceTests(unittest.TestCase):
+    def test_public_monitor_refreshes_without_indec_token(self):
+        monitor={'catalog':{'series':[{'id':sid} for sid in c.CAME_IDS]},'retrievedAt':'2026-11-17T12:00:00Z','histories':{}}
+        with patch.dict(c.os.environ,{},clear=True),patch.object(c,'monitor_bundle',return_value=monitor),patch.object(c,'crianza',side_effect=c.SourceError('Sin clave')),patch.object(c,'catalog',side_effect=c.SourceError('Sin red')),patch.object(c,'inflation',return_value=[]),patch.object(c,'country_risk',side_effect=c.SourceError('Sin red')),patch.object(c,'rem_expectations',side_effect=c.SourceError('Sin red')):
+            packet=c.collect()
+        self.assertEqual(packet['monitor']['sync']['cameMissing'],[])
+        self.assertIn('Monitor Argy · catálogo, calendario y coyuntura',packet['updatedSources'])
+    def test_monitor_failure_preserves_actual_last_success_date(self):
+        old={'retrievedAt':'2026-11-01T00:00:00Z','catalog':{'series':[{'id':'ipc'}]}}
+        with patch.object(c,'monitor_bundle',side_effect=c.SourceError('Caído')),patch.object(c,'crianza',side_effect=c.SourceError('Sin clave')),patch.object(c,'catalog',side_effect=c.SourceError('Sin red')),patch.object(c,'inflation',return_value=[]),patch.object(c,'country_risk',side_effect=c.SourceError('Sin red')),patch.object(c,'rem_expectations',side_effect=c.SourceError('Sin red')):
+            packet=c.collect({'monitor':old})
+        self.assertEqual(packet['monitor']['retrievedAt'],old['retrievedAt'])
+        self.assertEqual(packet['monitorError'],'Caído')
+    def test_versions_detect_monitor_revision_but_ignore_poll_time(self):
+        import copy
+        a={'series':[],'monitor':{'retrievedAt':'old','catalog':{'series':[{'id':'came','ultimoValor':100}]}}}
+        b=copy.deepcopy(a);b['monitor']['retrievedAt']='new'
+        self.assertEqual(c.snapshot_version(a),c.snapshot_version(b))
+        b['monitor']['catalog']['series'][0]['ultimoValor']=101
+        self.assertNotEqual(c.snapshot_version(a),c.snapshot_version(b))
     def test_indec_credential_is_refused_for_a_different_host(self):
         with patch.object(c,'urlopen') as network:
             with self.assertRaises(c.SourceError):c.fetch('https://monitorargy.com/api/v1/series',token='dummy-for-test')

@@ -184,6 +184,19 @@ def rem_expectations():
         if not all(row.get(k) for k in ['informe','indicador','periodo','muestra','unidad']):raise SourceError('REM: faltan metadatos de horizonte o muestra.')
         if not isinstance(row.get('mediana'),(int,float)) or not math.isfinite(row['mediana']):raise SourceError('REM: mediana no válida.')
     return {'sourceUrl':url,'provider':'BCRA REM vía ArgentinaDatos','retrievedAt':stamp(),'rows':rows,'note':'Expectativas de participantes encuestados; no son proyecciones propias del BCRA. El informe y el horizonte objetivo son fechas distintas. Percentiles entre participantes no son intervalos de confianza.'}
+CAME_IDS=['ipip_came','ipip_came_interanual','ipip_came_desest_mensual','ventas_minoristas_came','ventas_minoristas_came_interanual','ventas_minoristas_came_desest_mensual']
+
+def snapshot_version(packet):
+    # Versionar revisiones de catálogo/calendario/REM aunque no cambie INDEC.
+    # Fechas de consulta e intentos no constituyen una revisión estadística.
+    volatile={'retrievedAt','generatedAt','collectionStartedAt','at','sync'}
+    def stable(value):
+        if isinstance(value,dict):return {k:stable(v) for k,v in value.items() if k not in volatile}
+        if isinstance(value,list):return [stable(v) for v in value]
+        return value
+    evidence={k:packet[k] for k in ['series','monitor','expectations'] if k in packet}
+    return hashlib.sha256(json.dumps(stable(evidence),sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
+
 def monitor_bundle():
     # Peticiones sin token ni cookies. fetch rechaza credenciales en este dominio.
     base='https://monitorargy.com/api/v1/';started=time.monotonic();result={'provider':'Monitor Argy','sourceUrl':'https://monitorargy.com','retrievedAt':stamp(),'attribution':'Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.','errors':[]}
@@ -198,7 +211,7 @@ def monitor_bundle():
     if not result.get('catalog',{}).get('series'):raise SourceError('Monitor Argy no devolvió un catálogo válido.')
     ids={s['id'] for s in result['catalog']['series']};result['histories']={}
     featured=['emae_desest','ipc_mensual','empleo_privado_desest','pobreza_nowcast','tc_mayorista','saldo_comercial','tasa_tamar','base_monetaria','resultado_primario','supermercados_desest','isac_desest','petroleo']
-    for sid in featured:
+    for sid in CAME_IDS+featured:
         if time.monotonic()-started>75:
             result['errors'].append({'source':'histories','message':'Se alcanzó el presupuesto de tiempo del proveedor complementario; se conservan las historias previas.'});break
         if sid not in ids:continue
@@ -250,16 +263,24 @@ def collect(previous=None):
     except SourceError as e:
         if previous.get('expectations'):packet['expectations']=previous['expectations']
         packet['expectationsError']=str(e)
-    if os.environ.get('INDEC_API_TOKEN'):
-        try:
-            incoming=monitor_bundle();older=previous.get('monitor',{})
-            for key in ['calendar','outlook']:
-                if key not in incoming and key in older:incoming[key]=older[key]
-            incoming['histories']={**older.get('histories',{}),**incoming['histories']}
-            packet['monitor']=incoming;success.append('Monitor Argy · catálogo, calendario y coyuntura')
-        except SourceError as e:
-            if previous.get('monitor'):packet['monitor']=previous['monitor']
-            packet['monitorError']=str(e)
+    # Monitor Argy es público: una clave INDEC ausente/vencida no debe impedirlo.
+    older=previous.get('monitor',{})
+    try:
+        incoming=monitor_bundle()
+        for key in ['calendar','outlook']:
+            if key not in incoming and key in older:incoming[key]=older[key]
+        incoming['histories']={**older.get('histories',{}),**incoming['histories']}
+        ids={s['id'] for s in incoming['catalog']['series']}
+        old_ids={s['id'] for s in older.get('catalog',{}).get('series',[])}
+        incoming['sync']={'attemptedAt':started,'catalogReceivedAt':incoming['retrievedAt'],
+            'addedIds':sorted(ids-old_ids),'removedIds':sorted(old_ids-ids),
+            'camePresent':sorted(ids.intersection(CAME_IDS)),'cameMissing':sorted(set(CAME_IDS)-ids)}
+        if incoming['sync']['cameMissing']:
+            incoming.setdefault('errors',[]).append({'source':'CAME','message':'Series faltantes: '+', '.join(incoming['sync']['cameMissing'])})
+        packet['monitor']=incoming;success.append('Monitor Argy · catálogo, calendario y coyuntura')
+    except SourceError as e:
+        if older:packet['monitor']=older
+        packet['monitorError']=str(e)
     # Eventos extra del calendario (licitaciones del Tesoro, feriados): se suman
     # siempre, aun sin token/monitor, desde fuentes propias/curadas. Nunca debe
     # tumbar al colector: cualquier error se registra y se continúa.
@@ -285,8 +306,7 @@ def main():
         for error in packet['failures']:print(error['source']+': '+error['message'],file=sys.stderr)
         return 1
     temp=OUT/'latest.pending';temp.write_text(json.dumps(packet,ensure_ascii=False,indent=2),encoding='utf8');temp.replace(target)
-    observations=[{'id':s['id'],'points':s['points']} for s in packet['series']]
-    version=hashlib.sha256(json.dumps(observations,sort_keys=True).encode()).hexdigest()[:16]
+    version=snapshot_version(packet)
     archive=OUT/'versions';archive.mkdir(exist_ok=True);snapshot=archive/(version+'.json')
     if not snapshot.exists():snapshot.write_text(json.dumps(packet,ensure_ascii=False),encoding='utf8')
     print(f"Series conservadas: {len(packet['series'])}. Fuentes actualizadas: {len(packet['updatedSources'])}. Fuentes con errores: {len(packet['failures'])}.")
