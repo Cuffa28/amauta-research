@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(`https://monitorargy.com/api/v1/series/${encodeURIComponent(id)}`, {
       headers: { Accept: "application/json", "User-Agent": "AmautaResearch/1.0" },
-      next: { revalidate: 10800 },
+      next: { revalidate: 900 },
       signal: AbortSignal.timeout(25000),
     });
     if (!response.ok) {
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     if (data.id !== id || !Array.isArray(data.puntos)) {
       return NextResponse.json({ error: "La respuesta no coincide con la serie solicitada." }, { status: 502 });
     }
-    return NextResponse.json(data, { headers: { "Cache-Control": "public, s-maxage=10800, stale-while-revalidate=86400" } });
+    return NextResponse.json(data, { headers: { "Cache-Control": "public, s-maxage=900, stale-while-revalidate=60" } });
   } catch {
     return NextResponse.json({ error: "No se pudo consultar la historia. Se conservan los datos ya cargados." }, { status: 502 });
   }

@@ -7,8 +7,10 @@
   const response=await fetch('live/caja-2027.json',{cache:'no-store'});if(!response.ok)throw Error('No se pudo leer la base de caja.');const d=await response.json();
   const months=d.mensual_2027, sum=key=>months.reduce((n,m)=>n+m[key],0);
   $('total').textContent=fmt(sum('servicio_usd_equivalente_millones'));
-  $('documented').textContent='Sin calendario completo';
-  $('months').innerHTML=months.map(m=>`<tr><td>${esc(m.mes)}</td><td class="num">${fmt(m.capital_usd_equivalente_millones)}</td><td class="num">${fmt(m.intereses_usd_equivalente_millones)}</td><td class="num">${fmt(m.servicio_usd_equivalente_millones)}</td><td class="num">Pendiente</td><td class="num">Sin asignar</td><td class="num">Pendiente</td></tr>`).join('');
+  const funding=m=>CajaModel.confirmed(d.fundingLedger,m);
+  const documented=months.reduce((n,m)=>n+funding(m.mes),0);
+  $('documented').textContent=documented>0?fmt(documented)+' · parcial':'Sin calendario completo';
+  $('months').innerHTML=months.map(m=>`<tr><td>${esc(m.mes)}</td><td class="num">${fmt(m.capital_usd_equivalente_millones)}</td><td class="num">${fmt(m.intereses_usd_equivalente_millones)}</td><td class="num">${fmt(m.servicio_usd_equivalente_millones)}</td><td class="num">${funding(m.mes)>0?fmt(funding(m.mes))+' · parcial':'Pendiente'}</td><td class="num">Sin asignar</td><td class="num">Pendiente</td></tr>`).join('');
   $('totals').innerHTML=`<tr><th>Total base histórica</th><th class="num">${fmt(sum('capital_usd_equivalente_millones'))}</th><th class="num">${fmt(sum('intereses_usd_equivalente_millones'))}</th><th class="num">${fmt(sum('servicio_usd_equivalente_millones'))}</th><th colspan="3">Sin brecha vigente calculable</th></tr>`;
   $('source').innerHTML=link(d.fuente_vencimientos.url,'Excel oficial')+' · Hojas A.3.4 (capital, fila 103) y A.3.5 (intereses, fila 104), columnas C:N. '+link(d.fuentes['Deuda trimestral y archivos originales'],'Publicaciones del Ministerio');
   $('evidence').innerHTML=d.fundingLedger.map(r=>`<tr><td>${esc(r.name)}<br><small>${esc(r.issuer)} · evidencia ${esc(r.evidenceDate)}</small></td><td>${esc(r.description)}</td><td>${esc(r.treatment)}</td><td>${link(r.sourceUrl,'Documento oficial')}</td></tr>`).join('');
