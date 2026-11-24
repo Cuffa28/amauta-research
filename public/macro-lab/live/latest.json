@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-24T06:58:40.747436+00:00",
+  "generatedAt": "2026-11-24T15:17:02.018144+00:00",
   "series": [
     {
       "id": "crianza0",
@@ -10,7 +10,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-24T06:58:08.896946+00:00",
+      "retrievedAt": "2026-11-24T15:16:31.502737+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -351,7 +351,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-24T06:58:08.897231+00:00",
+      "retrievedAt": "2026-11-24T15:16:31.502993+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -692,7 +692,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-24T06:58:08.897392+00:00",
+      "retrievedAt": "2026-11-24T15:16:31.503136+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -1033,7 +1033,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/canasta-crianza",
-      "retrievedAt": "2026-11-24T06:58:08.897561+00:00",
+      "retrievedAt": "2026-11-24T15:16:31.503272+00:00",
       "note": "Fuente: INDEC, canasta de crianza. Gran Buenos Aires. Bienes y servicios más valorización del cuidado. Valores nominales. La fecha es el período observado; publicación no informada por este conector.",
       "points": [
         {
@@ -1374,7 +1374,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/1",
-      "retrievedAt": "2026-11-24T06:58:12.332416+00:00",
+      "retrievedAt": "2026-11-24T15:16:33.893549+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Reservas internacionales brutas; no netas ni de libre disponibilidad.",
       "points": [
         {
@@ -4331,7 +4331,7 @@
       "unit": "En millones de USD",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/78",
-      "retrievedAt": "2026-11-24T06:58:12.655966+00:00",
+      "retrievedAt": "2026-11-24T15:16:34.152139+00:00",
       "note": "Fuente: BCRA, API monetaria v4. Factor de variación de reservas por compra de divisas; conservar fecha de observación y metodología. No equivale a la variación total de reservas ni necesariamente al momento de concertación de la intervención.",
       "points": [
         {
@@ -7284,7 +7284,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/27",
-      "retrievedAt": "2026-11-24T06:58:12.979750+00:00",
+      "retrievedAt": "2026-11-24T15:16:34.379899+00:00",
       "note": "IPC publicado por BCRA, variable 27. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -8443,7 +8443,7 @@
       "unit": "%",
       "frequency": "M",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/28",
-      "retrievedAt": "2026-11-24T06:58:13.329298+00:00",
+      "retrievedAt": "2026-11-24T15:16:34.631802+00:00",
       "note": "IPC publicado por BCRA, variable 28. La fecha identifica el mes observado. La cobertura y metodología cambian en la historia; 2007–2015 requiere especial cautela y no se encadena con el IPC nacional actual. Vista predeterminada desde 2017. Variación publicada, no nivel de índice.",
       "points": [
         {
@@ -9603,7 +9603,7 @@
       "frequency": "D",
       "official": false,
       "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais",
-      "retrievedAt": "2026-11-24T06:58:13.570963+00:00",
+      "retrievedAt": "2026-11-24T15:16:35.402769+00:00",
       "note": "Referencia de riesgo país distribuida por ArgentinaDatos, que identifica a Ámbito como fuente. Servicio no oficial; no es una conexión directa al EMBI de J.P. Morgan. No se mezcla con la estimación propia de BondTerminal. Fecha de observación diaria; puede tener rezago. Datos: https://argentinadatos.com/docs/operations/get-finanzas-indices-riesgo-pais",
       "points": [
         {
@@ -40621,7 +40621,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipc_nacional?descripcion=ilike.%2Ageneral%2A&region=ilike.%2Anacional%2A&tipo_de_indicador=eq.Indice&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:15.293440+00:00",
+      "retrievedAt": "2026-11-24T15:16:36.730255+00:00",
       "dimensions": {},
       "note": "INDEC · IPC nacional · nivel general. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -41108,7 +41108,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:17.353956+00:00",
+      "retrievedAt": "2026-11-24T15:16:38.287603+00:00",
       "dimensions": {
         "codigo": "0"
       },
@@ -41593,7 +41593,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:17.354687+00:00",
+      "retrievedAt": "2026-11-24T15:16:38.288154+00:00",
       "dimensions": {
         "codigo": "100"
       },
@@ -42078,7 +42078,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:17.355352+00:00",
+      "retrievedAt": "2026-11-24T15:16:38.288648+00:00",
       "dimensions": {
         "codigo": "110"
       },
@@ -42563,7 +42563,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:17.356111+00:00",
+      "retrievedAt": "2026-11-24T15:16:38.289163+00:00",
       "dimensions": {
         "codigo": "120"
       },
@@ -43048,7 +43048,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:17.356859+00:00",
+      "retrievedAt": "2026-11-24T15:16:38.289648+00:00",
       "dimensions": {
         "codigo": "200"
       },
@@ -43533,7 +43533,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+desestacionalizada",
-      "retrievedAt": "2026-11-24T06:58:19.208383+00:00",
+      "retrievedAt": "2026-11-24T15:16:40.203007+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie desestacionalizada"
       },
@@ -44638,7 +44638,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-nivel-general?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.200401&tipo_de_indicador_descripcion=eq.%C3%8Dndice+serie+original",
-      "retrievedAt": "2026-11-24T06:58:19.209523+00:00",
+      "retrievedAt": "2026-11-24T15:16:40.203867+00:00",
       "dimensions": {
         "tipo_de_indicador_descripcion": "Índice serie original"
       },
@@ -45743,7 +45743,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/ipi_manufacturero?descripcion=eq.IPI+Manufacturero+-+Nivel+general&tipo_de_indicador=eq.%C3%8Dndice&serie=eq.Serie+desestacionalizada&periodo=gte.201601",
-      "retrievedAt": "2026-11-24T06:58:20.355913+00:00",
+      "retrievedAt": "2026-11-24T15:16:41.309356+00:00",
       "dimensions": {},
       "note": "INDEC · Industria · desestacionalizada. Apertura: {}. Se conserva el período observado. Revisiones y valores provisionales según la fuente.",
       "points": [
@@ -46274,7 +46274,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.A",
-      "retrievedAt": "2026-11-24T06:58:23.869987+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.012863+00:00",
       "dimensions": {
         "codigo": "A"
       },
@@ -46755,7 +46755,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.B",
-      "retrievedAt": "2026-11-24T06:58:23.871773+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.014131+00:00",
       "dimensions": {
         "codigo": "B"
       },
@@ -47236,7 +47236,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.C",
-      "retrievedAt": "2026-11-24T06:58:23.873517+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.015347+00:00",
       "dimensions": {
         "codigo": "C"
       },
@@ -47717,7 +47717,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.D",
-      "retrievedAt": "2026-11-24T06:58:23.875228+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.016586+00:00",
       "dimensions": {
         "codigo": "D"
       },
@@ -48198,7 +48198,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.E",
-      "retrievedAt": "2026-11-24T06:58:23.876947+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.017801+00:00",
       "dimensions": {
         "codigo": "E"
       },
@@ -48679,7 +48679,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.F",
-      "retrievedAt": "2026-11-24T06:58:23.878667+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.019005+00:00",
       "dimensions": {
         "codigo": "F"
       },
@@ -49160,7 +49160,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.G",
-      "retrievedAt": "2026-11-24T06:58:23.880396+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.020330+00:00",
       "dimensions": {
         "codigo": "G"
       },
@@ -49641,7 +49641,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.H",
-      "retrievedAt": "2026-11-24T06:58:23.882119+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.021550+00:00",
       "dimensions": {
         "codigo": "H"
       },
@@ -50122,7 +50122,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.I",
-      "retrievedAt": "2026-11-24T06:58:23.883840+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.022766+00:00",
       "dimensions": {
         "codigo": "I"
       },
@@ -50603,7 +50603,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.J",
-      "retrievedAt": "2026-11-24T06:58:23.885560+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.023984+00:00",
       "dimensions": {
         "codigo": "J"
       },
@@ -51084,7 +51084,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.K",
-      "retrievedAt": "2026-11-24T06:58:23.887264+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.025204+00:00",
       "dimensions": {
         "codigo": "K"
       },
@@ -51565,7 +51565,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.L",
-      "retrievedAt": "2026-11-24T06:58:23.888980+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.026408+00:00",
       "dimensions": {
         "codigo": "L"
       },
@@ -52046,7 +52046,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.M",
-      "retrievedAt": "2026-11-24T06:58:23.890717+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.027625+00:00",
       "dimensions": {
         "codigo": "M"
       },
@@ -52527,7 +52527,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.N",
-      "retrievedAt": "2026-11-24T06:58:23.892431+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.028837+00:00",
       "dimensions": {
         "codigo": "N"
       },
@@ -53008,7 +53008,7 @@
       "unit": "índice",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/estimador-mensual-de-actividad-economica-sectores?tipo_de_indicador=eq.%C3%8Dndice+base+2004%3D100&periodo=gte.201701&codigo=eq.O",
-      "retrievedAt": "2026-11-24T06:58:23.894165+00:00",
+      "retrievedAt": "2026-11-24T15:16:44.030074+00:00",
       "dimensions": {
         "codigo": "O"
       },
@@ -53489,7 +53489,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA&tipo_de_indicador=eq.CBA&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.032719+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.300950+00:00",
       "dimensions": {
         "codigo": "CBA",
         "tipo_de_indicador": "CBA"
@@ -53979,7 +53979,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT&tipo_de_indicador=eq.CBT&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.033352+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.301453+00:00",
       "dimensions": {
         "codigo": "CBT",
         "tipo_de_indicador": "CBT"
@@ -54469,7 +54469,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBA+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.033966+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.301886+00:00",
       "dimensions": {
         "codigo": "CBA H2",
         "tipo_de_indicador": "Hogar 2"
@@ -54959,7 +54959,7 @@
       "unit": "ARS",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/valorizacion_canastas_cba_cbt?codigo=eq.CBT+H2&tipo_de_indicador=eq.Hogar+2&region=eq.GBA&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.035211+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.302992+00:00",
       "dimensions": {
         "codigo": "CBT H2",
         "tipo_de_indicador": "Hogar 2"
@@ -55450,7 +55450,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.0&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.035592+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.303325+00:00",
       "inputs": [
         "salarios",
         "ipc"
@@ -55938,7 +55938,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.100&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.035665+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.303382+00:00",
       "inputs": [
         "salarios_reg",
         "ipc"
@@ -56426,7 +56426,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.110&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.035721+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.303431+00:00",
       "inputs": [
         "salarios_priv",
         "ipc"
@@ -56914,7 +56914,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.120&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.035777+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.303479+00:00",
       "inputs": [
         "salarios_pub",
         "ipc"
@@ -57402,7 +57402,7 @@
       "unit": "índice real base común=100",
       "frequency": "M",
       "sourceUrl": "https://api.indec.gob.ar/v1/indice_salarios?tipo_de_indicador=eq.Indice&codigo=eq.200&periodo=gte.201701",
-      "retrievedAt": "2026-11-24T06:58:26.035828+00:00",
+      "retrievedAt": "2026-11-24T15:16:45.303523+00:00",
       "inputs": [
         "salarios_no_reg",
         "ipc"
@@ -57888,7 +57888,7 @@
       "unit": "Pesos argentinos por dólar estadounidense",
       "frequency": "D",
       "sourceUrl": "https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias/5",
-      "retrievedAt": "2026-11-24T15:10:38.803759+00:00",
+      "retrievedAt": "2026-11-24T15:16:35.154675+00:00",
       "note": "Tipo de cambio mayorista de referencia del BCRA (Comunicación A 3500), pesos por dólar. Fecha de observación diaria. Fuente: API Monetarias v4 del BCRA, variable 5.",
       "points": [
         {
@@ -67505,6 +67505,7 @@
     "BCRA · reservas",
     "BCRA · compra de divisas",
     "BCRA · inflación",
+    "BCRA · dólar oficial (A3500)",
     "ArgentinaDatos · riesgo país",
     "INDEC · actividad, salarios y canastas",
     "REM · expectativas de mercado",
@@ -67515,7 +67516,7 @@
   "expectations": {
     "sourceUrl": "https://api.argentinadatos.com/v1/finanzas/rem/ultimo",
     "provider": "BCRA REM vía ArgentinaDatos",
-    "retrievedAt": "2026-11-24T06:58:26.247548+00:00",
+    "retrievedAt": "2026-11-24T15:16:45.479974+00:00",
     "rows": [
       {
         "informe": "2026-10",
@@ -70955,11 +70956,11 @@
   "monitor": {
     "provider": "Monitor Argy",
     "sourceUrl": "https://monitorargy.com",
-    "retrievedAt": "2026-11-24T06:58:26.247572+00:00",
+    "retrievedAt": "2026-11-24T15:16:45.480000+00:00",
     "attribution": "Monitor Argy (monitorargy.com), con datos de los organismos indicados en cada serie. Cálculos propios de Monitor Argy: CC BY 4.0.",
     "errors": [],
     "catalog": {
-      "generado": "2026-11-24T00:48:32.990323+00:00",
+      "generado": "2026-11-24T11:13:22.635763+00:00",
       "paneles": [
         {
           "id": "precios",
@@ -71321,11 +71322,11 @@
             "web": "https://www.bna.com.ar/Personas"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 1600,
-          "variacionUltimo": 15,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 2086
+          "observaciones": 2087
         },
         {
           "id": "tc_bna_en_el_mes",
@@ -71340,11 +71341,11 @@
             "web": "https://www.bna.com.ar/Personas"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 2.564103,
-          "variacionUltimo": 0.961538,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 2081
+          "observaciones": 2082
         },
         {
           "id": "tc_bna_interanual",
@@ -71359,11 +71360,11 @@
             "web": "https://www.bna.com.ar/Personas"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 10.344828,
-          "variacionUltimo": 1.034483,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 1825
+          "observaciones": 1826
         },
         {
           "id": "tc_mep",
@@ -71378,11 +71379,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 1743.1,
-          "variacionUltimo": 93.3,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 2086
+          "observaciones": 2087
         },
         {
           "id": "tc_mep_en_el_mes",
@@ -71397,11 +71398,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 11.110403,
-          "variacionUltimo": 5.947221,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 2081
+          "observaciones": 2082
         },
         {
           "id": "tc_mep_interanual",
@@ -71416,11 +71417,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 18.272493,
-          "variacionUltimo": 5.016503,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 1825
+          "observaciones": 1826
         },
         {
           "id": "tc_ccl",
@@ -71435,11 +71436,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 1806.2,
-          "variacionUltimo": 58,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 3624
+          "observaciones": 3625
         },
         {
           "id": "tc_ccl_en_el_mes",
@@ -71454,11 +71455,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 9.446767,
-          "variacionUltimo": 3.514513,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 3602
+          "observaciones": 3603
         },
         {
           "id": "tc_ccl_interanual",
@@ -71473,11 +71474,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 21.343635,
-          "variacionUltimo": 3.89654,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 3363
+          "observaciones": 3364
         },
         {
           "id": "tc_blue",
@@ -71492,11 +71493,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 1675,
-          "variacionUltimo": 35,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 4146
+          "observaciones": 4147
         },
         {
           "id": "tc_blue_en_el_mes",
@@ -71511,11 +71512,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 7.028754,
-          "variacionUltimo": 2.236422,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 4125
+          "observaciones": 4126
         },
         {
           "id": "tc_blue_interanual",
@@ -71530,11 +71531,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 17.54386,
-          "variacionUltimo": 2.45614,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 3885
+          "observaciones": 3886
         },
         {
           "id": "brecha_blue",
@@ -71606,11 +71607,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 3.619987,
-          "variacionUltimo": -2.344372,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 2086
+          "observaciones": 2087
         },
         {
           "id": "itcrm",
@@ -72024,11 +72025,11 @@
             "web": "https://argentinadatos.com/"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-20",
-          "ultimoValor": 1070,
-          "variacionUltimo": 139,
+          "ultimaFecha": "2026-11-23",
+          "ultimoValor": 1035,
+          "variacionUltimo": -35,
           "frescura": "vigente",
-          "observaciones": 7109
+          "observaciones": 7110
         },
         {
           "id": "emae",
@@ -87794,11 +87795,11 @@
             "web": "https://argentinadatos.com"
           },
           "desestacionalizacion": "no",
-          "ultimaFecha": "2026-11-23",
+          "ultimaFecha": "2026-11-24",
           "ultimoValor": 1806.2,
-          "variacionUltimo": 58,
+          "variacionUltimo": 0,
           "frescura": "vigente",
-          "observaciones": 4146
+          "observaciones": 4147
         },
         {
           "id": "tc_financiero_fin_de_mes",
@@ -149753,7 +149754,7 @@
         }
       ],
       "amautaExtra": {
-        "generado": "2026-11-24T06:58:40.747400+00:00",
+        "generado": "2026-11-24T15:17:02.018115+00:00",
         "conteo": 124,
         "tipos": [
           "eeuu",
@@ -150925,7 +150926,7 @@
         "observaciones": 272,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-10-21T19:11:09.396150+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -151284,7 +151285,7 @@
           "de": "ipc_nivel_general"
         },
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-17T15:13:47.122285+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -151648,7 +151649,7 @@
         "observaciones": 176,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-13T17:10:56.022304+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -152004,7 +152005,7 @@
         "observaciones": 23,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:14:21.067843+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -152132,7 +152133,7 @@
         "observaciones": 1935,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-23T22:00:42.656503+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
@@ -158850,7 +158851,7 @@
         "observaciones": 442,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-19T19:06:41.561114+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -159214,7 +159215,7 @@
         "observaciones": 514,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-20T20:50:33.370675+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
@@ -161308,7 +161309,7 @@
         "observaciones": 1933,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-23T22:03:04.369775+00:00",
         "resolucion": "1d",
         "resolucionesDisponibles": [
@@ -168018,7 +168019,7 @@
         "observaciones": 130,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T17:51:11.992658+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -168382,7 +168383,7 @@
         "observaciones": 116,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-10-22T19:06:56.217580+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -168738,7 +168739,7 @@
         "observaciones": 177,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-06T19:34:28.242041+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -169098,7 +169099,7 @@
         "observaciones": 117,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-06T19:06:49.120812+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -169458,7 +169459,7 @@
         "observaciones": 33,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:11:44.014129+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -169629,7 +169630,7 @@
           "de": "ipip_came"
         },
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:11:44.039057+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -169749,7 +169750,7 @@
         "observaciones": 33,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:11:46.703761+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -169917,7 +169918,7 @@
         "observaciones": 34,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:14:44.830204+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -170092,7 +170093,7 @@
           "de": "ventas_minoristas_came"
         },
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:14:44.856897+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -170216,7 +170217,7 @@
         "observaciones": 34,
         "derivada": null,
         "metodologiaDesestacionalizacion": null,
-        "generado": "2026-11-24T00:48:32.990323+00:00",
+        "generado": "2026-11-24T11:13:22.635763+00:00",
         "vintage": "2026-11-16T11:14:47.510938+00:00",
         "resolucion": "1m",
         "resolucionesDisponibles": [
@@ -170363,8 +170364,8 @@
       }
     },
     "sync": {
-      "attemptedAt": "2026-11-24T06:58:07.240635+00:00",
-      "catalogReceivedAt": "2026-11-24T06:58:26.247572+00:00",
+      "attemptedAt": "2026-11-24T15:16:29.991043+00:00",
+      "catalogReceivedAt": "2026-11-24T15:16:45.480000+00:00",
       "addedIds": [],
       "removedIds": [],
       "camePresent": [
@@ -170378,6 +170379,6 @@
       "cameMissing": []
     }
   },
-  "collectionStartedAt": "2026-11-24T06:58:07.240635+00:00",
+  "collectionStartedAt": "2026-11-24T15:16:29.991043+00:00",
   "retainedSeries": []
 }
