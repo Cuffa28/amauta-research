@@ -3,7 +3,6 @@ import Link from "next/link";
 const TOOLS = [
   { href: "/cedears", title: "Monitor CEDEARs", sub: "Cotizaciones y fundamentals en vivo", icon: "📈" },
   { href: "/fondos", title: "Monitor FCIs", sub: "Fondos Comunes · CAFCI", icon: "📊" },
-  { href: "/chat", title: "Chat + Noticias", sub: "Asistente IA + noticias de Argentina", icon: "💬" },
   { href: "/simulador", title: "Simulador", sub: "Comparador CPD · Banco vs Mercado", icon: "🧮" },
   { href: "/informes", title: "Generador de Informes", sub: "Informes de rendimiento para clientes", icon: "📄" },
   { href: "/financiamiento", title: "Financiamiento", sub: "Seguimiento de gestiones (SGR/BCO)", icon: "🏦" },

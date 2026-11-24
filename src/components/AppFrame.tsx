@@ -20,7 +20,6 @@ const TOOLS = [
   { href: "/macro", title: "Macro Lab", sub: "Datos oficiales · mesa de research", icon: "🌐", short: "Macro Lab" },
   { href: "/cedears", title: "Monitor CEDEARs", sub: "Cotizaciones y fundamentals en vivo", icon: "📈", short: "CEDEARs", live: true },
   { href: "/fondos", title: "Monitor FCIs", sub: "Fondos Comunes · CAFCI", icon: "📊", short: "FCIs" },
-  { href: "/chat", title: "Chat + Noticias", sub: "Asistente IA + noticias de Argentina", icon: "💬", short: "Chat" },
   { href: "/simulador", title: "Simulador", sub: "Comparador CPD · Banco vs Mercado", icon: "🧮", short: "Simulador" },
   { href: "/informes", title: "Generador de Informes", sub: "Informes de rendimiento para clientes", icon: "📄", short: "Informes" },
   { href: "/financiamiento", title: "Financiamiento", sub: "Seguimiento de gestiones (SGR/BCO)", icon: "🏦", short: "Financiamiento" },
