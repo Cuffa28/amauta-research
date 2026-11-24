@@ -24,7 +24,7 @@ class CollectorTests(unittest.TestCase):
             packet=c.collect({'series':[old]})
         # El calendario Amauta (licitaciones curadas locales + feriados) aporta siempre,
         # aun si fallan todas las fuentes de red.
-        self.assertEqual(packet['series'],[old]);self.assertEqual(len(packet['failures']),4);self.assertEqual(packet['updatedSources'],['Amauta · calendario (licitaciones y feriados)'])
+        self.assertEqual(packet['series'],[old]);self.assertEqual(len(packet['failures']),5);self.assertEqual(packet['updatedSources'],['Amauta · calendario (licitaciones y feriados)'])
         self.assertEqual(packet['retainedSeries'],['crianza0'])
         self.assertGreaterEqual(packet['generatedAt'],packet['collectionStartedAt'])
     def test_purchase_candidate_cannot_be_silently_misidentified(self):

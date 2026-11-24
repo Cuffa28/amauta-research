@@ -247,6 +247,18 @@ def collect(previous=None):
         success.append('BCRA · inflación')
     except (SourceError,ValueError,KeyError,TypeError) as e:failures.append({'source':'BCRA · inflación','message':str(e) if isinstance(e,SourceError) else 'Metadatos de inflación inválidos.','at':stamp()})
     try:
+        _cat=entries if 'entries' in locals() else catalog()
+        oficial=next((m for m in _cat if int(m['idVariable'])==5),None)
+        odesc=str(oficial.get('descripcion','')).lower() if oficial else ''
+        ounit=str(oficial.get('unidadExpresion','')).lower() if oficial else ''
+        if not oficial or 'tipo de cambio' not in odesc or 'mayorista' not in odesc or not ('usd' in ounit or 'dólar' in ounit or 'dolar' in ounit):
+            raise SourceError('La variable 5 del BCRA no coincide con el tipo de cambio mayorista (A3500); no se importó una serie ambigua.')
+        s=monetary(oficial,'tc_oficial','2017-01-01')
+        s.update(name='Dólar oficial · mayorista BCRA (A3500)',topic='Cambiario',official=True)
+        s['note']='Tipo de cambio mayorista de referencia del BCRA (Comunicación A 3500), pesos por dólar. Fecha de observación diaria. Fuente: API Monetarias v4 del BCRA, variable 5.'
+        series['tc_oficial']=s;success.append('BCRA · dólar oficial (A3500)')
+    except (SourceError,ValueError,KeyError,TypeError) as e:failures.append({'source':'BCRA · dólar oficial','message':str(e) if isinstance(e,SourceError) else 'Metadatos del dólar oficial inválidos.','at':stamp()})
+    try:
         series['risk']=country_risk();success.append('ArgentinaDatos · riesgo país')
     except SourceError as e:failures.append({'source':'ArgentinaDatos','message':str(e),'at':stamp()})
     # En ausencia de clave se omite esta expansión; las series existentes mantienen su estado.
