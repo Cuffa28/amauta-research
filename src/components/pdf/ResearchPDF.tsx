@@ -16,7 +16,7 @@ const s=StyleSheet.create({
  cards:{flexDirection:"row",flexWrap:"wrap",columnGap:8},card:{width:"49%",padding:9,backgroundColor:"#FAF8F9",borderRadius:6,marginBottom:8},
  heading:{fontSize:12,fontFamily:"Helvetica-Bold",marginTop:9,marginBottom:5,color:"#621044"},cardTitle:{fontSize:10,fontFamily:"Helvetica-Bold",marginBottom:4,color:"#621044"},
  paragraph:{fontSize:8.7,lineHeight:1.35,marginBottom:6},cardText:{fontSize:8.5,lineHeight:1.35},attribution:{fontSize:7,color:"#70686C",marginTop:5},
- figure:{borderWidth:1,borderColor:"#E9E4E6",padding:9,borderRadius:6,marginTop:5,marginBottom:9},chart:{width:495,alignSelf:"center"},caption:{fontSize:7,color:"#70686C",marginTop:4},
+ figure:{borderWidth:1,borderColor:"#E9E4E6",padding:9,marginTop:5,marginBottom:9},chart:{width:495,alignSelf:"center"},caption:{fontSize:7,color:"#70686C",marginTop:4},
  macro:{borderWidth:1,borderColor:"#E9E4E6",borderRadius:6,padding:9,marginBottom:8},macroValue:{fontFamily:"Helvetica-Bold",fontSize:14,lineHeight:1.2,marginBottom:4},range:{flexDirection:"row",justifyContent:"space-between",fontSize:7,color:"#70686C"},
  footer:{position:"absolute",bottom:22,left:32,right:32,height:12,fontSize:7,color:"#70686C",flexDirection:"row",justifyContent:"space-between"},signature:{borderTopWidth:1,borderTopColor:"#F3CF11",marginTop:8,paddingTop:7,fontSize:8},name:{fontSize:11,fontFamily:"Helvetica-Bold"}
 });
@@ -46,5 +46,6 @@ export function ResearchPDF({edition}:{edition:ResearchEdition}) {
  {edition.macro?.series.length ? <><Text style={s.heading} minPresenceAhead={140}>Macro Lab · contexto con fecha</Text><Text style={s.sub}>Snapshot disponible al publicar: {dateTimeART(edition.macro.generatedAt)} ART. Cada serie conserva su fecha observada; no son cotizaciones en vivo.</Text><View style={s.cards}>{edition.macro.series.map(series=><MacroFigure key={series.id} series={series}/>)}</View>{edition.macro.failures.length>0&&<Text style={s.caption}>Las series retenidas conservan su fecha y están identificadas.</Text>}</>:null}
  </Page></Document>;
 }
+
 
 
